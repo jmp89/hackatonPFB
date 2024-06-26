@@ -17,7 +17,7 @@ const initDB = async () => {
     console.log("Borrando tablas...");
 
     await pool.query(
-      "DROP TABLE IF EXISTS participaciones. proyectos, equipos, usuarios"
+      "DROP TABLE IF EXISTS participaciones, proyectos, equipos, usuarios"
     );
 
     console.log("Creando tablas...");

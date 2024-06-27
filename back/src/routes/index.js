@@ -6,4 +6,10 @@ const router = express.Router();
 
 router.use(userRouter);
 
+
+// Ruta de ejemplo para probar el middleware de bodyParser
+router.post('/testParser', (req, res) => {
+    res.send(req.body);
+});
+
 export default router;

@@ -1,8 +1,13 @@
 import express from "express";
-import { validateUserController } from "../controllers/users/index.js";
+import {
+  validateUserController,
+  loginUserController,
+} from "../controllers/users/index.js";
 
 const router = express.Router();
 
-router.post("/validate", validateUserController);
+router.get("/users/validate/:registrationCode", validateUserController);
+
+router.post("/users/login", loginUserController);
 
 export default router;

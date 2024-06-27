@@ -1,7 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import { jsonParser, urlencodedParser } from './middlewares/bodyParser.js';
+import { jsonParser } from './middlewares/bodyParser.js';
 import routes from "./routes/index.js";
 
 const server = express();
@@ -35,6 +35,5 @@ server.use((req, res) => {
 
 // Middleware de parseo del body
 server.use(jsonParser);
-server.use(urlencodedParser);
 
 export default server;

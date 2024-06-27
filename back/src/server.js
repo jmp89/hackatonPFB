@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import { jsonParser, urlencodedParser } from './middlewares/bodyParser.js';
 import routes from "./routes/index.js";
 
 const server = express();
@@ -14,7 +15,7 @@ server.get("/", (req, res) => {
   res.send("El servidor está funcionando correctamente");
 });
 
-server.use(routes);
+server.use('/', routes);
 
 /**Middleware de manejo de errores */
 server.use((error, req, res, next) => {
@@ -31,5 +32,9 @@ server.use((req, res) => {
     message: "Not found",
   });
 });
+
+// Middleware de parseo del body
+server.use(jsonParser);
+server.use(urlencodedParser);
 
 export default server;

@@ -10,7 +10,7 @@ const getEventsService = async (filter, sort, direction) => {
         e.ciudad,
         e.organizador,
         e.tematica
-        FROM Eventos e
+        FROM eventos e
     `
 
     if (filter){

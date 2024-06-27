@@ -98,6 +98,13 @@ const initDB = async () => {
 
     console.log("Usuario admin creado!");
 
+    // CREAMOS UN EVENTO DE PRUEBA
+    await pool.query(`
+      INSERT INTO eventos (nombre, tematica, codigo_reserva) 
+      VALUES ('nombrePrueba', 'tematicaPrueba', 'code1')
+    `);
+
+    console.log("Evento de prueba creado!");
     process.exit(0);
   } catch (error) {
     console.log(error);

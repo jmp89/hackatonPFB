@@ -23,21 +23,23 @@ const initDB = async () => {
     console.log("Creando tablas...");
 
     await pool.query(`
-            CREATE TABLE Usuarios (
+            CREATE TABLE usuarios (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 nombre VARCHAR(100) NOT NULL,
                 email VARCHAR(100) UNIQUE NOT NULL,
                 contraseña VARCHAR(100) NOT NULL,
-                es_admin BOOLEAN DEFAULT FALSE,
-                avatar VARCHAR(255),
-                codigo_registro VARCHAR(255),
+                avatar VARCHAR(100) DEFAULT NULL,
+                active BOOLEAN DEFAULT false,
+                role ENUM('admin', 'normal') DEFAULT 'normal',
+                registrationCode CHAR(30),
+                recoverPassCode CHAR(10),
                 fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             )
     `);
 
     await pool.query(`
-            CREATE TABLE Equipos (
+            CREATE TABLE equipos (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 nombre VARCHAR(100) NOT NULL,
                 descripcion TEXT,
@@ -47,7 +49,7 @@ const initDB = async () => {
     `);
 
     await pool.query(`
-            CREATE TABLE Eventos (
+            CREATE TABLE eventos (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 tecnologia VARCHAR(100),
                 online_presencial BOOLEAN DEFAULT TRUE,
@@ -65,7 +67,7 @@ const initDB = async () => {
     `);
 
     await pool.query(`
-            CREATE TABLE Participa (
+            CREATE TABLE participa (
                 usuario_id INT,
                 evento_id INT,
                 PRIMARY KEY (usuario_id, evento_id),
@@ -75,7 +77,7 @@ const initDB = async () => {
     `);
 
     await pool.query(`
-            CREATE TABLE Pertenece (
+            CREATE TABLE pertenece (
                 usuario_id INT,
                 equipo_id INT,
                 evento_id INT,
@@ -92,8 +94,8 @@ const initDB = async () => {
     console.log("Creando usuario admin");
 
     await pool.query(`
-      INSERT INTO Usuarios (nombre, email, contraseña, es_admin) 
-      VALUES ('admin', 'admin@example.com', 'admin123', TRUE)
+      INSERT INTO usuarios (nombre, email, contraseña, role) 
+      VALUES ('admin', 'admin@example.com', 'admin123', 'admin')
     `);
 
     console.log("Usuario admin creado!");

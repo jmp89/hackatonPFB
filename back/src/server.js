@@ -1,10 +1,13 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import { jsonParser } from "./middlewares/bodyParser.js";
 import routes from "./routes/index.js";
-import errorHandler from "./middlewares/errorHandler.js";
-import notFoundHandler from "./middlewares/notFoundHandler.js";
+
+import {
+  bodyParser,
+  errorHandler,
+  notFoundHandler,
+} from "./middlewares/index.js";
 
 const server = express();
 
@@ -20,7 +23,7 @@ server.get("/", (req, res) => {
 server.use("/", routes);
 
 // Middleware de parseo del body
-server.use(jsonParser);
+server.use(bodyParser);
 
 // Middleware de manejo de errores
 server.use(errorHandler);

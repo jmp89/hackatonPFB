@@ -62,7 +62,7 @@ const initDB = async () => {
                 rating TINYINT,
                 fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                FOREIGN KEY (organizador) REFERENCES Usuarios(id)
+                FOREIGN KEY (organizador) REFERENCES usuarios(id)
             )
     `);
 
@@ -71,8 +71,8 @@ const initDB = async () => {
                 usuario_id INT,
                 evento_id INT,
                 PRIMARY KEY (usuario_id, evento_id),
-                FOREIGN KEY (usuario_id) REFERENCES Usuarios(id),
-                FOREIGN KEY (evento_id) REFERENCES Eventos(id)
+                FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+                FOREIGN KEY (evento_id) REFERENCES eventos(id)
             )
     `);
 
@@ -82,9 +82,9 @@ const initDB = async () => {
                 equipo_id INT,
                 evento_id INT,
                 PRIMARY KEY (usuario_id, equipo_id, evento_id),
-                FOREIGN KEY (usuario_id) REFERENCES Usuarios(id),
-                FOREIGN KEY (equipo_id) REFERENCES Equipos(id),
-                FOREIGN KEY (evento_id) REFERENCES Eventos(id),
+                FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+                FOREIGN KEY (equipo_id) REFERENCES equipos(id),
+                FOREIGN KEY (evento_id) REFERENCES eventos(id),
                 UNIQUE (usuario_id, evento_id)
             )
     `);

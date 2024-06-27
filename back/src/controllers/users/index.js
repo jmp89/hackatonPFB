@@ -1,4 +1,6 @@
 import validateUserController from "./validateUserController.js";
-import eventRegistrationController from "./eventRegistrationController.js";
+import createEventAdminController from "./createEventAdmin.js";
 
-export { validateUserController, eventRegistrationController };
+export { validateUserController,
+        createEventAdminController
+ };

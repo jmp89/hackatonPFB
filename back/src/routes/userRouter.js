@@ -5,9 +5,9 @@ import {
   eventRegistrationController,
   loginUserController,
   editUserPasswordController,
+  createEventAdminController,
 } from "../controllers/users/index.js";
 
-import { createEventAdminController } from "../controllers/users/index.js";
 import {
   userExists,
   authUser,
@@ -17,12 +17,11 @@ import {
 
 const router = express.Router();
 
-router.get("/users/validate/:registrationCode", validateUserController);
-
-router.post("/event", authAdmin, createEventAdminController);
-
-router.post("/users/login", loginUserController);
-
-router.put("/users/password", editUserPasswordController);
+router
+  .get("/users/validate/:registrationCode", validateUserController)
+  .post("/users/login", loginUserController)
+  .put("/users/password", editUserPasswordController)
+  .post("/event", authAdmin, createEventAdminController)
+  .post("/event-registration", eventRegistrationController);
 
 export default router;

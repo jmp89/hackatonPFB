@@ -4,6 +4,7 @@ import errorHandler from "./errorHandler.js";
 import notFoundHandler from "./notFoundHandler.js";
 import userExists from "./userExists.js";
 import validator from "./validator.js";
+import authUser from "./authAdmin.js";
 
 export {
   authAdmin,
@@ -12,4 +13,5 @@ export {
   notFoundHandler,
   userExists,
   validator,
+  authUser,
 };

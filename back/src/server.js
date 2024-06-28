@@ -8,6 +8,7 @@ import { errorHandler, notFoundHandler } from "./middlewares/index.js";
 import fileUpload from "express-fileupload";
 const server = express();
 
+// Recursos estáticos
 const PUBLIC_FOLDER = path.join(process.cwd(), "public");
 server.use(express.static(PUBLIC_FOLDER));
 

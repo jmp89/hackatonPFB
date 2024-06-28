@@ -3,12 +3,15 @@ import morgan from "morgan";
 import cors from "cors";
 import { jsonParser } from './middlewares/bodyParser.js';
 import routes from "./routes/index.js";
-
+import fileUpload from "express-fileupload";
 const server = express();
 
 server.use(morgan("dev"));
 server.use(cors());
 server.use(express.json()); //*como me hacia falta, ya lo pongo
+
+server.use(fileUpload());
+
 
 // Llamado a rutas
 server.get("/", (req, res) => {

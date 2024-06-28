@@ -1,6 +1,7 @@
 import express from "express";
 
 import {
+  userRegisterController,
   validateUserController,
   eventRegistrationController,
   loginUserController,
@@ -21,6 +22,7 @@ import listTechnologies from "../controllers/entries/technologyListController.js
 const router = express.Router();
 
 router
+  .post("/users/register", userRegisterController)
   .get("/users/validate/:registrationCode", validateUserController)
   .post("/users/login", loginUserController)
   .put("/users/password", editUserPasswordController)

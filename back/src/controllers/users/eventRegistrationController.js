@@ -1,8 +1,18 @@
 import selectEventByCode from "../../services/users/selectEventByCode.js";
 import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
+import Joi from "joi";
 
 const eventRegistrationController = async (req, res, next) => {
+  const eventRegistrationSchema = Joi.object({
+    codigo: Joi.string().required(),
+  });
+
   try {
+    const { error } = eventRegistrationSchema.validate(req.body);
+    if (error) {
+      return res.status(400).send(error.message);
+    }
+
     const { codigo } = req.body;
 
     const evento = await selectEventByCode(codigo);

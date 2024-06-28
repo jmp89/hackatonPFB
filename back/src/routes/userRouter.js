@@ -15,6 +15,7 @@ import {
   authAdmin,
 } from "../middlewares/index.js";
 import uploadFiles from "../middlewares/uploadFiles.js";
+
 import listTechnologies from "../controllers/entries/technologyListController.js";
 
 const router = express.Router();
@@ -25,6 +26,7 @@ router
   .put("/users/password", editUserPasswordController)
   .post("/event", authAdmin, createEventAdminController)
   .post("/event/register", eventRegistrationController);
+
 
 router.post("/validate", validateUserController);
 

@@ -15,6 +15,7 @@ import {
   authAdmin,
 } from "../middlewares/index.js";
 import uploadFiles from "../middlewares/uploadFiles.js";
+import listTechnologies from "../controllers/entries/technologyListController.js";
 
 
 const router = express.Router();
@@ -32,6 +33,7 @@ router
   .post("/event-registration", eventRegistrationController);
 
 router.post('/upload', uploadFiles);
+router.get('/tecnologias',listTechnologies)
 
 
 export default router;

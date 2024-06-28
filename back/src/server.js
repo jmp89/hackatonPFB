@@ -4,7 +4,6 @@ import cors from "cors";
 import routes from "./routes/index.js";
 
 import {
-  bodyParser,
   errorHandler,
   notFoundHandler,
 } from "./middlewares/index.js";
@@ -21,9 +20,6 @@ server.get("/", (req, res) => {
 });
 
 server.use("/", routes);
-
-// Middleware de parseo del body
-server.use(bodyParser);
 
 // Middleware de manejo de errores
 server.use(errorHandler);

@@ -1,5 +1,4 @@
 import express from "express";
-
 import entriesRouter from "./entriesRouter.js";
 import userRouter from "./userRouter.js";
 

@@ -2,20 +2,20 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import routes from "./routes/index.js";
+import path from "path";
 
-import {
-  errorHandler,
-  notFoundHandler,
-} from "./middlewares/index.js";
+import { errorHandler, notFoundHandler } from "./middlewares/index.js";
 import fileUpload from "express-fileupload";
 const server = express();
+
+const PUBLIC_FOLDER = path.join(process.cwd(), "public");
+server.use(express.static(PUBLIC_FOLDER));
 
 server.use(morgan("dev"));
 server.use(cors());
 server.use(express.json()); //*como me hacia falta, ya lo pongo
 
 server.use(fileUpload());
-
 
 // Llamado a rutas
 server.get("/", (req, res) => {

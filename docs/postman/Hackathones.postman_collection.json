@@ -1,0 +1,385 @@
+{
+	"info": {
+		"_postman_id": "fafc810a-b3b1-4e5c-a230-de2ef5974daf",
+		"name": "Hackathones",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33783589"
+	},
+	"item": [
+		{
+			"name": "event",
+			"item": [
+				{
+					"name": "(En proceso)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"usuarios\": \"UsuarioTEST\",\r\n    \"equipos\": \"EquipoTEST\",\r\n    \"proyectos\": \"ProyectoTEST\",\r\n    \"participaciones\": \"ParticipacionesTEST\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}:3001/event",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"port": "3001",
+							"path": [
+								"event"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "event/register",
+			"item": [
+				{
+					"name": "Te has inscrito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": \"code1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}:3001/event/register",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"port": "3001",
+							"path": [
+								"event",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(Error) Evento NO encontrado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": \"ASDASDASD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}:3001/event/register",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"port": "3001",
+							"path": [
+								"event",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(Error) Fallo validación (Joi)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 123\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}:3001/event/register",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"port": "3001",
+							"path": [
+								"event",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "entries/search",
+			"item": [
+				{
+					"name": "Búsqueda",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_BASE}}:3001/entries/search?filtro=pru&sort=nombre",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"port": "3001",
+							"path": [
+								"entries",
+								"search"
+							],
+							"query": [
+								{
+									"key": "filtro",
+									"value": "pru"
+								},
+								{
+									"key": "sort",
+									"value": "nombre"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Error (sin parametros)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_BASE}}:3001/entries/search",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"port": "3001",
+							"path": [
+								"entries",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "entries/:eventID",
+			"item": [
+				{
+					"name": "Evento con ID 1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_BASE}}:3001/entries/1",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"port": "3001",
+							"path": [
+								"entries",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(Error) No se encontró el evento (id 999)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_BASE}}:3001/entries/1",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"port": "3001",
+							"path": [
+								"entries",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users/validate",
+			"item": [
+				{
+					"name": "Validate usuario no registrado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"user@user.com\",\r\n    \"contraseña\": \"blablabla\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}:3001/validate",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"port": "3001",
+							"path": [
+								"validate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validate user admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"contraseña\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}:3001/validate",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"port": "3001",
+							"path": [
+								"validate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users/login",
+			"item": [
+				{
+					"name": "Login admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"contraseña\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}:3001/users/login",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users/password",
+			"item": [
+				{
+					"name": "(En proceso)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"\",\r\n    \"recoverPassCode\": \"\",\r\n    \"newPassword\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}:3001/users/password",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "upload",
+			"item": [
+				{
+					"name": "(En proceso)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "asdasd",
+									"type": "file",
+									"src": "/C:/Users/juanm/Documents/Desarrollo/Proyectos/hackatonPFB/back/uploads/descarga.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL_BASE}}:3001/upload",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"port": "3001",
+							"path": [
+								"upload"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

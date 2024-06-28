@@ -3,17 +3,28 @@ import express from "express";
 import {
   validateUserController,
   eventRegistrationController,
+  loginUserController,
+  editUserPasswordController,
+  createEventAdminController,
 } from "../controllers/users/index.js";
-import {createEventAdminController} from "../controllers/users/index.js";
-import authAdmin from "../middlewares/authAdmin.js";
+
+import {
+  userExists,
+  authUser,
+  validator,
+  authAdmin,
+} from "../middlewares/index.js";
 import uploadFiles from "../middlewares/uploadFiles.js";
 
 
 const router = express.Router();
 
-router.post("/validate", validateUserController);
-
-router.post("/event", authAdmin, createEventAdminController)
+router
+  .get("/users/validate/:registrationCode", validateUserController)
+  .post("/users/login", loginUserController)
+  .put("/users/password", editUserPasswordController)
+  .post("/event", authAdmin, createEventAdminController)
+  .post("/event-registration", eventRegistrationController);
 
 router
   .post("/validate", validateUserController)

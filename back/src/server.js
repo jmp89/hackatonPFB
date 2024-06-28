@@ -1,8 +1,12 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import { jsonParser } from './middlewares/bodyParser.js';
 import routes from "./routes/index.js";
+
+import {
+  errorHandler,
+  notFoundHandler,
+} from "./middlewares/index.js";
 import fileUpload from "express-fileupload";
 const server = express();
 
@@ -18,25 +22,12 @@ server.get("/", (req, res) => {
   res.send("El servidor está funcionando correctamente");
 });
 
-server.use('/', routes);
+server.use("/", routes);
 
-/**Middleware de manejo de errores */
-server.use((error, req, res, next) => {
-  res.status(error.httpStatus || 500).send({
-    status: "error",
-    message: error.message,
-  });
-});
+// Middleware de manejo de errores
+server.use(errorHandler);
 
-/**Middleware de ruta no encontrada 404 */
-server.use((req, res) => {
-  res.status(404).send({
-    status: "error",
-    message: "Not found",
-  });
-});
-
-// Middleware de parseo del body
-server.use(jsonParser);
+// Middleware de ruta no encontrada 404
+server.use(notFoundHandler);
 
 export default server;

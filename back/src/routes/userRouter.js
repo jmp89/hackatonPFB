@@ -17,7 +17,6 @@ import {
 import uploadFiles from "../middlewares/uploadFiles.js";
 import listTechnologies from "../controllers/entries/technologyListController.js";
 
-
 const router = express.Router();
 
 router
@@ -25,15 +24,11 @@ router
   .post("/users/login", loginUserController)
   .put("/users/password", editUserPasswordController)
   .post("/event", authAdmin, createEventAdminController)
-  .post("/event-registration", eventRegistrationController);
+  .post("/event/register", eventRegistrationController);
 
-router
-  .post("/validate", validateUserController)
-  // Falta un middleware para verificar que el usuario está registrado
-  .post("/event-registration", eventRegistrationController);
+router.post("/validate", validateUserController);
 
-router.post('/upload', uploadFiles);
-router.get('/tecnologias',listTechnologies)
-
+router.post("/upload", uploadFiles);
+router.get("/tecnologias", listTechnologies);
 
 export default router;

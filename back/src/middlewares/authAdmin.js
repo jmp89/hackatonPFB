@@ -1,6 +1,6 @@
 import getPool from '../database/getPool.js';
 
-
+// falta crear la autenticacion de usuarios
 const authAdmin = async (req, res, next) => {
     const userId = req.userId;  // Asumiendo que userId está presente en req
   

@@ -7,12 +7,15 @@ import {
   errorHandler,
   notFoundHandler,
 } from "./middlewares/index.js";
-
+import fileUpload from "express-fileupload";
 const server = express();
 
 server.use(morgan("dev"));
 server.use(cors());
 server.use(express.json()); //*como me hacia falta, ya lo pongo
+
+server.use(fileUpload());
+
 
 // Llamado a rutas
 server.get("/", (req, res) => {

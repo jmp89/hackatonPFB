@@ -91,7 +91,7 @@ const initDB = async () => {
 
     console.log("Tablas creadas!");
 
-    console.log("Creando usuario admin");
+    console.log("Creando usuario admin...");
 
     await pool.query(`
       INSERT INTO usuarios (nombre, email, contraseña, role) 
@@ -99,17 +99,12 @@ const initDB = async () => {
     `);
 
     console.log("Usuario admin creado!");
+    console.log("Cerrando la conexión.");
 
-    // CREAMOS UN EVENTO DE PRUEBA
-    await pool.query(`
-      INSERT INTO eventos (nombre, tematica, codigo_reserva) 
-      VALUES ('nombrePrueba', 'tematicaPrueba', 'code1')
-    `);
-
-    console.log("Evento de prueba creado!");
     process.exit(0);
   } catch (error) {
     console.log(error);
+    process.exit(1);
   }
 };
 

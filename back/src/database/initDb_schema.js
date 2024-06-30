@@ -51,14 +51,14 @@ const initDB = async () => {
     await pool.query(`
             CREATE TABLE eventos (
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                tecnologia VARCHAR(100),
-                online_presencial BOOLEAN DEFAULT TRUE,
+                tecnologia VARCHAR(100) NOT NULL,
+                online_presencial ENUM("online", "presencial") NOT NULL,
                 ciudad VARCHAR(255),
-                rango_fechas DATE,  -- Cambiado DATERANGE a DATE
+                rango_fechas DATE NOT NULL,  -- Cambiado DATERANGE a DATE
                 tematica VARCHAR(255) NOT NULL,
                 nombre VARCHAR(255) NOT NULL,
+                descripcion TEXT,
                 organizador INT,
-                codigo_reserva VARCHAR(255),
                 rating TINYINT,
                 fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -70,9 +70,13 @@ const initDB = async () => {
             CREATE TABLE participa (
                 usuario_id INT,
                 evento_id INT,
+                codigo_reserva VARCHAR(255),
+                active BOOLEAN DEFAULT false,
                 PRIMARY KEY (usuario_id, evento_id),
                 FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-                FOREIGN KEY (evento_id) REFERENCES eventos(id)
+                FOREIGN KEY (evento_id) REFERENCES eventos(id),
+                fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             )
     `);
 

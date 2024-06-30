@@ -21,6 +21,19 @@ const eventRegistrationController = async (req, res, next) => {
     inscriptionToEvent(id, eventID, eventCode);
 
     const pool = await getPool();
+
+    const [[eventInfo]] = await pool.query(
+      `
+        SELECT nombre, descripcion
+        FROM eventos
+        WHERE id = ?
+      `,
+      [eventID]
+    );
+
+    console.log("/////////////////////");
+    console.log(eventInfo.nombre);
+
     const [email] = await pool.query(
       `
       SELECT email
@@ -31,7 +44,7 @@ const eventRegistrationController = async (req, res, next) => {
     );
     const finalEmail = email[0].email;
 
-    const emailSubject = `Confirma tu inscripción`;
+    const emailSubject = `Confirma tu inscripción en ${eventInfo.nombre}`;
 
     const emailBody = `
             Gracias por enviarnos tu solicitud,
@@ -40,6 +53,11 @@ const eventRegistrationController = async (req, res, next) => {
 
             <a href="http://localhost:3001/event/confirm/${eventCode}">¡Apúntate!</a>
 
+            <h2>Descripción del evento ${eventInfo.nombre}</h2>
+            
+            <p>${eventInfo.descripcion}</p>
+            
+            <hr />
             Hecho con ❤ por el equipo de Hackathon
     `;
 

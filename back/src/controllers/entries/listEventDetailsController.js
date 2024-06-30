@@ -9,17 +9,11 @@ const listEventDetailsController = async (req, res, next) => {
 
         const eventDetails = await getEventDetailsService(eventID);
 
-        if (eventDetails.length < 1){
+        if (eventDetails.length < 1 || eventDetails[0].nombre === null){
 
             const err = generateErrorsUtils("No se encontró el evento", 404);
             throw err;
         };
-
-        if (eventDetails[0].nombre === null){
-
-            const err = generateErrorsUtils("No se encontró el evento", 404);
-            throw err;
-        }
 
         res.send({
             status: 'ok',
@@ -31,7 +25,7 @@ const listEventDetailsController = async (req, res, next) => {
     } catch (error) {
         
         next(error);
-    }
+    };
 };
 
 export default listEventDetailsController;

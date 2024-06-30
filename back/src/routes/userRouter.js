@@ -1,12 +1,11 @@
 import express from "express";
+import Joi from "joi";
 
 import {
   userRegisterController,
   validateUserController,
-  eventRegistrationController,
   loginUserController,
   editUserPasswordController,
-  createEventAdminController,
 } from "../controllers/users/index.js";
 
 import {
@@ -26,13 +25,8 @@ router
   .get("/users/validate/:registrationCode", validateUserController)
   .post("/users/login", loginUserController)
   .put("/users/password", editUserPasswordController)
-  .post("/event", authAdmin, createEventAdminController)
-  .post("/event/register", eventRegistrationController);
-
-
-router.post("/validate", validateUserController);
-
-router.post("/upload", uploadFiles);
-router.get("/tecnologias", listTechnologies);
+  .post("/validate", validateUserController)
+  .post("/upload", uploadFiles)
+  .get("/tecnologias", listTechnologies);
 
 export default router;

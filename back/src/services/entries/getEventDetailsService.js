@@ -4,7 +4,7 @@ const getEventDetailsService = async (eventID) => {
 
     const pool = await getPool();
 
-    const eventDetails = await pool.query(`
+        const eventDetails = await pool.query(`
             SELECT e.nombre,
             e.tecnologia,
             e.online_presencial AS modalidad,
@@ -20,8 +20,9 @@ const getEventDetailsService = async (eventID) => {
             LEFT JOIN pertenece pe ON pe.evento_id = e.id
             WHERE e.id = ?
         `, [ eventID ]);
-
+    
     return eventDetails[0];
+
 };
 
 export default getEventDetailsService;

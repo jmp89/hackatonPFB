@@ -98,8 +98,8 @@ const initDB = async () => {
     console.log("Creando usuario admin...");
 
     await pool.query(`
-      INSERT INTO usuarios (nombre, email, contraseña, role) 
-      VALUES ('admin', 'admin@example.com', 'admin123', 'admin')
+      INSERT INTO usuarios (nombre, email, contraseña, role, active) 
+      VALUES ('admin', 'admin@example.com', 'admin123', 'admin', 1)
     `);
 
     console.log("Usuario admin creado!");

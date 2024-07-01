@@ -10,7 +10,7 @@ const initDb_data = async () => {
     await pool.query(`
                 INSERT INTO usuarios (nombre, email, contraseña, active)
                 VALUES
-                ("user01_test123", "user01@test.com", "$2b$10$81b3IBiTE3ISeyEBbCHwp.whmEzZkKN1pLuLarbyFzY7wMAHfoMxK", 1),
+                ("user01_test123", "juanmaciasperez89@gmail.com", "$2b$10$81b3IBiTE3ISeyEBbCHwp.whmEzZkKN1pLuLarbyFzY7wMAHfoMxK", 1),
                 ("user02_test321", "user02@test.com", "$2b$10$0WfVbW07bLFPwmt/qL7qQ.lNz9U5xadAoAw5sj5eQpNZ8E9bggCUK", 1),
                 ("user03_123test", "user03@test.com", "$2b$10$ghy3imG2g0Ms06E0jtUNG.W6X2fevVl86lnRTMZ2DoIQyGaXME7pW", 1),
                 ("user04_321test", "user04@test.com", "$2b$10$2oSdypiBYIPuGrfuY7/4lu9bHmU4umgzOZqOykHP2bE9Y/t9CcJOy", 1),
@@ -26,14 +26,14 @@ const initDb_data = async () => {
     console.log("Poblando tabla 'eventos'...");
 
     await pool.query(`
-                INSERT INTO eventos (tecnologia, online_presencial, ciudad, rango_fechas, tematica, nombre)
+                INSERT INTO eventos (tecnologia, online_presencial, ciudad, rango_fechas, tematica, nombre, descripcion)
                 VALUES
-                ("Python", 1, "A Coruña", "2024/05/22", "Coding Race", "Python Race Hackathon"),
-                ("JavaScript", 1, "A Coruña", "2024/08/13", "Gaming with JavaScript", "JSGaming"),
-                ("React", 1, "Madrid", "2024/07/24", "Top Developers", "Selecting best React developers"),
-                ("Next", 1, "Barcelona", "2024/02/05", "Coding Race", "App development Race with Next"),
-                ("Python", 1, "Madrid", "2024/11/17", "Coding", "Python AI development"),
-                ("JavaScript", 1, "Barcelona", "2024/06/08", "Coding Race", "API development with JS Race")
+                ("Python", 1, "A Coruña", "2024/05/22", "Coding Race", "Python Race Hackathon", "esta es la descripcion del evento 1"),
+                ("JavaScript", 1, "A Coruña", "2024/08/13", "Gaming with JavaScript", "JSGaming", "esta es la descripcion del evento 2"),
+                ("React", 1, "Madrid", "2024/07/24", "Top Developers", "Selecting best React developers", "esta es la descripcion del evento 3"),
+                ("Next", 1, "Barcelona", "2024/02/05", "Coding Race", "App development Race with Next", "esta es la descripcion del evento 4"),
+                ("Python", 1, "Madrid", "2024/11/17", "Coding", "Python AI development", "esta es la descripcion del evento 5"),
+                ("JavaScript", 1, "Barcelona", "2024/06/08", "Coding Race", "API development with JS Race", "esta es la descripcion del evento 6")
             `);
 
     console.log("Tabla 'eventos' poblada correctamente.");

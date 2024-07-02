@@ -25,7 +25,6 @@ router
   .get("/users/validate/:registrationCode", validateUserController)
   .post("/users/login", loginUserController)
   .put("/users/password", editUserPasswordController)
-  .post("/validate", validateUserController)
   .post("/upload", uploadFiles)
   .get("/tecnologias", listTechnologies);
 

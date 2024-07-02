@@ -13,7 +13,7 @@ const insertUserService = async (
 
   const [user] = await pool.query(
     `
-            SELECT id FROM usuarios WHERE email=?
+            SELECT id FROM users WHERE email=?
         `,
     [email]
   );

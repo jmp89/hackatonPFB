@@ -16,9 +16,9 @@ const updateUserPassService = async (email, recoverPassCode, newPassword) => {
 
   await pool.query(
     `
-            UPDATE usuarios
-            SET contraseña=?, recoverPassCode=null
-            WHERE recoverPassCode=?
+            UPDATE users
+            SET password=?, recover_pass_code=null
+            WHERE recover_pass_code=?
         `,
     [hashPassword, recoverPassCode]
   );

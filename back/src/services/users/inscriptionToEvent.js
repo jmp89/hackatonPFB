@@ -5,7 +5,7 @@ const inscriptionToEvent = async (userId, eventId, eventCode) => {
     const pool = await getPool();
     const [code] = await pool.query(
       `
-      INSERT INTO participa (usuario_id, evento_id, codigo_reserva)
+      INSERT INTO participates (user_id, event_id, reservation_code)
       VALUES (?, ?, ?)
       `,
       [userId, eventId, eventCode]

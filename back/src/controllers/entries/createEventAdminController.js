@@ -4,14 +4,14 @@ import Joi from "joi";
 const createEventAdminController = async (req, res, next) => {
   try {
     const createEventAdminSchema = Joi.object({
-      nombre: Joi.string().required(),
-      tecnologia: Joi.string().required(),
-      online_presencial: Joi.string().required(),
-      ciudad: Joi.string().allow(null),
-      rango_fechas: Joi.date().required(),
-      tematica: Joi.string().required(),
-      organizador: Joi.number().integer().required(),
-      descripcion: Joi.string().min(15).max(255).required(),
+      name: Joi.string().required(),
+      technology: Joi.string().required(),
+      online_on_site: Joi.string().required(),
+      city: Joi.string().allow(null),
+      date_range: Joi.date().required(),
+      category: Joi.string().required(),
+      organizer: Joi.number().integer().required(),
+      description: Joi.string().min(15).max(255).required(),
     });
 
     const { error } = createEventAdminSchema.validate(req.body);
@@ -20,29 +20,29 @@ const createEventAdminController = async (req, res, next) => {
       throw generateErrorsUtils(error.message, 400);
     }
     const {
-      nombre,
-      tecnologia,
-      online_presencial,
-      ciudad,
-      rango_fechas,
-      tematica,
-      organizador,
-      descripcion,
+      name,
+      technology,
+      online_on_site,
+      city,
+      date_range,
+      category,
+      organizer,
+      description,
     } = req.body;
 
     if (
-      !nombre ||
-      !tecnologia ||
-      !online_presencial ||
-      !rango_fechas ||
-      !tematica ||
-      !descripcion
+      !name ||
+      !technology ||
+      !online_on_site ||
+      !date_range ||
+      !category ||
+      !description
     ) {
       const err = generateErrorsUtils("Faltan campos por rellenar.", 401);
       throw err;
     }
 
-    if (online_presencial === "presencial" && !ciudad) {
+    if (online_on_site === "presencial" && !city) {
       const err = generateErrorsUtils(
         "Se debe incluir una ciudad si el evento es presencial.",
         401
@@ -51,14 +51,14 @@ const createEventAdminController = async (req, res, next) => {
     }
 
     const eventInfo = {
-      nombre: nombre,
-      tecnologia: tecnologia,
-      online_presencial: online_presencial,
-      ciudad: ciudad,
-      rango_fechas: rango_fechas,
-      tematica: tematica,
-      organizador: organizador,
-      descripcion: descripcion,
+      name: name,
+      technology: technology,
+      online_on_site: online_on_site,
+      city: city,
+      date_range: date_range,
+      category: category,
+      organizer: organizer,
+      description: description,
     };
 
     await createEventAdminService(eventInfo);

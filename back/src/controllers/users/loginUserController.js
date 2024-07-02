@@ -8,7 +8,7 @@ const loginUserController = async (req, res, next) => {
   try {
     const loginUserControllerSchema = Joi.object({
       email: Joi.string().email().required(),
-      contraseña: Joi.string().required(),
+      password: Joi.string().required(),
     });
 
     const { error } = loginUserControllerSchema.validate(req.body);
@@ -17,9 +17,9 @@ const loginUserController = async (req, res, next) => {
       throw generateErrorsUtils(error.message, 400);
     }
 
-    const { email, contraseña } = req.body;
+    const { email, password } = req.body;
 
-    if (!email || !contraseña)
+    if (!email || !password)
       throw generateErrorsUtils("Se esperaba email o contraseña", 400);
 
     const user = await selectUserByEmailService(email);
@@ -27,7 +27,7 @@ const loginUserController = async (req, res, next) => {
     let validPassword;
 
     if (user) {
-      validPassword = await bcrypt.compare(contraseña, user.contraseña);
+      validPassword = await bcrypt.compare(password, user.password);
     }
 
     if (!user || !validPassword) {

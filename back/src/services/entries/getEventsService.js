@@ -7,21 +7,21 @@ const getEventsService = async (filter, sort, direction) => {
         
     let query = `
         SELECT e.id,
-        e.nombre,
-        e.tecnologia,
-        e.online_presencial,
-        e.ciudad,
-        e.organizador,
-        e.tematica,
-        e.rango_fechas,
+        e.name,
+        e.technology,
+        e.online_on_site,
+        e.city,
+        e.organizer,
+        e.category,
+        e.date_range,
         e.rating
-        FROM eventos e
+        FROM events e
     `;
     
     if (!filter){
     
         query += `
-            ORDER BY rango_fechas ASC
+            ORDER BY date_range ASC
         `;
     
         const eventsList = await pool.query(query);
@@ -32,15 +32,15 @@ const getEventsService = async (filter, sort, direction) => {
     if (filter){
     
         query += `
-            WHERE e.nombre LIKE ?
-            OR e.tecnologia LIKE ?
-            OR e.online_presencial LIKE ?
-            OR e.organizador LIKE ?
-            OR e.tematica LIKE ?
+            WHERE e.name LIKE ?
+            OR e.technology LIKE ?
+            OR e.online_on_site LIKE ?
+            OR e.organizer LIKE ?
+            OR e.category LIKE ?
         `
     };
     
-    const validSort = [ "nombre", "tecnologia", "online_presencial", "organizador", "tematica" ];
+    const validSort = [ "name", "technology", "online_on_site", "organizer", "category" ];
     const validDirection = [ "ASC", "DESC" ];
     
     if (sort && !validSort.includes(sort)){

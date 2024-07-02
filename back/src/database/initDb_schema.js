@@ -17,79 +17,79 @@ const initDB = async () => {
     console.log("Borrando tablas...");
 
     await pool.query(
-      "DROP TABLE IF EXISTS Participa, Pertenece, Eventos, Equipos, Usuarios"
+      "DROP TABLE IF EXISTS participates, member_of, events, teams, users"
     );
 
     console.log("Creando tablas...");
 
     await pool.query(`
-            CREATE TABLE usuarios (
+            CREATE TABLE users (
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                nombre VARCHAR(100) NOT NULL,
+                name VARCHAR(100) NOT NULL,
                 email VARCHAR(100) UNIQUE NOT NULL,
-                contraseña VARCHAR(100) NOT NULL,
+                password VARCHAR(100) NOT NULL,
                 avatar VARCHAR(100) DEFAULT NULL,
                 active BOOLEAN DEFAULT false,
                 role ENUM('admin', 'normal') DEFAULT 'normal',
-                registrationCode CHAR(30),
-                recoverPassCode CHAR(10),
-                fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                registration_code CHAR(30),
+                recover_pass_code CHAR(10),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             )
     `);
 
     await pool.query(`
-            CREATE TABLE equipos (
+            CREATE TABLE teams (
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                nombre VARCHAR(100) NOT NULL,
-                descripcion TEXT,
-                fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                name VARCHAR(100) NOT NULL,
+                description TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             )
     `);
 
     await pool.query(`
-            CREATE TABLE eventos (
+            CREATE TABLE events (
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                tecnologia VARCHAR(100) NOT NULL,
-                online_presencial ENUM("online", "presencial") NOT NULL,
-                ciudad VARCHAR(255),
-                rango_fechas DATE NOT NULL,  -- Cambiado DATERANGE a DATE
-                tematica VARCHAR(255) NOT NULL,
-                nombre VARCHAR(255) NOT NULL,
-                descripcion TEXT,
-                organizador INT,
+                name VARCHAR(255) NOT NULL,
+                technology VARCHAR(100) NOT NULL,
+                online_on_site ENUM("online", "on_site") DEFAULT 'online' NOT NULL,
+                city VARCHAR(255),
+                date_range DATE NOT NULL,  -- Cambiado DATERANGE a DATE
+                category VARCHAR(255) NOT NULL,
+                description TEXT,
+                organizer INT,
                 rating TINYINT,
-                fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                FOREIGN KEY (organizador) REFERENCES usuarios(id)
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                FOREIGN KEY (organizer) REFERENCES users(id)
             )
     `);
 
     await pool.query(`
-            CREATE TABLE participa (
-                usuario_id INT,
-                evento_id INT,
-                codigo_reserva VARCHAR(255),
+            CREATE TABLE participates (
+                user_id INT,
+                event_id INT,
+                reservation_code VARCHAR(255),
                 active BOOLEAN DEFAULT false,
-                PRIMARY KEY (usuario_id, evento_id),
-                FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-                FOREIGN KEY (evento_id) REFERENCES eventos(id),
-                fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                PRIMARY KEY (user_id, event_id),
+                FOREIGN KEY (user_id) REFERENCES users(id),
+                FOREIGN KEY (event_id) REFERENCES events(id),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                mofified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             )
     `);
 
     await pool.query(`
-            CREATE TABLE pertenece (
-                usuario_id INT,
-                equipo_id INT,
-                evento_id INT,
-                PRIMARY KEY (usuario_id, equipo_id, evento_id),
-                FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-                FOREIGN KEY (equipo_id) REFERENCES equipos(id),
-                FOREIGN KEY (evento_id) REFERENCES eventos(id),
-                UNIQUE (usuario_id, evento_id)
+            CREATE TABLE member_of (
+                user_id INT,
+                team_id INT,
+                event_id INT,
+                PRIMARY KEY (user_id, team_id, event_id),
+                FOREIGN KEY (user_id) REFERENCES users(id),
+                FOREIGN KEY (team_id) REFERENCES teams(id),
+                FOREIGN KEY (event_id) REFERENCES events(id),
+                UNIQUE (user_id, event_id)
             )
     `);
 
@@ -98,7 +98,7 @@ const initDB = async () => {
     console.log("Creando usuario admin...");
 
     await pool.query(`
-      INSERT INTO usuarios (nombre, email, contraseña, role, active) 
+      INSERT INTO users (name, email, password, role, active) 
       VALUES ('admin', 'admin@example.com', '$2b$10$uRV5tpsAM4lrZDVM2L/cQeaycXQr6GYcsybzcsxZ6Nj3GZCW3IdJ6', 'admin', 1)
     `);
 

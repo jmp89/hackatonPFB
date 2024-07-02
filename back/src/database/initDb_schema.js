@@ -99,7 +99,7 @@ const initDB = async () => {
 
     await pool.query(`
       INSERT INTO usuarios (nombre, email, contraseña, role, active) 
-      VALUES ('admin', 'admin@example.com', 'admin123', 'admin', 1)
+      VALUES ('admin', 'admin@example.com', '$2b$10$uRV5tpsAM4lrZDVM2L/cQeaycXQr6GYcsybzcsxZ6Nj3GZCW3IdJ6', 'admin', 1)
     `);
 
     console.log("Usuario admin creado!");

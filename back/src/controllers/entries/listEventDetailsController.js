@@ -9,7 +9,7 @@ const listEventDetailsController = async (req, res, next) => {
 
         const eventDetails = await getEventDetailsService(eventID);
 
-        if (eventDetails.length < 1 || eventDetails[0].nombre === null){
+        if (eventDetails.length < 1 || eventDetails[0].name === null){
 
             const err = generateErrorsUtils("No se encontró el evento", 404);
             throw err;

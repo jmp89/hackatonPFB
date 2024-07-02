@@ -36,7 +36,7 @@ const eventRegistrationController = async (req, res, next) => {
 
     const [[eventInfo]] = await pool.query(
       `
-        SELECT nombre, descripcion
+        SELECT name, description
         FROM eventos
         WHERE id = ?
       `,
@@ -46,14 +46,14 @@ const eventRegistrationController = async (req, res, next) => {
     const [email] = await pool.query(
       `
       SELECT email
-      FROM usuarios
+      FROM users
       WHERE id = ?
       `,
       [id]
     );
     const finalEmail = email[0].email;
 
-    const emailSubject = `Confirma tu inscripción en ${eventInfo.nombre}`;
+    const emailSubject = `Confirma tu inscripción en ${eventInfo.name}`;
 
     const emailBody = `
             Gracias por enviarnos tu solicitud, a continuación te mostramos un poco de qué va este Hackathon con más detalle:
@@ -61,9 +61,9 @@ const eventRegistrationController = async (req, res, next) => {
             
 
             
-            <h2>¿De qué va ${eventInfo.nombre}?</h2>
+            <h2>¿De qué va ${eventInfo.name}?</h2>
             
-            <p>${eventInfo.descripcion}</p>
+            <p>${eventInfo.description}</p>
             
             Haz click en el siguiente botón para confirmar la inscripción.
 

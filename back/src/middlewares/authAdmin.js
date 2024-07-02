@@ -1,27 +1,27 @@
-import getPool from '../database/getPool.js';
+import jwt from "jsonwebtoken";
+import generateErrorsUtils from "../utils/generateErrorsUtils.js";
+import "dotenv/config";
 
-// falta crear la autenticacion de usuarios
 const authAdmin = async (req, res, next) => {
-    const userId = req.userId;  // Asumiendo que userId está presente en req
-  
-    if (!userId) {
-      return res.status(401).json({ message: 'Usuario no autenticado' });
-    }
-  
-    const pool = await getPool();
-  
+
     try {
-      const [rows] = await pool.query('SELECT es_admin FROM usuarios WHERE id = ?', [userId]);
-  
-      if (rows.length === 0 || !rows[0].es_admin) {
-        return res.status(403).json({ message: 'Acceso denegado: solo los administradores pueden realizar esta acción' });
-      }
-  
-      next();
+        
+        const token = req.headers["authorization"];
+        const { SECRET } = process.env;
+
+        const cleanedToken = jwt.verify(token, SECRET);
+
+        if (cleanedToken.role !== "admin"){
+
+            const err = generateErrorsUtils("Solamente un administrador puede crear un evento.", 403);
+            throw err;
+        };
+
+        next();
+
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error de servidor', error });
+        next(error);
     }
-  };
-  
-  export default authAdmin;
+};
+
+export default authAdmin;

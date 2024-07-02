@@ -5,26 +5,26 @@ const createEventAdminService = async (eventInfo) => {
 
   await pool.query(
     `
-            INSERT INTO eventos (
-                nombre,
-                tecnologia,
-                online_presencial,
-                ciudad,
-                rango_fechas,
-                tematica,
-                organizador,
-                descripcion
+            INSERT INTO events (
+                name,
+                technology,
+                online_on_site,
+                city,
+                date_range,
+                category,
+                organizer,
+                description
             ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
         `,
     [
-      eventInfo.nombre,
-      eventInfo.tecnologia,
-      eventInfo.online_presencial,
-      eventInfo.ciudad,
-      eventInfo.rango_fechas,
-      eventInfo.tematica,
-      eventInfo.organizador,
-      eventInfo.descripcion,
+      eventInfo.name,
+      eventInfo.technology,
+      eventInfo.online_on_site,
+      eventInfo.city,
+      eventInfo.date_range,
+      eventInfo.category,
+      eventInfo.organizer,
+      eventInfo.description,
     ]
   );
 };

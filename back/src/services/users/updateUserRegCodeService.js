@@ -6,7 +6,7 @@ const updateUserRegCodeService = async (registrationCode) => {
 
   const [user] = await pool.query(
     `
-            SELECT id FROM usuarios WHERE registrationCode=?
+            SELECT id FROM users WHERE registration_code=?
         `,
     [registrationCode]
   );
@@ -16,9 +16,9 @@ const updateUserRegCodeService = async (registrationCode) => {
 
   await pool.query(
     `
-            UPDATE usuarios
-            SET active=true, registrationCode=null
-            WHERE registrationCode=?
+            UPDATE users
+            SET active=true, registration_code=null
+            WHERE registration_code=?
         `,
     [registrationCode]
   );

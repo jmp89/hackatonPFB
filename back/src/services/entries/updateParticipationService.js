@@ -6,7 +6,7 @@ const updateParticipationService = async (eventCode) => {
 
   const [user] = await pool.query(
     `
-            SELECT usuario_id FROM participa WHERE codigo_reserva=?
+            SELECT user_id FROM participates WHERE reservation_code=?
         `,
     [eventCode]
   );
@@ -16,9 +16,9 @@ const updateParticipationService = async (eventCode) => {
 
   await pool.query(
     `
-            UPDATE participa
-            SET active=true, codigo_reserva=null
-            WHERE codigo_reserva=?
+            UPDATE participates
+            SET active=true, reservation_code=null
+            WHERE reservation_code=?
         `,
     [eventCode]
   );

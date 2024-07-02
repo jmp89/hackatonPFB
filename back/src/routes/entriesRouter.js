@@ -4,8 +4,8 @@ import listEventDetailsController from "../controllers/entries/listEventDetailsC
 import validateEventParticipationController from "../controllers/entries/validateEventParticipationController.js";
 import eventRegistrationController from "../controllers/entries/eventRegistrationController.js";
 import createEventAdminController from "../controllers/entries/createEventAdminController.js";
-import authAdminService from "../services/entries/authAdminService.js";
-import listEventTematicasController from "../controllers/entries/listEventTematicasController.js";
+import authAdmin from "../middlewares/authAdmin.js";
+import listEventCategoriesController from "../controllers/entries/listEventCategoriesController.js";
 
 const router = express.Router();
 
@@ -13,9 +13,9 @@ const router = express.Router();
 router
   .get("/entries/search", listEventsController)
   .get("/entries/:eventID", listEventDetailsController)
-  .post("/event", authAdminService, createEventAdminController)
+  .post("/event", authAdmin, createEventAdminController)
   .post("/event/register", eventRegistrationController)
   .get("/event/confirm/:eventCode", validateEventParticipationController)
-  .get("/event/tematicas", listEventTematicasController);
+  .get("/event/categories", listEventCategoriesController);
 
 export default router;

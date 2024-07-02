@@ -6,7 +6,7 @@ const eventUnlistService = async (id, eventID) => {
     const pool = await getPool();
 
     const eventRegister = await pool.query(`
-            SELECT * FROM participa WHERE usuario_id = ? AND evento_id = ?
+            SELECT * FROM participates WHERE user_id = ? AND event_id = ?
         `, [ id, eventID ]);
 
     if (eventRegister[0].length < 1){
@@ -15,7 +15,7 @@ const eventUnlistService = async (id, eventID) => {
     }
 
     await pool.query(`
-            DELETE FROM participa WHERE usuario_id = ? AND evento_id = ?
+            DELETE FROM participates WHERE user_id = ? AND event_id = ?
         `, [ id, eventID ]);
 };
 

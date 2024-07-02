@@ -5,10 +5,10 @@ const initDb_data = async () => {
     const pool = await getPool();
 
     console.log("Conexión establecida.");
-    console.log("Poblando tabla 'usuarios'...");
+    console.log("Poblando tabla 'users'...");
 
     await pool.query(`
-                INSERT INTO usuarios (nombre, email, contraseña, active)
+                INSERT INTO users (name, email, password, active)
                 VALUES
                 ("user01_test123", "juanmaciasperez89@gmail.com", "$2b$10$81b3IBiTE3ISeyEBbCHwp.whmEzZkKN1pLuLarbyFzY7wMAHfoMxK", 1),
                 ("user02_test321", "user02@test.com", "$2b$10$0WfVbW07bLFPwmt/qL7qQ.lNz9U5xadAoAw5sj5eQpNZ8E9bggCUK", 1),
@@ -22,11 +22,11 @@ const initDb_data = async () => {
                 ("user10_pass321", "user10@test.com", "$2b$10$LjitD6YxmKy.MzqB/zVehePco3GGxAh7h9Ack2vXAcfKSvRAxr/ce", 1)
             `);
 
-    console.log("Tabla 'usuarios' poblada correctamente.");
-    console.log("Poblando tabla 'eventos'...");
+    console.log("Tabla 'users' poblada correctamente.");
+    console.log("Poblando tabla 'events'...");
 
     await pool.query(`
-                INSERT INTO eventos (tecnologia, online_presencial, ciudad, rango_fechas, tematica, nombre, descripcion)
+                INSERT INTO events (technology, online_on_site, city, date_range, category, name, description)
                 VALUES
                 ("Python", 1, "A Coruña", "2024/05/22", "Coding Race", "Python Race Hackathon", "esta es la descripcion del evento 1"),
                 ("JavaScript", 1, "A Coruña", "2024/08/13", "Gaming with JavaScript", "JSGaming", "esta es la descripcion del evento 2"),
@@ -36,11 +36,11 @@ const initDb_data = async () => {
                 ("JavaScript", 1, "Barcelona", "2024/06/08", "Coding Race", "API development with JS Race", "esta es la descripcion del evento 6")
             `);
 
-    console.log("Tabla 'eventos' poblada correctamente.");
-    console.log("Poblando tabla 'participa'...");
+    console.log("Tabla 'events' poblada correctamente.");
+    console.log("Poblando tabla 'participates'...");
 
     await pool.query(`
-                INSERT INTO participa (usuario_id, evento_id, codigo_reserva)
+                INSERT INTO participates (user_id, event_id, reservation_code)
                 VALUES
                 (1, 1, NULL),
                 (3, 1, NULL),
@@ -74,11 +74,11 @@ const initDb_data = async () => {
                 (9, 6, NULL)
             `);
 
-    console.log("Tabla 'participa' poblada correctamente.");
-    console.log("Poblando tabla 'equipos'...");
+    console.log("Tabla 'participates' poblada correctamente.");
+    console.log("Poblando tabla 'teams'...");
 
     await pool.query(`
-                INSERT INTO equipos (nombre, descripcion)
+                INSERT INTO teams (name, description)
                 VALUES
                 ("Code Crusaders", "Innovadores en búsqueda de nuevas soluciones de software"),
                 ("Byte Busters", "Especialistas en depuración y optimización de código"),
@@ -94,11 +94,11 @@ const initDb_data = async () => {
                 ("Algorithm Avengers", "Creadores de algoritmos potentes y eficientes")
             `);
 
-    console.log("Tabla 'equipos' poblada correctamente.");
-    console.log("Poblando tabla 'pertenece'...");
+    console.log("Tabla 'teams' poblada correctamente.");
+    console.log("Poblando tabla 'member_of'...");
 
     await pool.query(`
-                INSERT INTO pertenece (usuario_id, equipo_id, evento_id)
+                INSERT INTO member_of (user_id, team_id, event_id)
                 VALUES
                 (1, 1, 1),
                 (3, 1, 1),
@@ -126,7 +126,7 @@ const initDb_data = async () => {
                 (8, 12, 6)
             `);
 
-    console.log("Tabla 'pertenece' poblada correctamente.");
+    console.log("Tabla 'member_of' poblada correctamente.");
     console.log("Cerrando la conexión.");
 
     process.exit(0);

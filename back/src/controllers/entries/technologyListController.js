@@ -7,17 +7,17 @@ const listTechnologies = async (req, res) => {
 
     // Consulta SQL para obtener las tecnologías distintas
     const query = `
-      SELECT DISTINCT tecnologia
-      FROM eventos;
+      SELECT DISTINCT technology
+      FROM events;
     `;
 
     // Ejecutar la consulta y obtener los resultados
     const [rows, fields] = await pool.query(query);
 
     // Extraer las tecnologías de los resultados
-    const tecnologias = rows.map(row => row.tecnologia);
+    const technologies = rows.map(row => row.tecnology);
 
-    res.json(tecnologias);
+    res.json(technologies);
   } catch (error) {
     console.error('Error al obtener las tecnologías:', error);
     res.status(500).json({ error: 'Error al obtener las tecnologías' });

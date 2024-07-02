@@ -8,8 +8,8 @@ const registerUserController = async (req, res, next) => {
       username: Joi.string().required(),
       email: Joi.string().email().required(),
       password: Joi.string()
-        // Caracteres permitidos: Alfanúmericos, mínimo 3 y máximo 30
-        .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+        // Caracteres permitidos: Alfanúmericos, mínimo 8 y máximo 30
+        .pattern(new RegExp("^[a-zA-Z0-9]{8,30}$"))
         .required(),
     });
     const { username, email, password } = req.body;
@@ -17,7 +17,7 @@ const registerUserController = async (req, res, next) => {
     const { error } = userRegisterSchema.validate(req.body);
 
     if (error) {
-      return res.status(400).send(error.message);
+      throw generateErrorsUtils(error.message, 400);
     }
 
     await insertUserService(username, email, password, registrationCode);

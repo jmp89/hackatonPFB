@@ -20,6 +20,7 @@ import listTechnologies from "../controllers/entries/technologyListController.js
 
 const router = express.Router();
 
+// Joi validado hasta /tecnologias, users/password por arreglar
 router
   .post("/users/register", userRegisterController)
   .get("/users/validate/:registrationCode", validateUserController)

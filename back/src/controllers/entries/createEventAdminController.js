@@ -1,8 +1,24 @@
 import createEventAdminService from "../../services/entries/createEventAdminService.js";
 import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
-
+import Joi from "joi";
 const createEventAdminController = async (req, res, next) => {
   try {
+    const createEventAdminSchema = Joi.object({
+      nombre: Joi.string().required(),
+      tecnologia: Joi.string().required(),
+      online_presencial: Joi.string().required(),
+      ciudad: Joi.string().allow(null),
+      rango_fechas: Joi.date().required(),
+      tematica: Joi.string().required(),
+      organizador: Joi.number().integer().required(),
+      descripcion: Joi.string().min(15).max(255).required(),
+    });
+
+    const { error } = createEventAdminSchema.validate(req.body);
+
+    if (error) {
+      throw generateErrorsUtils(error.message, 400);
+    }
     const {
       nombre,
       tecnologia,

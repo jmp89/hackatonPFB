@@ -2,9 +2,21 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 import selectUserByEmailService from "../../services/users/selectUserByEmailService.js";
+import Joi from "joi";
 
 const loginUserController = async (req, res, next) => {
   try {
+    const loginUserControllerSchema = Joi.object({
+      email: Joi.string().email().required(),
+      contraseña: Joi.string().required(),
+    });
+
+    const { error } = loginUserControllerSchema.validate(req.body);
+
+    if (error) {
+      throw generateErrorsUtils(error.message, 400);
+    }
+
     const { email, contraseña } = req.body;
 
     if (!email || !contraseña)

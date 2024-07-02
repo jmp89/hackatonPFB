@@ -5,11 +5,23 @@ import Randomstring from "randomstring";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import getPool from "../../database/getPool.js";
+import Joi from "joi";
 
 const { SECRET } = process.env;
 
 const eventRegistrationController = async (req, res, next) => {
   try {
+    // Validacion Joi
+    const eventRegistrationControllerSchema = Joi.object({
+      eventID: Joi.number().positive.integer.required(),
+    });
+
+    const { error } = eventRegistrationControllerSchema.validate(req.body);
+
+    if (error) {
+      throw generateErrorsUtils(error.message, 400);
+    }
+
     const eventCode = Randomstring.generate(10);
     const { eventID } = req.body;
     const auth = req.headers["authorization"];

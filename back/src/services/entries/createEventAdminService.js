@@ -1,10 +1,10 @@
 import getPool from "../../database/getPool.js";
 
 const createEventAdminService = async (eventInfo) => {
+  const pool = await getPool();
 
-    const pool = await getPool();
-
-    await pool.query(`
+  await pool.query(
+    `
             INSERT INTO eventos (
                 nombre,
                 tecnologia,
@@ -12,17 +12,21 @@ const createEventAdminService = async (eventInfo) => {
                 ciudad,
                 rango_fechas,
                 tematica,
-                organizador
-            ) VALUES ( ?, ?, ?, ?, ?, ?, ? )
-        `,[
-            eventInfo.nombre,
-            eventInfo.tecnologia,
-            eventInfo.online_presencial,
-            eventInfo.ciudad,
-            eventInfo.rango_fechas,
-            eventInfo.tematica,
-            eventInfo.organizador
-        ]);
+                organizador,
+                descripcion
+            ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
+        `,
+    [
+      eventInfo.nombre,
+      eventInfo.tecnologia,
+      eventInfo.online_presencial,
+      eventInfo.ciudad,
+      eventInfo.rango_fechas,
+      eventInfo.tematica,
+      eventInfo.organizador,
+      eventInfo.descripcion,
+    ]
+  );
 };
 
 export default createEventAdminService;

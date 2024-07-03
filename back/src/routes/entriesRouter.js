@@ -6,13 +6,10 @@ import eventRegistrationController from "../controllers/entries/eventRegistratio
 import createEventAdminController from "../controllers/entries/createEventAdminController.js";
 import authAdmin from "../middlewares/authAdmin.js";
 import listEventCategoriesController from "../controllers/entries/listEventCategoriesController.js";
-<<<<<<< Updated upstream
 import initiatePasswordRecoveryController from "../controllers/users/initiatePasswordRecoveryController.js";
 import resetPasswordController from "../controllers/users/resetPasswordController.js";
-=======
 import eventUnlistController from "../controllers/entries/eventUnlistController.js";
 import authUser from "../middlewares/authUser.js";
->>>>>>> Stashed changes
 
 const router = express.Router();
 

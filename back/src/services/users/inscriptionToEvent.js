@@ -1,19 +1,29 @@
 import getPool from "../../database/getPool.js";
+import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 
 const inscriptionToEvent = async (userId, eventId, eventCode) => {
-  try {
+
     const pool = await getPool();
-    const [code] = await pool.query(
+
+    const [[alreadyParticipating]] = await pool.query(`
+        SELECT user_id, event_id
+        FROM participates
+        WHERE user_id = ? AND event_id = ?
+      `, [ userId, eventId ])
+
+      if (alreadyParticipating){
+
+        throw generateErrorsUtils("El usuario ya está inscrito en este evento.", 401);
+      }
+
+    await pool.query(
       `
       INSERT INTO participates (user_id, event_id, reservation_code)
       VALUES (?, ?, ?)
       `,
       [userId, eventId, eventCode]
     );
-  } catch (error) {
-    console.error("Error en inscriptionToEvent:", error);
-    throw error;
-  }
+
 };
 
 export default inscriptionToEvent;

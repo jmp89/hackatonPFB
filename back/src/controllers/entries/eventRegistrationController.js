@@ -40,7 +40,7 @@ const eventRegistrationController = async (req, res, next) => {
     }
     // Validacion Joi
 
-    inscriptionToEvent(id, eventID, eventCode);
+    await inscriptionToEvent(id, eventID, eventCode);
 
     const [[eventInfo]] = await pool.query(
       `

@@ -13,7 +13,7 @@ const eventRegistrationController = async (req, res, next) => {
   try {
     // Validacion Joi
     const eventRegistrationControllerSchema = Joi.object({
-      eventID: Joi.number().positive.integer.required(),
+      eventID: Joi.number().positive().integer().required(),
     });
 
     const { error } = eventRegistrationControllerSchema.validate(req.body);

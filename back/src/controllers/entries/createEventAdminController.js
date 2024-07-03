@@ -42,7 +42,7 @@ const createEventAdminController = async (req, res, next) => {
       throw err;
     }
 
-    if (online_on_site === "presencial" && !city) {
+    if (online_on_site === "on_site" && !city) {
       const err = generateErrorsUtils(
         "Se debe incluir una ciudad si el evento es presencial.",
         401

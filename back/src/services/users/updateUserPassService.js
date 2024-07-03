@@ -3,13 +3,13 @@ import getPool from "../../database/getPool.js";
 import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 import selectUserByEmailService from "./selectUserByEmailService.js";
 
-const updateUserPassService = async (email, recoverPassCode, newPassword) => {
+const updateUserPassService = async (email, oldPassword, newPassword) => {
   const pool = await getPool();
 
   const user = await selectUserByEmailService(email);
 
-  if (!user || user.recoverPassCode !== recoverPassCode) {
-    throw generateErrorsUtils("Email o codigo de recuperación incorrecto", 409);
+  if (!user || !bcrypt.compare(oldPassword, user.password)) {
+    throw generateErrorsUtils("Las contraseñas no coinciden", 409);
   }
 
   const hashPassword = await bcrypt.hash(newPassword, 10);
@@ -17,10 +17,10 @@ const updateUserPassService = async (email, recoverPassCode, newPassword) => {
   await pool.query(
     `
             UPDATE users
-            SET password=?, recover_pass_code=null
-            WHERE recover_pass_code=?
+            SET password=?
+            WHERE email=?
         `,
-    [hashPassword, recoverPassCode]
+    [hashPassword, email]
   );
 };
 

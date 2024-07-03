@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "fafc810a-b3b1-4e5c-a230-de2ef5974daf",
+		"_postman_id": "c704be99-fce1-4deb-adb0-3990ac557ab3",
 		"name": "Hackathones",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "33783589"
@@ -18,7 +18,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/entries/search?filter=race&sort=nombre&direction=desc",
+									"raw": "{{URL_BASE}}:3001/entries/search?filter=race&sort=name&direction=desc",
 									"host": [
 										"{{URL_BASE}}"
 									],
@@ -34,7 +34,7 @@
 										},
 										{
 											"key": "sort",
-											"value": "nombre"
+											"value": "name"
 										},
 										{
 											"key": "direction",
@@ -46,7 +46,7 @@
 							"response": []
 						},
 						{
-							"name": "Listado últimas entradas (sin parametros)",
+							"name": "Listado (sin parametros)",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -126,7 +126,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n      \"nombre\": \"Hackathon Python Trainee\",\r\n      \"tecnologia\": \"Python\",\r\n      \"online_presencial\": \"online\",\r\n      \"ciudad\": \"\",\r\n      \"rango_fechas\": \"2025/07/01\",\r\n      \"tematica\": \"Iniciacion a programación\",\r\n      \"organizador\": 1,\r\n      \"descripcion\": \"Esta es una descripcion para este nuevo evento\"\r\n}",
+									"raw": "{\r\n      \"name\": \"Hackathon Python Trainee\",\r\n      \"technology\": \"Python\",\r\n      \"online_on_site\": \"online\",\r\n      \"city\": null,\r\n      \"date_range\": \"2025/07/01\",\r\n      \"category\": \"Iniciacion a programación\",\r\n      \"organizer\": 1,\r\n      \"description\": \"Esta es una descripcion para este nuevo evento\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -160,7 +160,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n      \"nombre\": \"Hackathon Python Trainee\",\r\n      \"tecnologia\": \"Python\",\r\n      \"online_presencial\": \"online\",\r\n      \"ciudad\": \"\",\r\n      \"rango_fechas\": \"2025/07/01\",\r\n      \"tematica\": \"Iniciacion a programación\",\r\n      \"organizador\": 1,\r\n      \"descripcion\": \"Esta es una descripcion para este nuevo evento\"\r\n}",
+									"raw": "{\r\n      \"nombre\": \"Hackathon Python Trainee\",\r\n      \"tecnologia\": \"Python\",\r\n      \"online_presencial\": \"online\",\r\n      \"ciudad\": null,\r\n      \"rango_fechas\": \"2025/07/01\",\r\n      \"tematica\": \"Iniciacion a programación\",\r\n      \"organizador\": 1,\r\n      \"descripcion\": \"Esta es una descripcion para este nuevo evento\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -192,14 +192,13 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6Im5vcm1hbCIsImlhdCI6MTcxOTc2NTU3MSwiZXhwIjoxNzIwMzcwMzcxfQ.uVpiHklG0G6eWLFFZABdACJ-BjcJ8XL1_nVZt_Lyyms",
-										"description": "user: user01@test.com",
+										"value": "{{TOKEN_USER}}",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"eventID\": 4\r\n}",
+									"raw": "{\r\n    \"eventID\": 1\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -224,10 +223,16 @@
 							"name": "(Error) Evento NO encontrado",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN_USER}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"codigo\": \"ASDASDASD\"\r\n}",
+									"raw": "{\r\n    \"eventID\": 999\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -252,10 +257,16 @@
 							"name": "(Error) Fallo validación (Joi)",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN_USER}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"codigo\": 123\r\n}",
+									"raw": "{\r\n    \"MeLoInvento\": 123\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -271,6 +282,45 @@
 									"path": [
 										"event",
 										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "event/unlist",
+					"item": [
+						{
+							"name": "Borrar inscripcion",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN_USER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"eventID\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}:3001/event/unlist",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"port": "3001",
+									"path": [
+										"event",
+										"unlist"
 									]
 								}
 							},
@@ -320,7 +370,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/event/confirm/testCode",
+									"raw": "{{URL_BASE}}:3001/event/confirm/123132",
 									"host": [
 										"{{URL_BASE}}"
 									],
@@ -328,7 +378,7 @@
 									"path": [
 										"event",
 										"confirm",
-										"testCode"
+										"123132"
 									]
 								}
 							},
@@ -337,22 +387,29 @@
 					]
 				},
 				{
-					"name": "/event/tematicas",
+					"name": "/event/categories",
 					"item": [
 						{
-							"name": "Listado de tematicas",
+							"name": "Listado de categorias",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN_USER}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/event/tematicas",
+									"raw": "{{URL_BASE}}:3001/event/categories",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"event",
-										"tematicas"
+										"categories"
 									]
 								}
 							},
@@ -378,7 +435,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\": \"John\",\r\n    \"email\": \"j.uanmaciasperez89@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+									"raw": "{\r\n    \"username\": \"John\",\r\n    \"email\": \"usuario@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -467,7 +524,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"user02@test.com\",\r\n    \"contraseña\": \"test321\"\r\n}",
+									"raw": "{\r\n    \"email\": \"user02@test.com\",\r\n    \"password\": \"test321\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -495,7 +552,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"contraseña\": \"admin123\"\r\n}",
+									"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"password\": \"admin123\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -523,7 +580,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"ADSAFASD\",\r\n    \"contraseña\": \"ASDASDasd\"\r\n}",
+									"raw": "{\r\n    \"email\": \"ADSAFASD@email.com\",\r\n    \"password\": \"ASDASDasd\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -547,16 +604,22 @@
 					]
 				},
 				{
-					"name": "users/password",
+					"name": "users/edit-password",
 					"item": [
 						{
-							"name": "(En proceso)",
+							"name": "Cambio de password",
 							"request": {
 								"method": "PUT",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN_USER}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"user03@test.com\",\r\n    \"recoverPassCode\": \"\",\r\n    \"newPassword\": \"\"\r\n}",
+									"raw": "{\r\n    \"email\": \"user02@test.com\",\r\n    \"oldPassword\": \"123456\",\r\n    \"newPassword\": \"test321\",\r\n    \"repeatNewPassword\": \"test321\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -564,14 +627,48 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL_BASE}}:3001/users/password",
+									"raw": "{{URL_BASE}}:3001/users/edit-password",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"users",
-										"password"
+										"edit-password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "(Error) Fallo de validación Joi",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN_USER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"user02@test.com\",\r\n    \"oldPassword\": \"123456\",\r\n    \"newPassword\": \"test321\",\r\n    \"repeatNewPassword\": \"otraPassword\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}:3001/users/edit-password",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"port": "3001",
+									"path": [
+										"users",
+										"edit-password"
 									]
 								}
 							},
@@ -591,7 +688,7 @@
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "archivo",
+											"key": "fileName",
 											"description": "fasfadasd",
 											"type": "file",
 											"src": "/C:/Users/juanm/Documents/Desarrollo/Proyectos/hackatonPFB/back/public/media/img-static.png"
@@ -622,13 +719,61 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/tecnologias",
+									"raw": "{{URL_BASE}}:3001/technologies",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
-										"tecnologias"
+										"technologies"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/users/initiate-password",
+					"item": [
+						{
+							"name": "EN PROCESO",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{URL_BASE}}:3001/users/initiate-password",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"port": "3001",
+									"path": [
+										"users",
+										"initiate-password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/users/reset-password",
+					"item": [
+						{
+							"name": "EN PROCESO",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{URL_BASE}}:3001/users/reset-password",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"port": "3001",
+									"path": [
+										"users",
+										"reset-password"
 									]
 								}
 							},

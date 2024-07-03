@@ -1,6 +1,7 @@
 import createEventAdminService from "../../services/entries/createEventAdminService.js";
 import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 import Joi from "joi";
+
 const createEventAdminController = async (req, res, next) => {
   try {
     const createEventAdminSchema = Joi.object({

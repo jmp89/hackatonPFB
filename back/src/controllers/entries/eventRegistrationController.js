@@ -11,7 +11,12 @@ const { SECRET } = process.env;
 
 const eventRegistrationController = async (req, res, next) => {
   try {
-    // Validacion Joi
+    const pool = await getPool();
+    const eventCode = Randomstring.generate(10);
+    const { eventID } = req.body;
+    const auth = req.headers["authorization"];
+    const cleanToken = jwt.verify(auth, SECRET);
+    const { id, role } = cleanToken;
     const eventRegistrationControllerSchema = Joi.object({
       eventID: Joi.number().positive().integer().required(),
     });
@@ -21,18 +26,21 @@ const eventRegistrationController = async (req, res, next) => {
     if (error) {
       throw generateErrorsUtils(error.message, 400);
     }
+    const [[eventExists]] = await pool.query(
+      `
+      SELECT id 
+      FROM events 
+      WHERE id = ?
+      `,
+      [eventID]
+    );
 
-    const eventCode = Randomstring.generate(10);
-    const { eventID } = req.body;
-    const auth = req.headers["authorization"];
-    const cleanToken = jwt.verify(auth, SECRET);
-    const { id, role } = cleanToken;
-    if (!role) {
-      throw generateErrorsUtils("Debes iniciar sesión", 403);
+    if (!eventExists) {
+      throw generateErrorsUtils("No se ha encontrado el evento", 404);
     }
-    inscriptionToEvent(id, eventID, eventCode);
+    // Validacion Joi
 
-    const pool = await getPool();
+    inscriptionToEvent(id, eventID, eventCode);
 
     const [[eventInfo]] = await pool.query(
       `

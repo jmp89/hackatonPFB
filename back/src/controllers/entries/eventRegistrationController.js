@@ -37,7 +37,7 @@ const eventRegistrationController = async (req, res, next) => {
     const [[eventInfo]] = await pool.query(
       `
         SELECT name, description
-        FROM eventos
+        FROM events
         WHERE id = ?
       `,
       [eventID]

@@ -6,7 +6,10 @@ const authUser = (req, res, next) => {
     const { authorization } = req.headers;
 
     if (!authorization) {
-      throw generateErrorsUtils("Se esperaba un token por el encabezado", 401);
+      throw generateErrorsUtils(
+        "Debe iniciar sesión para realizar esta acción",
+        403
+      );
     }
 
     let tokenInfo;

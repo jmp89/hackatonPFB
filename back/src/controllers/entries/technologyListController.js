@@ -15,12 +15,12 @@ const listTechnologies = async (req, res) => {
     const [rows, fields] = await pool.query(query);
 
     // Extraer las tecnologías de los resultados
-    const technologies = rows.map(row => row.tecnology);
+    const technologies = rows.map((row) => row.technology);
 
     res.json(technologies);
   } catch (error) {
-    console.error('Error al obtener las tecnologías:', error);
-    res.status(500).json({ error: 'Error al obtener las tecnologías' });
+    console.error("Error al obtener las tecnologías:", error);
+    res.status(500).json({ error: "Error al obtener las tecnologías" });
   }
 };
 

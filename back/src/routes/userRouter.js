@@ -25,8 +25,8 @@ router
   .post("/users/register", userRegisterController)
   .get("/users/validate/:registrationCode", validateUserController)
   .post("/users/login", loginUserController)
-  .put("/users/password", editUserPasswordController)
+  .put("/users/edit-password", editUserPasswordController)
   .post("/upload", uploadFiles)
-  .get("/tecnologias", listTechnologies);
+  .get("/technologies", listTechnologies);
 
 export default router;

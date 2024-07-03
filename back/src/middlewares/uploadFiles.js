@@ -13,7 +13,7 @@ const uploadFiles = async (req, res) => {
       throw err;
     }
 
-    const file = req.files.archive;
+    const file = req.files.fileName;
 
     // Directorio de destino donde guardar los archivos subidos (back/uploads)
     // sin /public no funciona, pero no debería incluirlo

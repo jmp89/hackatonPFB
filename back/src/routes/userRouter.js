@@ -1,11 +1,13 @@
 import express from "express";
-import Joi from "joi";
 
 import {
   userRegisterController,
   validateUserController,
   loginUserController,
   editUserPasswordController,
+  initiatePasswordRecoveryController,
+  resetPasswordController,
+  uploadFilesController
 } from "../controllers/users/index.js";
 
 import {
@@ -14,9 +16,6 @@ import {
   validator,
   authAdmin,
 } from "../middlewares/index.js";
-import uploadFiles from "../middlewares/uploadFiles.js";
-
-import listTechnologies from "../controllers/entries/technologyListController.js";
 
 const router = express.Router();
 
@@ -26,7 +25,8 @@ router
   .get("/users/validate/:registrationCode", validateUserController)
   .post("/users/login", loginUserController)
   .put("/users/edit-password", editUserPasswordController)
-  .post("/upload", uploadFiles)
-  .get("/technologies", listTechnologies);
+  .post("/users/initiate-password", initiatePasswordRecoveryController)
+  .post("/users/reset-password", resetPasswordController)
+  .post("/upload", uploadFilesController);
 
 export default router;

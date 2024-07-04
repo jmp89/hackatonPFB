@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 // Obtener el directorio actual (__dirname) usando import.meta.url y fileURLToPath
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const uploadFiles = async (req, res) => {
+const uploadFilesController = async (req, res) => {
   try {
     if (!req.files || Object.keys(req.files).length === 0) {
       const err = new Error("Faltan campos");
@@ -43,4 +43,4 @@ const uploadFiles = async (req, res) => {
   }
 };
 
-export default uploadFiles;
+export default uploadFilesController;

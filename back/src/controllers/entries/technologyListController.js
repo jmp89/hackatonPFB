@@ -1,7 +1,7 @@
 import getPool from "../../database/getPool.js";
 
 // Función asincrónica para listar tecnologías
-const listTechnologies = async (req, res) => {
+const technologyListController = async (req, res) => {
   try {
     let pool = await getPool();
 
@@ -24,4 +24,4 @@ const listTechnologies = async (req, res) => {
   }
 };
 
-export default listTechnologies;
+export default technologyListController;

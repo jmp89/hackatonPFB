@@ -28,7 +28,7 @@ La aplicación actualmente está en construcción, aunque ya tenemos una primera
 
 ---
 
-**_Instalación de dependecias_**
+**_Instalación de dependencias_**
 
 Una vez descargado el repositorio, abre tu terminal dentro de la carpeta `/back` y usa `npm i` dentro de la carpeta.
 
@@ -40,7 +40,7 @@ Una vez termines, cambia el nombre del archivo a `.env`
 
 **_Crea y pobla la base de datos_**
 
-Si quieres hacer usar de la base de datos establecida (y recomendada para este proyecto), usa los siguientes comandos en tu terminal respetando el orden:
+Si quieres hacer uso de la base de datos establecida (y recomendada para este proyecto), usa los siguientes comandos en tu terminal respetando el orden:
 
 1. `npm run initDb_schema`
 2. `npm run initDb_data`

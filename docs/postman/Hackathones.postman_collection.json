@@ -10,7 +10,7 @@
 			"name": "entries",
 			"item": [
 				{
-					"name": "entries/search",
+					"name": "event/search",
 					"item": [
 						{
 							"name": "Búsqueda",
@@ -18,13 +18,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/entries/search?filter=race&sort=name&direction=desc",
+									"raw": "{{URL_BASE}}:3001/event/search?filter=race&sort=name&direction=desc",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
-										"entries",
+										"event",
 										"search"
 									],
 									"query": [
@@ -51,13 +51,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/entries/search",
+									"raw": "{{URL_BASE}}:3001/event/search",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
-										"entries",
+										"event",
 										"search"
 									]
 								}
@@ -67,7 +67,7 @@
 					]
 				},
 				{
-					"name": "entries/:eventID",
+					"name": "event/:eventID",
 					"item": [
 						{
 							"name": "Evento con ID 1",
@@ -75,13 +75,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/entries/1",
+									"raw": "{{URL_BASE}}:3001/event/details/1",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
-										"entries",
+										"event",
+										"details",
 										"1"
 									]
 								}
@@ -94,13 +95,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/entries/999",
+									"raw": "{{URL_BASE}}:3001/event/details/999",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
-										"entries",
+										"event",
+										"details",
 										"999"
 									]
 								}
@@ -524,7 +526,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"user02@test.com\",\r\n    \"password\": \"test321\"\r\n}",
+									"raw": "{\r\n    \"email\": \"juanmaciasperez89@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -552,7 +554,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"password\": \"admin123\"\r\n}",
+									"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"password\": \"123456\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -619,7 +621,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"user02@test.com\",\r\n    \"oldPassword\": \"123456\",\r\n    \"newPassword\": \"test321\",\r\n    \"repeatNewPassword\": \"test321\"\r\n}",
+									"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"oldPassword\": \"admin123\",\r\n    \"newPassword\": \"123456\",\r\n    \"repeatNewPassword\": \"123456\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -691,7 +693,7 @@
 											"key": "fileName",
 											"description": "fasfadasd",
 											"type": "file",
-											"src": "/C:/Users/juanm/Documents/Desarrollo/Proyectos/hackatonPFB/back/public/media/img-static.png"
+											"src": "/C:/Users/juanm/Documents/Desarrollo/Proyectos/hackatonPFB/back/public/media/hackaton-banner.jpg"
 										}
 									]
 								},
@@ -719,12 +721,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/technologies",
+									"raw": "{{URL_BASE}}:3001/event/technologies",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
+										"event",
 										"technologies"
 									]
 								}
@@ -737,10 +740,19 @@
 					"name": "/users/initiate-password",
 					"item": [
 						{
-							"name": "EN PROCESO",
+							"name": "Recibir código para resetear",
 							"request": {
 								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"juanmaciasperez89@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
 									"raw": "{{URL_BASE}}:3001/users/initiate-password",
 									"host": [
@@ -761,10 +773,19 @@
 					"name": "/users/reset-password",
 					"item": [
 						{
-							"name": "EN PROCESO",
+							"name": "Resetear contraseña",
 							"request": {
 								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"juanmaciasperez89@gmail.com\",\r\n    \"recoverPassCode\": \"\",\r\n    \"newPassword\": \"123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
 									"raw": "{{URL_BASE}}:3001/users/reset-password",
 									"host": [

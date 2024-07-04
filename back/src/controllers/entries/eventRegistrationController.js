@@ -1,69 +1,69 @@
-import inscriptionToEvent from "../../services/users/inscriptionToEvent.js";
-import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
-import sendMailUtils from "../../utils/sendMailUtils.js";
-import Randomstring from "randomstring";
-import jwt from "jsonwebtoken";
-import "dotenv/config";
-import getPool from "../../database/getPool.js";
-import Joi from "joi";
+import inscriptionToEvent from '../../services/users/inscriptionToEvent.js';
+import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
+import sendMailUtils from '../../utils/sendMailUtils.js';
+import Randomstring from 'randomstring';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config';
+import getPool from '../../database/getPool.js';
+import Joi from 'joi';
 
 const { SECRET } = process.env;
 
 const eventRegistrationController = async (req, res, next) => {
-  try {
-    const pool = await getPool();
-    const eventCode = Randomstring.generate(10);
-    const { eventID } = req.body;
-    const auth = req.headers["authorization"];
-    const cleanToken = jwt.verify(auth, SECRET);
-    const { id, role } = cleanToken;
-    const eventRegistrationControllerSchema = Joi.object({
-      eventID: Joi.number().positive().integer().required(),
-    });
+    try {
+        const pool = await getPool();
+        const eventCode = Randomstring.generate(10);
+        const { eventID } = req.body;
+        const auth = req.headers['authorization'];
+        const cleanToken = jwt.verify(auth, SECRET);
+        const { id, role } = cleanToken;
+        const eventRegistrationControllerSchema = Joi.object({
+            eventID: Joi.number().positive().integer().required(),
+        });
 
-    const { error } = eventRegistrationControllerSchema.validate(req.body);
+        const { error } = eventRegistrationControllerSchema.validate(req.body);
 
-    if (error) {
-      throw generateErrorsUtils(error.message, 400);
-    }
-    const [[eventExists]] = await pool.query(
-      `
+        if (error) {
+            throw generateErrorsUtils(error.message, 400);
+        }
+        const [[eventExists]] = await pool.query(
+            `
       SELECT id 
       FROM events 
       WHERE id = ?
       `,
-      [eventID]
-    );
+            [eventID]
+        );
 
-    if (!eventExists) {
-      throw generateErrorsUtils("No se ha encontrado el evento", 404);
-    }
-    // Validacion Joi
+        if (!eventExists) {
+            throw generateErrorsUtils('No se ha encontrado el evento', 404);
+        }
+        // Validacion Joi
 
-    await inscriptionToEvent(id, eventID, eventCode);
+        await inscriptionToEvent(id, eventID, eventCode);
 
-    const [[eventInfo]] = await pool.query(
-      `
+        const [[eventInfo]] = await pool.query(
+            `
         SELECT name, description
         FROM events
         WHERE id = ?
       `,
-      [eventID]
-    );
+            [eventID]
+        );
 
-    const [email] = await pool.query(
-      `
+        const [email] = await pool.query(
+            `
       SELECT email
       FROM users
       WHERE id = ?
       `,
-      [id]
-    );
-    const finalEmail = email[0].email;
+            [id]
+        );
+        const finalEmail = email[0].email;
 
-    const emailSubject = `Confirma tu inscripción en ${eventInfo.name}`;
+        const emailSubject = `Confirma tu inscripción en ${eventInfo.name}`;
 
-    const emailBody = `
+        const emailBody = `
             Gracias por enviarnos tu solicitud, a continuación te mostramos un poco de qué va este Hackathon con más detalle:
 
             
@@ -82,14 +82,14 @@ const eventRegistrationController = async (req, res, next) => {
             Hecho con ❤ por el equipo de Hackathon
     `;
 
-    await sendMailUtils(finalEmail, emailSubject, emailBody);
+        await sendMailUtils(finalEmail, emailSubject, emailBody);
 
-    res.status(200).json({
-      message: "Te has inscrito con éxito",
-    });
-  } catch (error) {
-    next(error);
-  }
+        res.status(200).json({
+            message: 'Se ha enviado un email para confirmar la inscripción',
+        });
+    } catch (error) {
+        next(error);
+    }
 };
 
 export default eventRegistrationController;

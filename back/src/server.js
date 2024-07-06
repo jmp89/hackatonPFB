@@ -3,13 +3,16 @@ import morgan from "morgan";
 import cors from "cors";
 import routes from "./routes/index.js";
 import path from "path";
+import "dotenv/config";
 
 import { errorHandler, notFoundHandler } from "./middlewares/index.js";
 import fileUpload from "express-fileupload";
+
 const server = express();
 
 // Recursos estáticos
-const PUBLIC_FOLDER = path.join(process.cwd(), "public");
+const { UPLOADS_DIR } = process.env;
+const PUBLIC_FOLDER = path.join(process.cwd(), UPLOADS_DIR);
 server.use(express.static(PUBLIC_FOLDER));
 
 server.use(morgan("dev"));
@@ -23,7 +26,7 @@ server.get("/", (req, res) => {
   res.send("El servidor está funcionando correctamente");
 });
 
-server.use("/", routes);
+server.use(routes);
 
 // Middleware de manejo de errores
 server.use(errorHandler);

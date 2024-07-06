@@ -13,9 +13,11 @@ const authAdmin = async (req, res, next) => {
 
         if (cleanedToken.role !== "admin"){
 
-            const err = generateErrorsUtils("Solamente un administrador puede crear un evento.", 403);
+            const err = generateErrorsUtils("Solamente un administrador puede realizar esta acción.", 403);
             throw err;
         };
+
+        req.user = cleanedToken;
 
         next();
 

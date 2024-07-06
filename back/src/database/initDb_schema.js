@@ -1,4 +1,6 @@
 import getPool from "./getPool.js";
+import "dotenv/config";
+import bcrypt from "bcrypt";
 
 const initDB = async () => {
   try {
@@ -55,11 +57,13 @@ const initDB = async () => {
                 technology VARCHAR(100) NOT NULL,
                 online_on_site ENUM("online", "on_site") DEFAULT 'online' NOT NULL,
                 city VARCHAR(255),
-                date_range DATE NOT NULL,  -- Cambiado DATERANGE a DATE
+                start_date DATE NOT NULL,
+                finish_date DATE NOT NULL,
                 category VARCHAR(255) NOT NULL,
                 description TEXT,
                 organizer INT,
                 rating TINYINT,
+                avatar VARCHAR(100) DEFAULT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 FOREIGN KEY (organizer) REFERENCES users(id)
@@ -96,10 +100,14 @@ const initDB = async () => {
     console.log("Tablas creadas!");
 
     console.log("Creando usuario admin...");
-
+    
     await pool.query(`
       INSERT INTO users (name, email, password, role, active) 
-      VALUES ('admin', 'admin@example.com', '$2b$10$uRV5tpsAM4lrZDVM2L/cQeaycXQr6GYcsybzcsxZ6Nj3GZCW3IdJ6', 'admin', 1)
+      VALUES ('${process.env.MYSQL_ADMIN_NAME}',
+      '${process.env.MYSQL_ADMIN_EMAIL}',
+      '${await bcrypt.hash(process.env.MYSQL_ADMIN_PASSWORD, 10)}',
+      'admin',
+      1)
     `);
 
     console.log("Usuario admin creado!");

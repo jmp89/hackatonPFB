@@ -1,9 +1,11 @@
-import sendRecoveryCodeEmailService from "../../controllers/users/sendRecoveryCodeEmailService.js";
-import selectUserByEmailService from "../../services/users/selectUserByEmailService.js";
-import getPool from "../../database/getPool.js";
 import randomstring from "randomstring";
 import Joi from "joi";
 
+import getPool from "../../database/getPool.js";
+import {
+  selectUserByEmailService,
+  sendRecoveryCodeEmailService
+} from "../../services/users/index.js";
 
 const initiatePasswordRecoveryController = async (req, res, next) => {
   try {

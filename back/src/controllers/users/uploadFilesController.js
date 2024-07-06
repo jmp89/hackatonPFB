@@ -1,45 +1,50 @@
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import randomstring from "randomstring";
+import "dotenv/config";
 
-// Obtener el directorio actual (__dirname) usando import.meta.url y fileURLToPath
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
+import {insertUserAvatarService} from '../../services/users/index.js';
 
-const uploadFilesController = async (req, res) => {
+const { UPLOADS_DIR } = process.env;
+
+const uploadFilesController = async (req, res, next) => {
     try {
         if (!req.files || Object.keys(req.files).length === 0) {
-            const err = new Error('Faltan campos');
-            err.httpStatus = 400;
-            throw err;
+            throw generateErrorsUtils("Faltan campos", 401);
         }
 
         const file = req.files.fileName;
 
         // Directorio de destino donde guardar los archivos subidos (back/uploads)
         // sin /public no funciona, pero no debería incluirlo
-        const uploadDir = path.join(__dirname, '../../../public/uploads');
+        const uploadDir = path.join(process.cwd(), UPLOADS_DIR);
 
         // Verificar si la carpeta de destino existe, si no, crearla
         if (!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir, { recursive: true });
         }
 
+        const randomName = randomstring.generate(15);        
+        const finalName = randomName + "_" + file.name;
         // Ruta completa del archivo de destino dentro de back/uploads
-        const uploadPath = path.join(uploadDir, file.name);
+        const uploadPath = path.join(uploadDir, finalName);
 
+        const userID = req.user.id;
+        
+        await insertUserAvatarService(finalName, userID);
+        
         // Mover el archivo a la carpeta de destino
         await file.mv(uploadPath);
-
+        
         res.send({
             status: 'ok',
-            message: 'Archivo subido',
+            message: 'Archivo subido correctamente'
         });
+
     } catch (err) {
-        console.error(err);
-        res.status(err.httpStatus || 500).send({
-            status: 'error',
-            message: err.message,
-        });
+
+        next(err);
     }
 };
 

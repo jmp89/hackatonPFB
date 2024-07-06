@@ -3,7 +3,7 @@ import errorHandler from "./errorHandler.js";
 import notFoundHandler from "./notFoundHandler.js";
 import userExists from "./userExists.js";
 import validator from "./validator.js";
-import authUser from "./authAdmin.js";
+import authUser from "./authUser.js";
 
 export {
   authAdmin,

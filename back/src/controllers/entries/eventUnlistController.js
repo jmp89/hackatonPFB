@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
 import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
-import eventUnlistService from "../../services/entries/eventUnlistService.js";
+import {eventUnlistService} from "../../services/entries/index.js";
 
 dotenv.config();
 

@@ -1,4 +1,4 @@
-import inscriptionToEvent from '../../services/users/inscriptionToEvent.js';
+import {inscriptionToEvent} from '../../services/users/index.js';
 import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
 import sendMailUtils from '../../utils/sendMailUtils.js';
 import Randomstring from 'randomstring';

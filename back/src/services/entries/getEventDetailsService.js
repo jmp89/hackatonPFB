@@ -11,7 +11,8 @@ const getEventDetailsService = async (eventID) => {
             e.city,
             e.category,
             e.organizer,
-            e.date_range AS fechas,
+            e.start_date,
+            e.finish_date,
             e.rating,
             COUNT(DISTINCT p.user_id) AS total_participants,
             COUNT(DISTINCT m.team_id) AS total_teams

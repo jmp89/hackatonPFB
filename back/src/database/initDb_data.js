@@ -26,14 +26,14 @@ const initDb_data = async () => {
     console.log("Poblando tabla 'events'...");
 
     await pool.query(`
-                INSERT INTO events (technology, online_on_site, city, date_range, category, name, description)
+                INSERT INTO events (technology, online_on_site, city, start_date, finish_date, category, name, description)
                 VALUES
-                ("Python", 1, "A Coruña", "2024/05/22", "Coding Race", "Python Race Hackathon", "esta es la descripcion del evento 1"),
-                ("JavaScript", 1, "A Coruña", "2024/08/13", "Gaming with JavaScript", "JSGaming", "esta es la descripcion del evento 2"),
-                ("React", 1, "Madrid", "2024/07/24", "Top Developers", "Selecting best React developers", "esta es la descripcion del evento 3"),
-                ("Next", 1, "Barcelona", "2024/02/05", "Coding Race", "App development Race with Next", "esta es la descripcion del evento 4"),
-                ("Python", 1, "Madrid", "2024/11/17", "Coding", "Python AI development", "esta es la descripcion del evento 5"),
-                ("JavaScript", 1, "Barcelona", "2024/06/08", "Coding Race", "API development with JS Race", "esta es la descripcion del evento 6")
+                ("Python", "on_site", "A Coruña", "2024/05/22", "2024/07/22", "Coding Race", "Python Race Hackathon", "esta es la descripcion del evento 1"),
+                ("JavaScript", "on_site", "A Coruña", "2024/08/13", "2024/10/13","Gaming with JavaScript", "JSGaming", "esta es la descripcion del evento 2"),
+                ("React", "on_site", "Madrid", "2024/07/24", "2024/09/24", "Top Developers", "Selecting best React developers", "esta es la descripcion del evento 3"),
+                ("Next", "on_site", "Barcelona", "2024/02/05", "2024/04/05", "Coding Race", "App development Race with Next", "esta es la descripcion del evento 4"),
+                ("Python", "on_site", "Madrid", "2024/11/17", "2024/12/28", "Coding", "Python AI development", "esta es la descripcion del evento 5"),
+                ("JavaScript", "on_site", "Barcelona", "2024/06/08", "2024/09/08", "Coding Race", "API development with JS Race", "esta es la descripcion del evento 6")
             `);
 
     console.log("Tabla 'events' poblada correctamente.");

@@ -1,4 +1,4 @@
-import getEventCategoriesService from '../../services/entries/getEventCategoriesService.js';
+import {getEventCategoriesService} from '../../services/entries/index.js';
 import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
 
 const listEventCategoriesController = async (req, res, next) => {

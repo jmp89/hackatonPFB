@@ -1,4 +1,4 @@
-import createEventAdminService from "../../services/entries/createEventAdminService.js";
+import {createEventAdminService} from "../../services/entries/index.js";
 import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 import Joi from "joi";
 
@@ -9,7 +9,8 @@ const createEventAdminController = async (req, res, next) => {
       technology: Joi.string().required(),
       online_on_site: Joi.string().required(),
       city: Joi.string().allow(null),
-      date_range: Joi.date().required(),
+      start_date: Joi.date().required(),
+      finish_date: Joi.date().required(),
       category: Joi.string().required(),
       organizer: Joi.number().integer().required(),
       description: Joi.string().min(15).max(255).required(),
@@ -25,7 +26,8 @@ const createEventAdminController = async (req, res, next) => {
       technology,
       online_on_site,
       city,
-      date_range,
+      start_date,
+      finish_date,
       category,
       organizer,
       description,
@@ -35,7 +37,8 @@ const createEventAdminController = async (req, res, next) => {
       !name ||
       !technology ||
       !online_on_site ||
-      !date_range ||
+      !start_date ||
+      !finish_date ||
       !category ||
       !description
     ) {
@@ -56,7 +59,8 @@ const createEventAdminController = async (req, res, next) => {
       technology: technology,
       online_on_site: online_on_site,
       city: city,
-      date_range: date_range,
+      start_date: start_date,
+      finish_date: finish_date,
       category: category,
       organizer: organizer,
       description: description,
@@ -66,11 +70,13 @@ const createEventAdminController = async (req, res, next) => {
 
     res.send({
       status: "ok",
-      message: "Evento creado correctamente.",
+      message: "Evento creado correctamente."
     });
+
   } catch (error) {
+
     next(error);
-  }
+  };
 };
 
 export default createEventAdminController;

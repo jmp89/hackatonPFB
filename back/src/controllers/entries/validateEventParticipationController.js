@@ -1,4 +1,4 @@
-import updateParticipationService from "../../services/entries/updateParticipationService.js";
+import {updateParticipationService} from "../../services/entries/index.js";
 
 const validateEventParticipationController = async (req, res, next) => {
   try {

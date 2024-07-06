@@ -17,7 +17,7 @@ const authUser = (req, res, next) => {
     try {
       tokenInfo = jwt.verify(authorization, process.env.SECRET);
     } catch (error) {
-      throw generateErrorsUtils("Credenciales invalidas", 401);
+      throw generateErrorsUtils("Credenciales inválidas", 401);
     }
 
     req.user = tokenInfo;

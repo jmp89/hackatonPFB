@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
-import selectUserByEmailService from "../../services/users/selectUserByEmailService.js";
+import {selectUserByEmailService} from "../../services/users/index.js";
 import Joi from "joi";
 
 const loginUserController = async (req, res, next) => {
@@ -35,7 +35,7 @@ const loginUserController = async (req, res, next) => {
     }
 
     if (!user.active) {
-      throw generateErrorsUtils("Usuario pendiente de activacion", 403);
+      throw generateErrorsUtils("Usuario pendiente de activación", 403);
     }
 
     const tokenInfo = {

@@ -1,7 +1,8 @@
 import randomstring from "randomstring";
-import insertUserService from "../../services/users/insertUserServices.js";
-import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 import Joi from "joi";
+
+import {insertUserService} from "../../services/users/index.js";
+import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 
 const registerUserController = async (req, res, next) => {
   try {
@@ -24,7 +25,7 @@ const registerUserController = async (req, res, next) => {
     await insertUserService(username, email, password, registrationCode);
     res.send({
       status: "ok",
-      message: "Usuario registrado correctamente.",
+      message: "Usuario registrado correctamente, se ha enviado un email de activación.",
     });
   } catch (error) {
     next(error);

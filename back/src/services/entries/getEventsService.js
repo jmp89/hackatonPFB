@@ -13,7 +13,8 @@ const getEventsService = async (filter, sort, direction) => {
         e.city,
         e.organizer,
         e.category,
-        e.date_range,
+        e.start_date,
+        e.finish_date,
         e.rating
         FROM events e
     `;

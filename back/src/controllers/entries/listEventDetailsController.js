@@ -1,5 +1,5 @@
 import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
-import getEventDetailsService from "../../services/entries/getEventDetailsService.js";
+import {getEventDetailsService} from "../../services/entries/index.js";
 
 const listEventDetailsController = async (req, res, next) => {
 

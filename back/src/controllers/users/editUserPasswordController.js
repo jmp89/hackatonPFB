@@ -1,4 +1,4 @@
-import updateUserPassService from "../../services/users/updateUserPassService.js";
+import {updateUserPassService} from "../../services/users/index.js";
 import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 import Joi from "joi";
 

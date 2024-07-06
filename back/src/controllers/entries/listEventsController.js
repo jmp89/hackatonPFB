@@ -1,5 +1,5 @@
 import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
-import getEventsService from '../../services/entries/getEventsService.js';
+import {getEventsService} from '../../services/entries/index.js';
 
 const listEventsController = async (req, res, next) => {
     try {

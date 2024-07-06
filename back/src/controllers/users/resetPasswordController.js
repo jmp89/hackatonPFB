@@ -1,5 +1,5 @@
 import getPool from '../../database/getPool.js';
-import updateUserPassService from '../../services/users/updateUserPassService.js';
+import {updateUserPassService} from '../../services/users/index.js';
 import Joi from 'joi';
 
 const resetPasswordController = async (req, res, next) => {

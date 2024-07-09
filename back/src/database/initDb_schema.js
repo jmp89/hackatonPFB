@@ -77,6 +77,7 @@ const initDB = async () => {
                 event_id INT,
                 reservation_code VARCHAR(255),
                 active BOOLEAN DEFAULT false,
+                rating_user_event TINYINT CHECK (rating_user_event BETWEEN 1 AND 5),
                 PRIMARY KEY (user_id, event_id),
                 FOREIGN KEY (user_id) REFERENCES users(id),
                 FOREIGN KEY (event_id) REFERENCES events(id),

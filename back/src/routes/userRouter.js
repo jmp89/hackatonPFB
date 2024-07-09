@@ -8,6 +8,7 @@ import {
   initiatePasswordRecoveryController,
   resetPasswordController,
   uploadFilesController,
+  updateUserProfileController,
   rateUserEvent
 } from "../controllers/users/index.js";
 
@@ -26,6 +27,6 @@ router
   .post("/users/initiate-password", initiatePasswordRecoveryController)
   .post("/users/reset-password", resetPasswordController)
   .post("/upload", authUser, uploadFilesController)
-  .post("/users/rate-event", rateUserEvent)
-
+  .put("/user/:id", updateUserProfileController)
+  .post("/users/rate-event", rateUserEvent);
 export default router;

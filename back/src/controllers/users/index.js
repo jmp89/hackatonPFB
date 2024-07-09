@@ -6,6 +6,8 @@ import initiatePasswordRecoveryController from "./initiatePasswordRecoveryContro
 import resetPasswordController from "./resetPasswordController.js";
 import uploadFilesController from "./uploadFilesController.js";
 import rateUserEvent from "./rateUserEvent.js";
+import updateUserProfileController from "./updateUserProfileController.js";
+
 
 export {
   userRegisterController,
@@ -15,5 +17,6 @@ export {
   initiatePasswordRecoveryController,
   resetPasswordController,
   uploadFilesController,
-  rateUserEvent
+  rateUserEvent,
+  updateUserProfileController
 };

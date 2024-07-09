@@ -1,18 +1,21 @@
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import AdminPage from './pages/AdminPage';
 import Home from './pages/Home';
 
-function App() {
-    return (
+const App = () => {
+  return (
+    <AuthProvider>
+      <Router>
         <Routes>
-            <Route path="/" element={<Home />} />
-
-            {/* <Route path="/site1" element={<Site1 />} /> */}
-
-            {/* <Route path="/site2" element={<Site2 />} /> */}
-
-            {/* <Route path="/site3" element={<Site3 />} /> */}
+          <Route path="/" element={<Home />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
-    );
-}
+      </Router>
+    </AuthProvider>
+  );
+};
 
 export default App;
+
+

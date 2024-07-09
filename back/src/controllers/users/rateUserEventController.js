@@ -1,16 +1,15 @@
 import getPool from "../../database/getPool.js";
+import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 
-const rateUserEvent = async (req, res) => {
-  const { userId, eventId, rating } = req.body;
-
-
-  if (rating < 1 || rating > 5) {
-    return res.status(400).send("La valoración debe estar entre 1 y 5");
-  }
-
+const rateUserEventController = async (req, res, next) => {
   try {
-    const pool = await getPool();
+    const { userId, eventId, rating } = req.body;
 
+    if (rating < 1 || rating > 5) {
+      throw generateErrorsUtils("La valoración debe estar entre 1 y 5", 400);
+    }
+
+    const pool = await getPool();
 
     const [[event]] = await pool.query(`
       SELECT id
@@ -19,9 +18,8 @@ const rateUserEvent = async (req, res) => {
     `, [eventId]);
 
     if (!event) {
-      return res.status(404).send("El evento no ha terminado o no existe");
+      throw generateErrorsUtils("El evento no ha terminado o no existe", 404);
     }
-
 
     const [result] = await pool.query(`
       UPDATE participates
@@ -29,16 +27,14 @@ const rateUserEvent = async (req, res) => {
       WHERE user_id = ? AND event_id = ?
     `, [rating, userId, eventId]);
 
-
     if (result.affectedRows === 0) {
-      return res.status(404).send("No has participado en este evento");
+      throw generateErrorsUtils("No has participado en este evento", 404);
     }
 
     res.status(200).send("Valoración registrada correctamente");
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Ha ocurrido un error al procesar la valoración");
+    next(error);
   }
 };
 
-export default rateUserEvent;
+export default rateUserEventController;

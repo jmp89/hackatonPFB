@@ -1,6 +1,6 @@
  export const resetPassword = async (email, recoverPassCode, newPassword) => {
     try {
-      const response = await fetch('/users/reset-password', {
+      const response = await fetch('localhost:3001/users/reset-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

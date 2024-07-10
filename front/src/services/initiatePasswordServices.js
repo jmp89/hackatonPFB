@@ -1,6 +1,6 @@
 export const initiatePassword = async () => {
     try {
-      const response = await fetch('/users/initiate-password', {
+      const response = await fetch('localhost:3001/users/initiate-password', {
        method: 'POST',
        headers: {
         'Content-Type': 'application/json'

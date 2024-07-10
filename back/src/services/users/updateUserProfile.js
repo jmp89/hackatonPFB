@@ -1,16 +1,47 @@
-import getPool from "../../database/getPool.js";
+import getPool from '../../database/getPool.js';
+import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
 
 const updateUserProfile = async (userId, name, email, personalInfo) => {
     try {
-
         const pool = await getPool();
-        const [results] = await pool.query(
-            'UPDATE users SET name = ?, email = ?, personal_info = ? WHERE id = ?',
-            [name, email, personalInfo, userId]
-        );
+
+        let query = 'UPDATE users SET ';
+        const values = [];
+
+        // Si el valor se manda vacío o undefined mantiene el valor anterior sin borrarlo
+
+        if (name !== undefined && name !== '') {
+            query += 'name = ?, ';
+            values.push(name);
+        }
+
+        if (email !== undefined && email !== '') {
+            query += 'email = ?, ';
+            values.push(email);
+        }
+
+        if (personalInfo !== undefined && personalInfo !== '') {
+            query += 'personal_info = ?, ';
+            values.push(personalInfo);
+        }
+
+        if (values.length === 0) {
+            throw generateErrorsUtils(
+                'No hay campos válidos para actualizar',
+                400
+            );
+        }
+
+        query = query.slice(0, -2) + ' WHERE id = ?';
+        values.push(userId);
+
+        const [results] = await pool.query(query, values);
         return results;
     } catch (error) {
-        throw new Error(`Error updating user profile: ${error.message}`);
+        throw generateErrorsUtils(
+            `Error editando el perfil: ${error.message}`,
+            400
+        );
     }
 };
 

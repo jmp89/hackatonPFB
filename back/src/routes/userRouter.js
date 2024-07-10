@@ -10,6 +10,7 @@ import {
     uploadFilesController,
     updateUserProfileController,
     rateUserEventController,
+    getMyEventsListController,
 } from '../controllers/users/index.js';
 
 import { authUser } from '../middlewares/index.js';
@@ -25,5 +26,6 @@ router
     .post('/users/reset-password', resetPasswordController)
     .post('/upload', authUser, uploadFilesController)
     .put('/users/edit/:id', authUser, updateUserProfileController)
-    .post('/users/rate-event', rateUserEventController);
+    .post('/users/rate-event', rateUserEventController)
+    .get('/users/my-events', authUser, getMyEventsListController);
 export default router;

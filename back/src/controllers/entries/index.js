@@ -6,6 +6,8 @@ import listEventDetailsController from "./listEventDetailsController.js";
 import listEventsController from "./listEventsController.js";
 import technologyListController from "./technologyListController.js";
 import validateEventParticipationController from "./validateEventParticipationController.js";
+import listEventResultsController from "./listEventResultsController.js";
+import insertEventResultsController from "./insertEventResultsController.js";
 
 export {
     createEventAdminController,
@@ -15,5 +17,7 @@ export {
     listEventDetailsController,
     listEventsController,
     technologyListController,
-    validateEventParticipationController
+    validateEventParticipationController,
+    listEventResultsController,
+    insertEventResultsController
 };

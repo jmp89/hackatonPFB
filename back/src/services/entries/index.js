@@ -4,7 +4,9 @@ import getEventCategoriesService from "./getEventCategoriesService.js";
 import getEventDetailsService from "./getEventDetailsService.js";
 import getEventsService from "./getEventsService.js";
 import updateParticipationService from "./updateParticipationService.js";
-
+import getEventResultsService from "./getEventResultsService.js";
+import insertEventResultsService from "./insertEventResultsService.js";
+import checkParticipationService from "./checkParticipationService.js";
 
 export {
     createEventAdminService,
@@ -12,5 +14,8 @@ export {
     getEventCategoriesService,
     getEventDetailsService,
     getEventsService,
-    updateParticipationService
+    updateParticipationService,
+    getEventResultsService,
+    insertEventResultsService,
+    checkParticipationService
 };

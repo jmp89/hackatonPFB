@@ -11,6 +11,8 @@ import {
     listEventCategoriesController,
     eventUnlistController,
     technologyListController,
+    listEventResultsController,
+    insertEventResultsController
 } from '../controllers/entries/index.js';
 
 const router = express.Router();
@@ -24,6 +26,8 @@ router
     .delete('/event/unlist', authUser, eventUnlistController)
     .get('/event/confirm/:eventCode', validateEventParticipationController)
     .get('/event/categories', listEventCategoriesController)
-    .get('/event/technologies', technologyListController);
+    .get('/event/technologies', technologyListController)
+    .get("/event/results", listEventResultsController)
+    .post("/event/insert-results", authAdmin, insertEventResultsController);
 
 export default router;

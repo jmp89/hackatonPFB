@@ -22,3 +22,4 @@ const updateUserProfileController = async (req, res, next) => {
 };
 
 export default updateUserProfileController;
+export default updateUserProfileController;

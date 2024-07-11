@@ -1,22 +1,22 @@
-export const initiatePassword = async () => {
-    try {
-      const response = await fetch('localhost:3001/users/initiate-password', {
-       method: 'POST',
-       headers: {
-        'Content-Type': 'application/json'
-       },
-        body: JSON.stringify({email: "email"}),
+export const initiatePassword = async (email) => {
+  try {
+      const response = await fetch('http://localhost:3001/users/initiate-password', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email }),
       });
-  
+
       if (!response.ok) {
-        throw new Error('Error en la solicitud'+ response.statusText);
+          throw new Error('Usuario no encontrado');
       }
-  
+
       const data = await response.json();
       console.log(data);
-    } catch (error) {
+      return data;
+  } catch (error) {
       console.error('Error:', error);
-    }
-  };
-  
-  initiatePassword()
+      throw error;
+  }
+};

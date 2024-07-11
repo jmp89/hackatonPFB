@@ -11,12 +11,9 @@ import {
     listEventCategoriesController,
     eventUnlistController,
     technologyListController,
-<<<<<<< Updated upstream
     listEventResultsController,
-    insertEventResultsController
-=======
+    insertEventResultsController,
     updateEventAdminController,
->>>>>>> Stashed changes
 } from '../controllers/entries/index.js';
 
 const router = express.Router();
@@ -31,11 +28,8 @@ router
     .get('/event/confirm/:eventCode', validateEventParticipationController)
     .get('/event/categories', listEventCategoriesController)
     .get('/event/technologies', technologyListController)
-<<<<<<< Updated upstream
     .get("/event/results", listEventResultsController)
-    .post("/event/insert-results", authAdmin, insertEventResultsController);
-=======
+    .post("/event/insert-results", authAdmin, insertEventResultsController)
     .put("/events/:id", authAdmin, updateEventAdminController);
->>>>>>> Stashed changes
 
 export default router;

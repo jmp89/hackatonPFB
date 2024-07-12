@@ -6,11 +6,11 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({
     name: 'Admin User',
     role: 'admin',
-    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzIwNjA1OTE5LCJleHAiOjE3MjEyMTA3MTl9.TYwNp7euaKife7xKawQ3q6sqdkzkC4AHlGR32tRJuuc', 
+    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzIwNzcyMDc3LCJleHAiOjE3MjEzNzY4Nzd9.fOws5B4T84_EOw4EKa-Wqs9jMJyWQM1lEw8NuXFaXQM', 
   });
 
   useEffect(() => {
-    // Aquí podrías implementar la lógica de autenticación real si es necesario
+    // Aquí podrías implementar la lógica de autenticación real 
   }, []);
 
   const login = (userData) => {
@@ -31,4 +31,3 @@ const AuthProvider = ({ children }) => {
 };
 
 export { AuthContext, AuthProvider };
-

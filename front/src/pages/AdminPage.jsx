@@ -1,14 +1,15 @@
+import { useContext } from 'react';
 import EventForm from '../components/EventForm';
+import { AuthContext } from '../context/AuthContext';
+
 
 const AdminPage = () => {
+  const { user } = useContext(AuthContext)
   return (
-    <div>
-      <h1>Admin Page</h1>
-      <EventForm />
-    </div>
+    <>
+      <EventForm token={user.token} />
+    </>
   );
 };
 
 export default AdminPage;
-
-

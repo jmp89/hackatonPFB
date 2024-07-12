@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import EventForm from '../components/EventForm';
-import { AuthContext } from '../context/AuthContext';
+import AuthContext from '../context/AuthContext';
 
 
 const AdminPage = () => {

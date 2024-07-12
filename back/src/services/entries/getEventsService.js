@@ -1,10 +1,9 @@
-import getPool from "../../database/getPool.js";
-import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
+import getPool from '../../database/getPool.js';
+import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
 
 const getEventsService = async (filter, sort, direction) => {
-
     const pool = await getPool();
-        
+
     let query = `
         SELECT e.id,
         e.name,
@@ -18,64 +17,62 @@ const getEventsService = async (filter, sort, direction) => {
         e.rating
         FROM events e
     `;
-    
-    if (!filter){
-    
+
+    if (!filter) {
         query += `
-            ORDER BY date_range ASC
+            ORDER BY e.start_date ASC
         `;
-    
+
         const eventsList = await pool.query(query);
-    
+
         return eventsList[0];
-    };
-    
-    if (filter){
-    
+    }
+
+    if (filter) {
         query += `
             WHERE e.name LIKE ?
             OR e.technology LIKE ?
             OR e.online_on_site LIKE ?
             OR e.organizer LIKE ?
             OR e.category LIKE ?
-        `
-    };
-    
-    const validSort = [ "name", "technology", "online_on_site", "organizer", "category" ];
-    const validDirection = [ "ASC", "DESC" ];
-    
-    if (sort && !validSort.includes(sort)){
-    
-        const err = generateErrorsUtils("Parámetros de búsqueda no válidos.");
+        `;
+    }
+
+    const validSort = [
+        'name',
+        'technology',
+        'online_on_site',
+        'organizer',
+        'category',
+    ];
+    const validDirection = ['ASC', 'DESC'];
+
+    if (sort && !validSort.includes(sort)) {
+        const err = generateErrorsUtils('Parámetros de búsqueda no válidos.');
         throw err;
-    };
-    
-    if (sort){
-    
-        if (direction && validDirection.includes(direction.toUpperCase())){
-                
+    }
+
+    if (sort) {
+        if (direction && validDirection.includes(direction.toUpperCase())) {
             query += `
                 ORDER BY ${sort} ${direction}
             `;
         } else {
-                
             query += `
                 ORDER BY ${sort} ASC
             `;
-        };
-    
-    };
-    
+        }
+    }
+
     const eventsList = await pool.query(query, [
         `%${filter}%`,
         `%${filter}%`,
         `%${filter}%`,
         `%${filter}%`,
-        `%${filter}%`
+        `%${filter}%`,
     ]);
-    
-    return eventsList[0];
 
+    return eventsList[0];
 };
 
 export default getEventsService;

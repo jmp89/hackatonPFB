@@ -1,87 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaHome } from 'react-icons/fa';
 
 const EventForm = ({ token }) => {
+  const navigate = useNavigate();
   const [eventData, setEventData] = useState({
-    id: '',
     name: '',
     technology: '',
-    online_on_site: '',
-    city: '',
+    online_on_site: 'online',
+    city: ' ',
     category: '',
     organizer: '',
     start_date: '',
     finish_date: '',
-    rating: '',
-    total_participants: '',
-    total_teams: ''
+    description: ''
   });
 
-  const [eventsList, setEventsList] = useState([]);
-  const [selectedEventId, setSelectedEventId] = useState('');
-  const [isNewEvent, setIsNewEvent] = useState(false);
-
-  useEffect(() => {
-    // Fetch existing events list
-    const fetchEventsList = async () => {
-      try {
-        const response = await fetch('/event', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch events list');
-        }
-
-        const data = await response.json();
-        setEventsList(data.events);
-      } catch (error) {
-        console.error('Error fetching events list:', error);
-      }
-    };
-
-    fetchEventsList();
-  }, [token]);
-
-  const handleSelectEvent = (eventId) => {
-    if (eventId === 'new') {
-      setIsNewEvent(true);
-      setEventData({
-        id: '',
-        name: '',
-        technology: '',
-        online_on_site: '',
-        city: '',
-        category: '',
-        organizer: '',
-        start_date: '',
-        finish_date: '',
-        rating: '',
-        total_participants: '',
-        total_teams: ''
-      });
-    } else {
-      const selectedEvent = eventsList.find(event => event.id === eventId);
-      if (selectedEvent) {
-        setIsNewEvent(false);
-        setEventData(selectedEvent);
-        setSelectedEventId(selectedEvent.id);
-      }
-    }
-  };
+  const [error, setError] = useState('');
+  const [createOk, setCreateOk] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const url = isNewEvent ? '/event' : `/event/${selectedEventId}`;
-      const method = isNewEvent ? 'POST' : 'PUT';
-
-      const response = await fetch(url, {
-        method,
+      const response = await fetch('http://localhost:3001/event', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          Authorization: `${token}`
         },
         body: JSON.stringify(eventData)
       });
@@ -92,33 +37,36 @@ const EventForm = ({ token }) => {
 
       const data = await response.json();
       console.log('Event saved successfully:', data);
-      // Optionally handle success (e.g., show success message, redirect, etc.)
-
+      setCreateOk('Event saved successfully!');
+      setError('');
     } catch (error) {
       console.error('Error submitting form:', error);
-      // Optionally handle error (e.g., show error message to user)
+      setError('Error submitting form: ' + error.message);
+      setCreateOk('');
     }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEventData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
+    setEventData(prevData => { 
+      const newData = {
+        ...prevData,
+      }
+      newData[name] = value
+      return newData
+    });
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
+    <div className="relative flex items-center justify-center min-h-screen bg-gray-100 px-4">
+      <div className="absolute top-4 right-4 z-10">
+        <FaHome
+          className="text-black text-3xl cursor-pointer"
+          onClick={() => navigate('/')}
+        />
+      </div>
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Event Form</h2>
-        <select className="w-full px-4 py-2 border rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-black" onChange={(e) => handleSelectEvent(e.target.value)}>
-          <option value="">Select an event</option>
-          {eventsList.map(event => (
-            <option key={event.id} value={event.id}>{event.name}</option>
-          ))}
-          <option value="new">Create new event</option>
-        </select>
+        <h2 className="text-2xl font-bold text-center mb-6">Create New Hackathon</h2>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -139,10 +87,12 @@ const EventForm = ({ token }) => {
             </select>
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="city" className="block text-lg font-medium mb-2">City:</label>
-            <input type="text" id="city" name="city" value={eventData.city} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" required />
-          </div>
+          {eventData.online_on_site === 'on_site' && (
+            <div className="mb-4">
+              <label htmlFor="city" className="block text-lg font-medium mb-2">City:</label>
+              <input type="text" id="city" name="city" value={eventData.city} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" required />
+            </div>
+          )}
 
           <div className="mb-4">
             <label htmlFor="category" className="block text-lg font-medium mb-2">Category:</label>
@@ -165,26 +115,20 @@ const EventForm = ({ token }) => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="rating" className="block text-lg font-medium mb-2">Rating:</label>
-            <input type="number" id="rating" name="rating" value={eventData.rating} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="total_participants" className="block text-lg font-medium mb-2">Total Participants:</label>
-            <input type="number" id="total_participants" name="total_participants" value={eventData.total_participants} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="total_teams" className="block text-lg font-medium mb-2">Total Teams:</label>
-            <input type="number" id="total_teams" name="total_teams" value={eventData.total_teams} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" />
+            <label htmlFor="description" className="block text-lg font-medium mb-2">Description:</label>
+            <input type="text" id="description" name="description" value={eventData.description} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" />
           </div>
 
           <button type="submit" className="w-full bg-black text-white py-2 rounded-lg font-bold text-lg mb-4">Submit</button>
         </form>
+
+        {error && <div className="text-red-500 text-center mt-4">{error}</div>}
+        {createOk && <div className="text-green-500 text-center mt-4">{createOk}</div>}
       </div>
     </div>
   );
 };
 
 export default EventForm;
+
 

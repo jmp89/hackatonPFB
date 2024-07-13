@@ -54,35 +54,34 @@ const LoginForm = () => {
         token
         ? <Navigate to="/" />
         : <>
-                <h2 className="h-15vh uppercase text-5xl font-bold text-center flex justify-center items-end
-                    sm:h-20vh">
+                <h2 className="mt-8 uppercase text-5xl font-bold text-center flex justify-center items-end
+                    sm:mt-32">
                     Login</h2>
 
-                <form className="h-85vh flex flex-col justify-start items-center gap-2.5
-                    sm:80-vh" 
+                <form className="flex flex-col justify-start items-center gap-2.5" 
                     onSubmit={handleSubmit}>
                     
-                    <label className="mt-20 text-xl font-bold" 
+                    <label className="uppercase mt-14 text-xl font-bold" 
                         htmlFor="email">Email</label>
                         
-                    <input className="text-xl w-72 h-14 border-2 border-solid border-gray-300 rounded-3xl  p-4
-                        focus: outline-none focus:border-black focus:border-solid focus:border-3
+                    <input className="text-xl w-72 h-12 border-2 border-solid border-gray-300 rounded-xl p-4
+                        focus:outline-none focus:border-black focus:border-solid focus:border-3
                         sm:w-96"
                         type="email" id="email" name="email" placeholder="Email" required
                         value={formData.email} onChange={handleChange} />
                     
-                    <label className="mt-14 text-xl font-bold"
+                    <label className="uppercase mt-10 text-xl font-bold"
                         htmlFor="password">Contraseña</label>
                         
-                    <input className="text-xl w-72 h-14 border-2 border-solid border-gray-300 rounded-3xl p-4
+                    <input className="text-xl w-72 h-12 border-2 border-solid border-gray-300 rounded-xl p-4
                         focus: outline-none focus:border-black focus:border-solid focus:border-3
                         sm:w-96"
                         type="password" id="password" name="password" placeholder="Contraseña" required
                         value={formData.password} onChange={handleChange} />
                     
-                    <button className="w-52 text-xl uppercase text-white bg-black max-w-96 mt-14 border-none rounded-3xl p-1
+                    <button className="w-32 text-xl uppercase text-white bg-black max-w-96 mt-10 border-none rounded-3xl p-1
                         hover:shadow-custom hover:font-bold
-                        sm:w-72"
+                        sm:w-36"
                         >Login</button>
 
                     {error && <p className="mt-5 text-xl text-red-500 font-bold text-center">{error}</p>}

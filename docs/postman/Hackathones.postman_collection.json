@@ -1118,7 +1118,7 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{URL_BASE}}:3001/hackaton-banner.jpg",
+                            "raw": "{{URL_BASE}}:3001/media/hackaton-banner.jpg",
                             "host": ["{{URL_BASE}}"],
                             "port": "3001",
                             "path": ["hackaton-banner.jpg"]

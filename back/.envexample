@@ -15,4 +15,4 @@ SMTP_USER=tucorreo@gmail.com
 SMTP_PASS=tu_clave_SMPTP
 
 SECRET=secretosuperpoderoso
-UPLOADS_DIR=public/uploads
+UPLOADS_DIR=public

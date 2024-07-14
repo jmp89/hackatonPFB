@@ -28,8 +28,8 @@ router
     .get('/event/confirm/:eventCode', validateEventParticipationController)
     .get('/event/categories', listEventCategoriesController)
     .get('/event/technologies', technologyListController)
-    .get("/event/results", listEventResultsController)
-    .post("/event/insert-results", authAdmin, insertEventResultsController)
-    .put("/events/:id", authAdmin, updateEventAdminController);
+    .get('/event/results', listEventResultsController)
+    .post('/event/insert-results', authAdmin, insertEventResultsController)
+    .put('/event/edit/:id', authAdmin, updateEventAdminController);
 
 export default router;

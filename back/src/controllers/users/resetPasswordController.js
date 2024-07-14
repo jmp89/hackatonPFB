@@ -1,5 +1,5 @@
 import getPool from '../../database/getPool.js';
-import {updateUserPassService} from '../../services/users/index.js';
+import { resetPassService } from '../../services/users/index.js';
 import Joi from 'joi';
 
 const resetPasswordController = async (req, res, next) => {
@@ -8,29 +8,24 @@ const resetPasswordController = async (req, res, next) => {
             email: Joi.string().email().required(),
             recoverPassCode: Joi.string().required(),
             newPassword: Joi.string()
-                .pattern(new RegExp('^[a-zA-Z0-9]{6,30}$'))
+                .pattern(new RegExp('^[a-zA-Z0-9]{4,30}$'))
                 .required(),
+            repeatNewPassword: Joi.string()
+                .required()
+                .valid(Joi.ref('newPassword')),
         });
 
-        const { email, recoverPassCode, newPassword } = req.body;
+        const { email, recoverPassCode, newPassword, repeatNewPassword } =
+            req.body;
         const { error } = passwordRecoverySchema.validate(req.body);
 
         if (error) {
-            return res.status(400).send(error.message);
+            return res
+                .status(400)
+                .send({ status: 'error', message: error.message });
         }
 
-        const pool = await getPool();
-
-        await updateUserPassService(email, recoverPassCode, newPassword);
-
-        await pool.query(
-            `
-            UPDATE users
-            SET recover_pass_code=NULL
-            WHERE email=?
-            `,
-            [email]
-        );
+        await resetPassService(email, recoverPassCode, newPassword);
 
         res.send({
             status: 'ok',

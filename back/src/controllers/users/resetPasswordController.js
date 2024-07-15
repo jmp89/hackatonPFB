@@ -1,4 +1,3 @@
-import getPool from '../../database/getPool.js';
 import { resetPassService } from '../../services/users/index.js';
 import Joi from 'joi';
 

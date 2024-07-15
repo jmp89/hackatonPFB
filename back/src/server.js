@@ -13,14 +13,16 @@ const server = express();
 
 // Recursos estáticos
 const { UPLOADS_DIR } = process.env;
-const PUBLIC_FOLDER = path.join(process.cwd(), String(UPLOADS_DIR));
+const PUBLIC_FOLDER = path.join(process.cwd(), UPLOADS_DIR);
 server.use(express.static(PUBLIC_FOLDER));
 
 server.use(morgan('dev'));
-server.use(cors({
-    origin: "http://localhost:5173",
-    credentials: true
-}));
+server.use(
+    cors({
+        origin: 'http://localhost:5173',
+        credentials: true,
+    })
+);
 server.use(cookieParser());
 server.use(express.json());
 

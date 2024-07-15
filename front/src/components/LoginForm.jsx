@@ -1,11 +1,11 @@
 import { useState, useContext } from "react";
 import { Navigate } from "react-router-dom";
 import fetchUserLoginService from "../services/fetchUserLoginService.js";
-import AuthContext from "../context/AuthContext.jsx";
+import {useAuth} from "../context/AuthContext";
 
 const LoginForm = () => {
 
-    const { token, setToken } = useContext(AuthContext);
+    const { token, updateToken } = useAuth();
 
     const [ formData, setFormData ] = useState({email: "", password: ""});
 
@@ -20,15 +20,14 @@ const LoginForm = () => {
             
             const data = await fetchUserLoginService(formData.email, formData.password, setError, setLoginOk);
             
-            if (!data || data.length < 1){
+            if (!data.token || data.token.length < 1){
             
                 const err = new Error("Error en la petición.");
                 err.httpStatus = 500;
                 throw err;
             };
-            
-            localStorage.setItem("token", data)
-            setToken(data);
+
+            updateToken(data.token);
 
             setFormData({email: "", password: ""});
             setLoginOk("Inicio de sesión exitoso, redirigiendo a la página principal...")

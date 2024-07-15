@@ -26,6 +26,7 @@ router
     .post('/users/reset-password', resetPasswordController)
     .post('/upload', authUser, uploadFilesController)
     .put('/users/edit/:id', authUser, updateUserProfileController)
-    .post('/users/rate-event', rateUserEventController)
+    .post('/users/rate-event', authUser, rateUserEventController)
     .get('/users/my-events', authUser, getMyEventsListController);
+    
 export default router;

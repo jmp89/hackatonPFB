@@ -3,6 +3,7 @@ import AdminPage from './pages/AdminPage';
 import Home from './pages/Home';
 import ResetPass from './components/resetPass';
 import ActivationSuccessPage from './pages/ActivationSuccessPage';
+import ActivationFormPage from './components/ActivationFormPage';
 import LoginFormPage from './pages/LoginFormPage'
 
 import RegisterFormPage from './pages/RegisterFormPage';
@@ -14,7 +15,8 @@ const App = () => {
       <Route path="/admin/:eventId?" element={<AdminPage />} />
       <Route path="/register" element={<RegisterFormPage />} />
       <Route path="/reset-password" element={<ResetPass />} />
-      <Route path="/users/validate" element={<ActivationSuccessPage />} />
+      <Route path='/users/validate/activate' element={<ActivationFormPage/>}/>
+      <Route path="/users/validate/activation-success" element={<ActivationSuccessPage />} />
       <Route path="/users/login" element={<LoginFormPage />} />
     </Routes>
   );

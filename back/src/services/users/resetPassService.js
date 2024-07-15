@@ -8,12 +8,7 @@ const resetPassService = async (email, recoverPassCode, newPassword) => {
 
     try {
         const user = await selectUserByEmailService(email);
-        console.log(
-            `----------------------------
-          ----------------------------
-          -----------------------`,
-            user
-        );
+
         if (!user || user.recover_pass_code !== recoverPassCode) {
             throw generateErrorsUtils(
                 'Código de recuperación inválido o usuario no encontrado',

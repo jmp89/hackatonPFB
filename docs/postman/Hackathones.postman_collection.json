@@ -128,7 +128,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n      \"name\": \"Hackathon Python Trainee\",\r\n      \"technology\": \"Python\",\r\n      \"online_on_site\": \"online\",\r\n      \"city\": null,\r\n      \"date_range\": \"2025/07/01\",\r\n      \"category\": \"Iniciacion a programación\",\r\n      \"organizer\": 1,\r\n      \"description\": \"Esta es una descripcion para este nuevo evento\"\r\n}",
+									"raw": "{\r\n      \"name\": \"Hackathon Python Trainee\",\r\n      \"technology\": \"Python\",\r\n      \"online_on_site\": \"online\",\r\n      \"city\": null,\r\n      \"category\": \"Iniciacion a programación\",\r\n      \"organizer\": 1,\r\n      \"description\": \"Creado desde Postman! =)\",\r\n      \"start_date\": \"2024-08-20\",\r\n      \"finish_date\": \"2024-08-23\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -136,13 +136,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL_BASE}}:3001/event",
+									"raw": "{{URL_BASE}}:3001/event/create",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
-										"event"
+										"event",
+										"create"
 									]
 								}
 							},
@@ -389,7 +390,7 @@
 					]
 				},
 				{
-					"name": "/event/categories",
+					"name": "event/categories",
 					"item": [
 						{
 							"name": "Listado de categorias",
@@ -444,7 +445,7 @@
 					]
 				},
 				{
-					"name": "/event/results",
+					"name": "event/results",
 					"item": [
 						{
 							"name": "Obtener resultados",
@@ -464,7 +465,12 @@
 								}
 							},
 							"response": []
-						},
+						}
+					]
+				},
+				{
+					"name": "event/insert-results",
+					"item": [
 						{
 							"name": "(admin) Insertar resultados",
 							"request": {
@@ -956,7 +962,7 @@
 											"key": "fileName",
 											"description": "fasfadasd",
 											"type": "file",
-											"src": "/C:/Users/juanm/Documents/Desarrollo/Proyectos/hackatonPFB/back/public/media/hackaton-banner.jpg"
+											"src": []
 										}
 									]
 								},
@@ -1005,7 +1011,7 @@
 					]
 				},
 				{
-					"name": "user/:id",
+					"name": "users/edit/:id",
 					"item": [
 						{
 							"name": "(user) Editar información",

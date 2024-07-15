@@ -18,18 +18,26 @@ import {
 
 const router = express.Router();
 
-// Validaciones Joi hasta event/tematicas
 router
     .get('/event/search', listEventsController)
     .get('/event/details/:eventID', listEventDetailsController)
-    .post('/event', authUser, authAdmin, createEventAdminController)
+    .post('/event/create', authUser, authAdmin, createEventAdminController)
     .post('/event/register', authUser, eventRegistrationController)
     .delete('/event/unlist', authUser, eventUnlistController)
-    .get('/event/confirm/:eventCode', authUser, validateEventParticipationController)
+    .get(
+        '/event/confirm/:eventCode',
+        authUser,
+        validateEventParticipationController
+    )
     .get('/event/categories', listEventCategoriesController)
     .get('/event/technologies', technologyListController)
     .get('/event/results', listEventResultsController)
-    .post('/event/insert-results', authUser, authAdmin, insertEventResultsController)
+    .post(
+        '/event/insert-results',
+        authUser,
+        authAdmin,
+        insertEventResultsController
+    )
     .put('/event/edit/:id', authUser, authAdmin, updateEventAdminController);
 
 export default router;

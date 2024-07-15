@@ -4,6 +4,7 @@ import cors from 'cors';
 import routes from './routes/index.js';
 import path from 'path';
 import 'dotenv/config';
+import cookieParser from 'cookie-parser';
 
 import { errorHandler, notFoundHandler } from './middlewares/index.js';
 import fileUpload from 'express-fileupload';
@@ -16,8 +17,12 @@ const PUBLIC_FOLDER = path.join(process.cwd(), String(UPLOADS_DIR));
 server.use(express.static(PUBLIC_FOLDER));
 
 server.use(morgan('dev'));
-server.use(cors());
-server.use(express.json()); //*como me hacia falta, ya lo pongo
+server.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
+server.use(cookieParser());
+server.use(express.json());
 
 server.use(fileUpload());
 

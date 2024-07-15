@@ -22,14 +22,14 @@ const router = express.Router();
 router
     .get('/event/search', listEventsController)
     .get('/event/details/:eventID', listEventDetailsController)
-    .post('/event', authAdmin, createEventAdminController)
+    .post('/event', authUser, authAdmin, createEventAdminController)
     .post('/event/register', authUser, eventRegistrationController)
     .delete('/event/unlist', authUser, eventUnlistController)
-    .get('/event/confirm/:eventCode', validateEventParticipationController)
+    .get('/event/confirm/:eventCode', authUser, validateEventParticipationController)
     .get('/event/categories', listEventCategoriesController)
     .get('/event/technologies', technologyListController)
     .get('/event/results', listEventResultsController)
-    .post('/event/insert-results', authAdmin, insertEventResultsController)
-    .put('/event/edit/:id', authAdmin, updateEventAdminController);
+    .post('/event/insert-results', authUser, authAdmin, insertEventResultsController)
+    .put('/event/edit/:id', authUser, authAdmin, updateEventAdminController);
 
 export default router;

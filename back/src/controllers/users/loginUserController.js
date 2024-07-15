@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import "dotenv/config";
 import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 import {selectUserByEmailService} from "../../services/users/index.js";
 import Joi from "joi";
@@ -18,9 +19,6 @@ const loginUserController = async (req, res, next) => {
     }
 
     const { email, password } = req.body;
-
-    if (!email || !password)
-      throw generateErrorsUtils("Se esperaba email o contraseña", 400);
 
     const user = await selectUserByEmailService(email);
 
@@ -44,13 +42,24 @@ const loginUserController = async (req, res, next) => {
     };
 
     const token = jwt.sign(tokenInfo, process.env.SECRET, {
+      expiresIn: 60 * 15,
+    });
+
+    const refreshToken = jwt.sign(tokenInfo, process.env.REFRESH_SECRET, {
       expiresIn: "7d",
     });
 
-    res.send({
-      status: "ok",
-      token: token,
-    });
+    res
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true, //? la cookie solo se puede ver en el servidor
+        sameSite: "strict", //? a la cookie solo se puede acceder en el mismo dominio
+        maxAge: 1000 * 60 * 60 * 24 * 7, //? tiempo validez 7 dias
+      })
+      .send({
+        status: "ok",
+        token: token,
+      });
+
   } catch (error) {
     next(error);
   }

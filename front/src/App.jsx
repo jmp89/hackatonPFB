@@ -7,6 +7,7 @@ import ActivationFormPage from './components/ActivationFormPage';
 import LoginFormPage from './pages/LoginFormPage'
 
 import RegisterFormPage from './pages/RegisterFormPage';
+import MyEventsPage from './pages/MyEventsPage';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
       <Route path='/users/validate/activate' element={<ActivationFormPage/>}/>
       <Route path="/users/validate/activation-success" element={<ActivationSuccessPage />} />
       <Route path="/users/login" element={<LoginFormPage />} />
+      <Route path="/users/my-events" element={<MyEventsPage />} />
     </Routes>
   );
 };

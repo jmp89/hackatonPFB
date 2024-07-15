@@ -27,14 +27,24 @@ const getMyEventsListController = async (req, res, next) => {
        WHERE p.user_id = ?`,
             [queryUserId]
         );
-
-        res.send({
-            status: 'ok',
+        
+        let resData = {
+            status: "ok",
             events: myEvents,
-        });
+        };
+
+        let newToken = {};
+        
+        if (req.newAccessToken && req.newAccessToken.length > 1){
+            newToken = {newAccessToken: req.newAccessToken};
+            resData = {...resData, ...newToken};
+        };
+        
+        res.send(resData);
+
     } catch (error) {
         next(error);
-    }
+    };
 };
 
 export default getMyEventsListController;

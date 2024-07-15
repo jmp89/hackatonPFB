@@ -4,13 +4,15 @@ const fetchUserLoginService = async (email, password, setError, setLoginOk) => {
 
     const response = await fetch(URL_LOGIN, {
         method: "POST",
+        mode: "cors",
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
             email: email,
             password: password
-        })
+        }),
     });
 
     const data = await response.json();
@@ -19,7 +21,7 @@ const fetchUserLoginService = async (email, password, setError, setLoginOk) => {
         throw new Error(data.message);
     };
 
-    return data.token;
+    return data;
 };
 
 export default fetchUserLoginService;

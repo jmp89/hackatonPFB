@@ -1,7 +1,6 @@
-import getPool from "../../database/getPool.js";
+import getPool from '../../database/getPool.js';
 
 const getEventResultsService = async () => {
-
     const pool = await getPool();
 
     const finishedEvents = await pool.query(`
@@ -15,7 +14,7 @@ const getEventResultsService = async () => {
         e.finish_date,
         e.start_time,
         e.finish_time,
-        e.category,
+        e.theme,
         e.description AS event_description,
         e.organizer,
         e.image,
@@ -30,7 +29,6 @@ const getEventResultsService = async () => {
     `);
 
     return finishedEvents[0];
-
 };
 
 export default getEventResultsService;

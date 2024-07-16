@@ -1,52 +1,30 @@
-import "dotenv/config";
-import bcrypt from "bcrypt";
-import mysql from "mysql2/promise";
+import 'dotenv/config';
+import bcrypt from 'bcrypt';
+import getPool from './getPool.js';
 
-const { MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD } = process.env;
-
-let pool;
-
-const initPool = async () => {
-  try {
-    if (!pool) {
-      pool = mysql.createPool({
-        connectionLimit: 10,
-        host: MYSQL_HOST,
-        user: MYSQL_USER,
-        password: MYSQL_PASSWORD,
-        timezone: "Z",
-      });
-    };
-
-    return await pool;
-  } catch (error) {
-    throw error;
-  };
-};
+const { MYSQL_DATABASE } = process.env;
 
 const initDB = async () => {
-  try {
-    let pool = await initPool();
+    try {
+        const pool = await getPool();
 
-    console.log("Eliminando base de datos...");
+        console.log('Eliminando base de datos...');
 
-    await pool.query("DROP DATABASE IF EXISTS hackathon");
+        await pool.query(`DROP DATABASE IF EXISTS ${MYSQL_DATABASE}`);
 
-    console.log("Creando base de datos hackathon...");
+        console.log(`Creando base de datos ${MYSQL_DATABASE}...`);
 
-    await pool.query("CREATE DATABASE hackathon");
+        await pool.query(`CREATE DATABASE ${MYSQL_DATABASE}`);
 
-    await pool.query("USE hackathon");
+        await pool.query(`USE ${MYSQL_DATABASE}`);
 
-    console.log("Borrando tablas...");
+        console.log('Borrando tablas...');
 
-    await pool.query(
-      "DROP TABLE IF EXISTS participates, member_of, events, teams, users"
-    );
+        await pool.query('DROP TABLE IF EXISTS participates, events, users');
 
-    console.log("Creando tablas...");
+        console.log('Creando tablas...');
 
-    await pool.query(`
+        await pool.query(`
             CREATE TABLE users (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(100) NOT NULL,
@@ -63,17 +41,7 @@ const initDB = async () => {
             )
     `);
 
-    await pool.query(`
-            CREATE TABLE teams (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(100) NOT NULL,
-                description TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-            )
-    `);
-
-    await pool.query(`
+        await pool.query(`
             CREATE TABLE events (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
@@ -84,7 +52,7 @@ const initDB = async () => {
                 finish_date DATE NOT NULL,
                 start_time TIME NOT NULL,
                 finish_time TIME NOT NULL,
-                category VARCHAR(255) NOT NULL,
+                theme VARCHAR(255) NOT NULL,
                 description TEXT,
                 organizer INT,
                 image VARCHAR(100) DEFAULT NULL,
@@ -94,7 +62,7 @@ const initDB = async () => {
             )
     `);
 
-    await pool.query(`
+        await pool.query(`
             CREATE TABLE participates (
                 user_id INT,
                 event_id INT,
@@ -110,24 +78,11 @@ const initDB = async () => {
             )
     `);
 
-    await pool.query(`
-            CREATE TABLE member_of (
-                user_id INT,
-                team_id INT,
-                event_id INT,
-                PRIMARY KEY (user_id, team_id, event_id),
-                FOREIGN KEY (user_id) REFERENCES users(id),
-                FOREIGN KEY (team_id) REFERENCES teams(id),
-                FOREIGN KEY (event_id) REFERENCES events(id),
-                UNIQUE (user_id, event_id)
-            )
-    `);
+        console.log('Tablas creadas!');
 
-    console.log("Tablas creadas!");
+        console.log('Creando usuario admin...');
 
-    console.log("Creando usuario admin...");
-    
-    await pool.query(`
+        await pool.query(`
       INSERT INTO users (name, email, password, role, active) 
       VALUES ('${process.env.MYSQL_ADMIN_NAME}',
       '${process.env.MYSQL_ADMIN_EMAIL}',
@@ -136,14 +91,14 @@ const initDB = async () => {
       1)
     `);
 
-    console.log("Usuario admin creado!");
-    console.log("Cerrando la conexión.");
+        console.log('Usuario admin creado!');
+        console.log('Cerrando la conexión.');
 
-    process.exit(0);
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  }
+        process.exit(0);
+    } catch (error) {
+        console.log(error);
+        process.exit(1);
+    }
 };
 
 initDB();

@@ -11,9 +11,9 @@ const getEventsService = async (filter, sort, direction) => {
         e.online_on_site,
         e.location,
         e.organizer,
-        e.category,
+        e.theme,
         e.start_date,
-        e.finish_date.
+        e.finish_date,
         e.start_time,
         e.finish_time
         FROM events e
@@ -35,7 +35,7 @@ const getEventsService = async (filter, sort, direction) => {
             OR e.technology LIKE ?
             OR e.online_on_site LIKE ?
             OR e.organizer LIKE ?
-            OR e.category LIKE ?
+            OR e.theme LIKE ?
         `;
     }
 
@@ -44,7 +44,7 @@ const getEventsService = async (filter, sort, direction) => {
         'technology',
         'online_on_site',
         'organizer',
-        'category',
+        'theme',
     ];
     const validDirection = ['ASC', 'DESC'];
 

@@ -1,13 +1,13 @@
-import getPool from "./getPool.js";
+import getPool from './getPool.js';
 
 const initDb_data = async () => {
-  try {
-    const pool = await getPool();
+    try {
+        const pool = await getPool();
 
-    console.log("Conexión establecida.");
-    console.log("Poblando tabla 'users'...");
+        console.log('Conexión establecida.');
+        console.log("Poblando tabla 'users'...");
 
-    await pool.query(`
+        await pool.query(`
                 INSERT INTO users (name, email, password, active, personal_info)
                 VALUES
                 ("user01_test123", "juanmaciasperez89@gmail.com", "$2b$10$81b3IBiTE3ISeyEBbCHwp.whmEzZkKN1pLuLarbyFzY7wMAHfoMxK", 1, "dasdasdds"),
@@ -22,11 +22,11 @@ const initDb_data = async () => {
                 ("user10_pass321", "user10@test.com", "$2b$10$LjitD6YxmKy.MzqB/zVehePco3GGxAh7h9Ack2vXAcfKSvRAxr/ce", 1, "dasdasdds")
             `);
 
-    console.log("Tabla 'users' poblada correctamente.");
-    console.log("Poblando tabla 'events'...");
+        console.log("Tabla 'users' poblada correctamente.");
+        console.log("Poblando tabla 'events'...");
 
-    await pool.query(`
-                INSERT INTO events (technology, online_on_site, location, start_date, finish_date, start_time, finish_time, category, name, description)
+        await pool.query(`
+                INSERT INTO events (technology, online_on_site, location, start_date, finish_date, start_time, finish_time, theme, name, description)
                 VALUES
                 ("Python", "on_site", "A Coruña", "2024-05-22", "2024-06-22", "09:00:00", "18:00:00", "Coding Race", "Python Race Hackathon", "esta es la descripcion del evento 1"),
                 ("JavaScript", "on_site", "A Coruña", "2024-08-13", "2024-10-13", "10:00:00", "17:00:00", "Gaming with JavaScript", "JSGaming", "esta es la descripcion del evento 2"),
@@ -41,10 +41,10 @@ const initDb_data = async () => {
                 ("Python", "on_site", "Granada", "2024-04-18", "2024-06-18", "09:00:00", "18:00:00", "Python for AI", "Machine Learning with Python", "esta es la descripcion del evento 11")
             `);
 
-    console.log("Tabla 'events' poblada correctamente.");
-    console.log("Poblando tabla 'participates'...");
+        console.log("Tabla 'events' poblada correctamente.");
+        console.log("Poblando tabla 'participates'...");
 
-    await pool.query(`
+        await pool.query(`
                 INSERT INTO participates (user_id, event_id, reservation_code, user_score, rating_user_event)
                 VALUES
                 (1, 1, NULL, 100, 5),
@@ -104,66 +104,15 @@ const initDb_data = async () => {
                 (10, 11, NULL, 60, 2)
                 `);
 
-    console.log("Tabla 'participates' poblada correctamente.");
-    console.log("Poblando tabla 'teams'...");
+        console.log("Tabla 'participates' poblada correctamente.");
 
-    await pool.query(`
-                INSERT INTO teams (name, description)
-                VALUES
-                ("Code Crusaders", "Innovadores en búsqueda de nuevas soluciones de software"),
-                ("Byte Busters", "Especialistas en depuración y optimización de código"),
-                ("Hack Heroes", "Creadores de herramientas tecnológicas para un futuro mejor"),
-                ("Pixel Pirates", "Diseñadores gráficos con un toque revolucionario"),
-                ("Script Sentries", "Defensores del código limpio y eficiente"),
-                ("Nerd Ninjas", "Maestros de la programación ágil y rápida"),
-                ("Syntax Squad", "Expertos en encontrar y corregir errores de sintaxis"),
-                ("Quantum Quokkas", "Pioneros en tecnologías avanzadas y computación cuántica"),
-                ("Data Dynamos", "Analistas de datos con habilidades excepcionales"),
-                ("Tech Titans", "Líderes en desarrollo tecnológico y software innovador"),
-                ("Logic Legends", "Solucionadores de problemas con pensamiento lógico afilado"),
-                ("Algorithm Avengers", "Creadores de algoritmos potentes y eficientes")
-            `);
+        console.log('Cerrando la conexión.');
 
-    console.log("Tabla 'teams' poblada correctamente.");
-    console.log("Poblando tabla 'member_of'...");
-
-    await pool.query(`
-                INSERT INTO member_of (user_id, team_id, event_id)
-                VALUES
-                (1, 1, 1),
-                (3, 1, 1),
-                (5, 2, 1),
-                (7, 2, 1),
-                (2, 3, 2),
-                (4, 3, 2),
-                (6, 4, 2),
-                (8, 4, 2),
-                (1, 5, 3),
-                (2, 5, 3),
-                (5, 6, 3),
-                (6, 6, 3),
-                (3, 7, 4),
-                (4, 7, 4),
-                (7, 8, 4),
-                (9, 8, 4),
-                (3, 9, 5),
-                (7, 9, 5),
-                (4, 10, 5),
-                (8, 10, 5),
-                (2, 11, 6),
-                (1, 11, 6),
-                (5, 12, 6),
-                (8, 12, 6)
-            `);
-
-    console.log("Tabla 'member_of' poblada correctamente.");
-    console.log("Cerrando la conexión.");
-
-    process.exit(0);
-  } catch (error) {
-    console.error(error.message);
-    process.exit(1);
-  }
+        process.exit(0);
+    } catch (error) {
+        console.error(error.message);
+        process.exit(1);
+    }
 };
 
 initDb_data();

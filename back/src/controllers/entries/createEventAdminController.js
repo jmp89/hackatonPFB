@@ -3,12 +3,12 @@ import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 import Joi from "joi";
 
 const createEventAdminController = async (req, res, next) => {
-  try {
+  try { // TODO => joi para start_time y finish_time, location es NOT NULL ahora
     const createEventAdminSchema = Joi.object({
       name: Joi.string().required(),
       technology: Joi.string().required(),
       online_on_site: Joi.string().required(),
-      city: Joi.string().allow(null),
+      location: Joi.string().allow(null),
       start_date: Joi.date().required(),
       finish_date: Joi.date().required(),
       category: Joi.string().required(),
@@ -25,26 +25,15 @@ const createEventAdminController = async (req, res, next) => {
       name,
       technology,
       online_on_site,
-      city,
+      location,
       start_date,
       finish_date,
+      start_time,
+      finish_time,
       category,
       organizer,
       description,
     } = req.body;
-
-    if (
-      !name ||
-      !technology ||
-      !online_on_site ||
-      !start_date ||
-      !finish_date ||
-      !category ||
-      !description
-    ) {
-      const err = generateErrorsUtils("Faltan campos por rellenar.", 401);
-      throw err;
-    }
 
     if (online_on_site === "on_site" && !city) {
       const err = generateErrorsUtils(
@@ -58,9 +47,11 @@ const createEventAdminController = async (req, res, next) => {
       name: name,
       technology: technology,
       online_on_site: online_on_site,
-      city: city,
+      location: location,
       start_date: start_date,
       finish_date: finish_date,
+      start_date: start_time,
+      finish_date: finish_time,
       category: category,
       organizer: organizer,
       description: description,

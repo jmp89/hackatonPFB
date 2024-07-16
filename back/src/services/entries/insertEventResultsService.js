@@ -8,7 +8,7 @@ const insertEventResultsService = async (eventInfo) => {
     await pool.query(`
                 UPDATE participates p
                 JOIN users u ON u.id = p.user_id
-                SET p.user_rating = ?
+                SET p.user_score = ?
                 WHERE u.name = ? AND p.event_id = ?
             `, [
                 eventInfo.points1,
@@ -19,7 +19,7 @@ const insertEventResultsService = async (eventInfo) => {
     await pool.query(`
                 UPDATE participates p
                 JOIN users u ON u.id = p.user_id
-                SET p.user_rating = ?
+                SET p.user_score = ?
                 WHERE u.name = ? AND p.event_id = ?
             `, [
                 eventInfo.points2,
@@ -30,7 +30,7 @@ const insertEventResultsService = async (eventInfo) => {
     await pool.query(`
                 UPDATE participates p
                 JOIN users u ON u.id = p.user_id
-                SET p.user_rating = ?
+                SET p.user_score = ?
                 WHERE u.name = ? AND p.event_id = ?
             `, [
                 eventInfo.points3,
@@ -42,7 +42,7 @@ const insertEventResultsService = async (eventInfo) => {
     await pool.query(`
                 UPDATE participates p
                 JOIN users u ON u.id = p.user_id
-                SET p.user_rating = ?
+                SET p.user_score = ?
                 WHERE u.name = ? AND p.event_id = ?
             `, [
                 eventInfo.points4,
@@ -53,7 +53,7 @@ const insertEventResultsService = async (eventInfo) => {
     await pool.query(`
                 UPDATE participates p
                 JOIN users u ON u.id = p.user_id
-                SET p.user_rating = ?
+                SET p.user_score = ?
                 WHERE u.name = ? AND p.event_id = ?
             `, [
                 eventInfo.points5,

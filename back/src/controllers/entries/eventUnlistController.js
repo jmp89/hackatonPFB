@@ -23,14 +23,6 @@ const eventUnlistController = async (req, res, next) => {
             throw generateErrorsUtils(error.message, 400);
         }
 
-        if (!eventID) {
-            const err = generateErrorsUtils(
-                'Es necesario el ID del evento.',
-                401
-            );
-            throw err;
-        }
-
         const token = req.headers['authorization'];
 
         if (!token) {

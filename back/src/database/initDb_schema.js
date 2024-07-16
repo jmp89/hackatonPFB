@@ -1,10 +1,32 @@
-import getPool from "./getPool.js";
 import "dotenv/config";
 import bcrypt from "bcrypt";
+import mysql from "mysql2/promise";
+
+const { MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD } = process.env;
+
+let pool;
+
+const initPool = async () => {
+  try {
+    if (!pool) {
+      pool = mysql.createPool({
+        connectionLimit: 10,
+        host: MYSQL_HOST,
+        user: MYSQL_USER,
+        password: MYSQL_PASSWORD,
+        timezone: "Z",
+      });
+    };
+
+    return await pool;
+  } catch (error) {
+    throw error;
+  };
+};
 
 const initDB = async () => {
   try {
-    let pool = await getPool();
+    let pool = await initPool();
 
     console.log("Eliminando base de datos...");
 
@@ -34,7 +56,7 @@ const initDB = async () => {
                 personal_info TEXT DEFAULT NULL,
                 active BOOLEAN DEFAULT false,
                 role ENUM('admin', 'normal') DEFAULT 'normal',
-                registration_code CHAR(30),
+                registration_code CHAR(15),
                 recover_pass_code CHAR(10),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -57,13 +79,15 @@ const initDB = async () => {
                 name VARCHAR(255) NOT NULL,
                 technology VARCHAR(100) NOT NULL,
                 online_on_site ENUM("online", "on_site") DEFAULT 'online' NOT NULL,
-                city VARCHAR(255),
+                location VARCHAR(255) NOT NULL,
                 start_date DATE NOT NULL,
                 finish_date DATE NOT NULL,
+                start_time TIME NOT NULL,
+                finish_time TIME NOT NULL,
                 category VARCHAR(255) NOT NULL,
                 description TEXT,
                 organizer INT,
-                avatar VARCHAR(100) DEFAULT NULL,
+                image VARCHAR(100) DEFAULT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 FOREIGN KEY (organizer) REFERENCES users(id)
@@ -77,7 +101,7 @@ const initDB = async () => {
                 reservation_code VARCHAR(255),
                 active BOOLEAN DEFAULT false,
                 rating_user_event TINYINT CHECK (rating_user_event BETWEEN 1 AND 5),
-                user_rating INT UNSIGNED,
+                user_score INT UNSIGNED,
                 PRIMARY KEY (user_id, event_id),
                 FOREIGN KEY (user_id) REFERENCES users(id),
                 FOREIGN KEY (event_id) REFERENCES events(id),

@@ -9,11 +9,13 @@ const getEventsService = async (filter, sort, direction) => {
         e.name,
         e.technology,
         e.online_on_site,
-        e.city,
+        e.location,
         e.organizer,
         e.category,
         e.start_date,
-        e.finish_date
+        e.finish_date.
+        e.start_time,
+        e.finish_time
         FROM events e
     `;
 

@@ -26,26 +26,26 @@ const initDb_data = async () => {
     console.log("Poblando tabla 'events'...");
 
     await pool.query(`
-                INSERT INTO events (technology, online_on_site, city, start_date, finish_date, category, name, description)
+                INSERT INTO events (technology, online_on_site, location, start_date, finish_date, start_time, finish_time, category, name, description)
                 VALUES
-                ("Python", "on_site", "A Coruña", "2024-05-22", "2024-06-22", "Coding Race", "Python Race Hackathon", "esta es la descripcion del evento 1"),
-                ("JavaScript", "on_site", "A Coruña", "2024-08-13", "2024-10-13", "Gaming with JavaScript", "JSGaming", "esta es la descripcion del evento 2"),
-                ("React", "on_site", "Madrid", "2024-07-24", "2024-09-24", "Top Developers", "Selecting best React developers", "esta es la descripcion del evento 3"),
-                ("Next", "on_site", "Barcelona", "2024-02-05", "2024-04-05", "Coding Race", "App development Race with Next", "esta es la descripcion del evento 4"),
-                ("Python", "on_site", "Madrid", "2024-01-17", "2024-03-28", "Coding", "Python AI development", "esta es la descripcion del evento 5"),
-                ("JavaScript", "on_site", "Barcelona", "2024-06-08", "2024-09-08", "Coding Race", "API development with JS Race", "esta es la descripcion del evento 6"),
-                ("Python", "on_site", "Sevilla", "2024-01-15", "2024-03-15", "Python Masters", "Advanced Python Techniques", "esta es la descripcion del evento 7"),
-                ("JavaScript", "on_site", "Valencia", "2024-02-20", "2024-04-20", "JavaScript Summit", "Exploring JS Frameworks", "esta es la descripcion del evento 8"),
-                ("React", "on_site", "Bilbao", "2024-01-05", "2024-02-25", "React Bootcamp", "Intensive React Training", "esta es la descripcion del evento 9"),
-                ("Next", "on_site", "Alicante", "2024-03-10", "2024-05-10", "Next.js Conference", "Building Modern Apps with Next.js", "esta es la descripcion del evento 10"),
-                ("Python", "on_site", "Granada", "2024-04-18", "2024-06-18", "Python for AI", "Machine Learning with Python", "esta es la descripcion del evento 11")
+                ("Python", "on_site", "A Coruña", "2024-05-22", "2024-06-22", "09:00:00", "18:00:00", "Coding Race", "Python Race Hackathon", "esta es la descripcion del evento 1"),
+                ("JavaScript", "on_site", "A Coruña", "2024-08-13", "2024-10-13", "10:00:00", "17:00:00", "Gaming with JavaScript", "JSGaming", "esta es la descripcion del evento 2"),
+                ("React", "on_site", "Madrid", "2024-07-24", "2024-09-24", "09:30:00", "18:30:00", "Top Developers", "Selecting best React developers", "esta es la descripcion del evento 3"),
+                ("Next", "on_site", "Barcelona", "2024-02-05", "2024-04-05", "08:00:00", "16:00:00", "Coding Race", "App development Race with Next", "esta es la descripcion del evento 4"),
+                ("Python", "on_site", "Madrid", "2024-01-17", "2024-03-28", "09:15:00", "17:15:00", "Coding", "Python AI development", "esta es la descripcion del evento 5"),
+                ("JavaScript", "on_site", "Barcelona", "2024-06-08", "2024-09-08", "09:00:00", "18:00:00", "Coding Race", "API development with JS Race", "esta es la descripcion del evento 6"),
+                ("Python", "on_site", "Sevilla", "2024-01-15", "2024-03-15", "10:00:00", "17:00:00", "Python Masters", "Advanced Python Techniques", "esta es la descripcion del evento 7"),
+                ("JavaScript", "on_site", "Valencia", "2024-02-20", "2024-04-20", "08:30:00", "17:30:00", "JavaScript Summit", "Exploring JS Frameworks", "esta es la descripcion del evento 8"),
+                ("React", "on_site", "Bilbao", "2024-01-05", "2024-02-25", "09:00:00", "18:00:00", "React Bootcamp", "Intensive React Training", "esta es la descripcion del evento 9"),
+                ("Next", "on_site", "Alicante", "2024-03-10", "2024-05-10", "09:30:00", "18:30:00", "Next.js Conference", "Building Modern Apps with Next.js", "esta es la descripcion del evento 10"),
+                ("Python", "on_site", "Granada", "2024-04-18", "2024-06-18", "09:00:00", "18:00:00", "Python for AI", "Machine Learning with Python", "esta es la descripcion del evento 11")
             `);
 
     console.log("Tabla 'events' poblada correctamente.");
     console.log("Poblando tabla 'participates'...");
 
     await pool.query(`
-                INSERT INTO participates (user_id, event_id, reservation_code, user_rating, rating_user_event)
+                INSERT INTO participates (user_id, event_id, reservation_code, user_score, rating_user_event)
                 VALUES
                 (1, 1, NULL, 100, 5),
                 (3, 1, NULL, 80, 4),

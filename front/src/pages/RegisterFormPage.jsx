@@ -56,7 +56,7 @@ const RegisterFormPage = () => {
 
   return (
     <main className="flex items-center justify-center px-4">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-md mt-10">
+      <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center bg-white p-6 rounded-lg shadow-md w-full max-w-3xl mt-10">
         <h2 className="text-2xl font-bold text-center mb-6">REGISTRARSE</h2>
 
         {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -106,7 +106,7 @@ const RegisterFormPage = () => {
           </section>
         </fieldset>
 
-        <button type="submit" className="w-full bg-black text-white py-2 rounded-lg font-bold text-lg mb-4">REGISTRARSE</button>
+        <button type="submit" className="w-44 bg-black text-white py-2 rounded-lg font-bold text-lg mb-4 hover:scale-105 transition-transform duration-300">REGISTRARSE</button>
 
         <section className="text-sm text-gray-700">
           <h2 className="text-lg font-bold mb-2">Políticas de usuario</h2>

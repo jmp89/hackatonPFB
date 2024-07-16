@@ -84,9 +84,20 @@ const eventRegistrationController = async (req, res, next) => {
 
         await sendMailUtils(finalEmail, emailSubject, emailBody);
 
-        res.status(200).json({
-            message: 'Se ha enviado un email para confirmar la inscripción',
-        });
+        let resData = {
+            status: "ok",
+            message: "Se ha enviado un email para confirmar la inscripción",
+        };
+
+        let newToken = {};
+        
+        if (req.newAccessToken && req.newAccessToken.length > 1){
+            newToken = {newAccessToken: req.newAccessToken};
+            resData = {...resData, ...newToken};
+        };
+        
+        res.send(resData);
+
     } catch (error) {
         next(error);
     }

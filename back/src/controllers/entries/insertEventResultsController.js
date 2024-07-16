@@ -27,10 +27,20 @@ const insertEventResultsController = async (req, res, next) => {
 
         await insertEventResultsService(eventInfo);
 
-        res.send({
-            status: 'ok',
-            message: 'Puntuaciones insertadas correctamente.',
-        });
+        let resData = {
+            status: "ok",
+            message: "Puntuaciones insertadas correctamente.",
+        };
+
+        let newToken = {};
+        
+        if (req.newAccessToken && req.newAccessToken.length > 1){
+            newToken = {newAccessToken: req.newAccessToken};
+            resData = {...resData, ...newToken};
+        };
+        
+        res.send(resData);
+
     } catch (error) {
         next(error);
     }

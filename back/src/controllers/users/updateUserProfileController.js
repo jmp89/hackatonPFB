@@ -27,7 +27,21 @@ const updateUserProfileController = async (req, res, next) => {
         }
 
         await updateUserProfile(userId, name, email, personal_info);
-        res.status(200).send('Perfil actualizado con éxito');
+
+        let resData = {
+            status: "ok",
+            messge: "Perfil actualizado con éxito",
+        };
+
+        let newToken = {};
+        
+        if (req.newAccessToken && req.newAccessToken.length > 1){
+            newToken = {newAccessToken: req.newAccessToken};
+            resData = {...resData, ...newToken};
+        };
+        
+        res.send(resData);
+
     } catch (err) {
         next(err);
     }

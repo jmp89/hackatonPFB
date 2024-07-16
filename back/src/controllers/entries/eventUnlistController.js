@@ -45,10 +45,20 @@ const eventUnlistController = async (req, res, next) => {
 
         await eventUnlistService(id, eventID);
 
-        res.send({
-            status: 'ok',
-            message: 'Registro al evento cancelado correctamente.',
-        });
+        let resData = {
+            status: "ok",
+            message: "Registro al evento cancelado correctamente.",
+        };
+
+        let newToken = {};
+        
+        if (req.newAccessToken && req.newAccessToken.length > 1){
+            newToken = {newAccessToken: req.newAccessToken};
+            resData = {...resData, ...newToken};
+        };
+        
+        res.send(resData);
+
     } catch (error) {
         next(error);
     }

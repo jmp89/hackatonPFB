@@ -37,10 +37,20 @@ const uploadFilesController = async (req, res, next) => {
         // Mover el archivo a la carpeta de destino
         await file.mv(uploadPath);
 
-        res.send({
-            status: 'ok',
-            message: 'Archivo subido correctamente',
-        });
+        let resData = {
+            status: "ok",
+            message: "Archivo subido correctamente",
+        };
+
+        let newToken = {};
+        
+        if (req.newAccessToken && req.newAccessToken.length > 1){
+            newToken = {newAccessToken: req.newAccessToken};
+            resData = {...resData, ...newToken};
+        };
+        
+        res.send(resData);
+
     } catch (err) {
         next(err);
     }

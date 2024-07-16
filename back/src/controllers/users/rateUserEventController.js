@@ -50,7 +50,20 @@ const rateUserEventController = async (req, res, next) => {
             throw generateErrorsUtils('No has participado en este evento', 404);
         }
 
-        res.status(200).send('Valoración registrada correctamente');
+        let resData = {
+            status: "ok",
+            message: "Valoración registrada correctamente",
+        };
+
+        let newToken = {};
+        
+        if (req.newAccessToken && req.newAccessToken.length > 1){
+            newToken = {newAccessToken: req.newAccessToken};
+            resData = {...resData, ...newToken};
+        };
+        
+        res.send(resData);
+
     } catch (error) {
         next(error);
     }

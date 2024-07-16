@@ -68,10 +68,19 @@ const createEventAdminController = async (req, res, next) => {
 
     await createEventAdminService(eventInfo);
 
-    res.send({
+    let resData = {
       status: "ok",
-      message: "Evento creado correctamente."
-    });
+      message: "Evento creado correctamente",
+    };
+
+    let newToken = {};
+  
+    if (req.newAccessToken && req.newAccessToken.length > 1){
+      newToken = {newAccessToken: req.newAccessToken};
+      resData = {...resData, ...newToken};
+    };
+  
+    res.send(resData);
 
   } catch (error) {
 

@@ -16,12 +16,12 @@ const getPool = async () => {
         database: MYSQL_DATABASE,
         timezone: "Z",
       });
-    }
+    };
 
     return await pool;
   } catch (error) {
-    console.log(error);
-  }
+    throw error;
+  };
 };
 
 export default getPool;

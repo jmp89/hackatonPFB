@@ -8,11 +8,13 @@ const getEventDetailsService = async (eventID) => {
             SELECT e.name,
             e.technology,
             e.online_on_site,
-            e.city,
+            e.location,
             e.category,
             e.organizer,
             e.start_date,
             e.finish_date,
+            e.start_time,
+            e.finish_time,
             COUNT(DISTINCT p.user_id) AS total_participants,
             COUNT(DISTINCT m.team_id) AS total_teams
             FROM events e

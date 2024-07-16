@@ -10,16 +10,18 @@ const getEventResultsService = async () => {
         e.name AS event_name,
         e.technology,
         e.online_on_site,
-        e.city,
+        e.location,
         e.start_date,
         e.finish_date,
+        e.start_time,
+        e.finish_time,
         e.category,
         e.description AS event_description,
         e.organizer,
-        e.avatar AS event_avatar,
+        e.image,
         u.name AS user_name,
         u.avatar AS user_avatar,
-        p.user_rating
+        p.user_score
         FROM events e
         LEFT JOIN participates p ON e.id = p.event_id
         LEFT JOIN users u ON p.user_id = u.id

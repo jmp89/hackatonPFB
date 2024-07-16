@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import fetchUserLoginService from "../services/fetchUserLoginService.js";
 import { useAuth } from "../context/AuthContext";
 
@@ -91,7 +91,7 @@ const LoginForm = () => {
         </button>
 
         <section className="text-center mb-4">
-          <a href="#" className="text-blue-500 text-sm">He olvidado mi contraseña</a>
+        <Link to="/reset-password" className="text-blue-500 text-sm">He olvidado mi contraseña</Link>
         </section>
       </form>
     </main>

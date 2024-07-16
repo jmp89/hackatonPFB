@@ -43,11 +43,12 @@ const ResetPass = () => {
 
     return (
         <main className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
-            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
+           
+            <fieldset className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
                 <h2 className="text-2xl font-bold text-center mb-6">Recuperar Contraseña</h2>
                 {step === 1 && (
                     <form onSubmit={handleEmailSubmit}>
-                        <div className="mb-4 flex flex-col items-center">
+                        <section className="mb-4 flex flex-col items-center">
                             <label className="block text-lg font-medium mb-2 text-center">Email</label>
                             <input
                                 type="email"
@@ -57,7 +58,7 @@ const ResetPass = () => {
                                 className="w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-black px-4 py-2"
                                 placeholder="Escribe tu email"
                             />
-                        </div>
+                        </section>
                         <button type="submit" className="w-full bg-black text-white py-2 rounded-lg font-bold text-lg">
                             Enviar código de verificación
                         </button>
@@ -65,7 +66,7 @@ const ResetPass = () => {
                 )}
                 {step === 2 && (
                     <form onSubmit={handlePasswordReset}>
-                        <div className="mb-4 flex flex-col items-center">
+                        <section className="mb-4 flex flex-col items-center">
                             <label className="block text-lg font-medium mb-2 text-center">Código de verificación</label>
                             <input
                                 type="text"
@@ -75,8 +76,8 @@ const ResetPass = () => {
                                 className="w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-black px-4 py-2"
                                 placeholder="Escribe el código de verificación"
                             />
-                        </div>
-                        <div className="mb-4 flex flex-col items-center">
+                        </section>
+                        <section className="mb-4 flex flex-col items-center">
                             <label className="block text-lg font-medium mb-2 text-center">Nueva Contraseña</label>
                             <input
                                 type="password"
@@ -86,8 +87,8 @@ const ResetPass = () => {
                                 className="w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-black px-4 py-2"
                                 placeholder="Escribe tu nueva contraseña"
                             />
-                        </div>
-                        <div className="mb-4 flex flex-col items-center">
+                        </section>
+                        <section className="mb-4 flex flex-col items-center">
                             <label className="block text-lg font-medium mb-2 text-center">Repite la Contraseña</label>
                             <input
                                 type="password"
@@ -97,7 +98,7 @@ const ResetPass = () => {
                                 className="w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-black px-4 py-2"
                                 placeholder="Repite tu nueva contraseña"
                             />
-                        </div>
+                        </section>
                         <button type="submit" className="w-full bg-black text-white py-2 rounded-lg font-bold text-lg">
                             Restablecer Contraseña
                         </button>
@@ -109,7 +110,8 @@ const ResetPass = () => {
                     </p>
                 )}
                 {message && <p className="text-center text-red-500 mt-4">{message}</p>}
-            </div>
+            </fieldset>
+            
         </main>
     );
 };

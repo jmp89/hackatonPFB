@@ -13,6 +13,25 @@
 					"name": "event/search",
 					"item": [
 						{
+							"name": "Listado (sin parametros)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL_BASE}}:3001/event/search",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"port": "3001",
+									"path": [
+										"event",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Búsqueda",
 							"request": {
 								"method": "GET",
@@ -40,25 +59,6 @@
 											"key": "direction",
 											"value": "desc"
 										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Listado (sin parametros)",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{URL_BASE}}:3001/event/search",
-									"host": [
-										"{{URL_BASE}}"
-									],
-									"port": "3001",
-									"path": [
-										"event",
-										"search"
 									]
 								}
 							},
@@ -112,7 +112,7 @@
 					]
 				},
 				{
-					"name": "event",
+					"name": "event/create",
 					"item": [
 						{
 							"name": "(admin) Crear evento",
@@ -128,7 +128,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n      \"name\": \"Hackathon Python Trainee\",\r\n      \"technology\": \"Python\",\r\n      \"online_on_site\": \"online\",\r\n      \"city\": null,\r\n      \"category\": \"Iniciacion a programación\",\r\n      \"organizer\": 1,\r\n      \"description\": \"Creado desde Postman! =)\",\r\n      \"start_date\": \"2024-08-20\",\r\n      \"finish_date\": \"2024-08-23\"\r\n}",
+									"raw": "{\r\n      \"name\": \"Hackathon Python Trainee\",\r\n      \"technology\": \"Python\",\r\n      \"online_on_site\": \"online\",\r\n      \"location\": \"Roma, Italia\",\r\n      \"theme\": \"Iniciacion a programación\",\r\n      \"organizer\": 1,\r\n      \"description\": \"Creado desde Postman! =)\",\r\n      \"start_date\": \"2024-08-20\",\r\n      \"finish_date\": \"2024-08-23\",\r\n      \"start_time\": \"10:00\",\r\n      \"finish_time\": \"22:00\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -171,13 +171,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL_BASE}}:3001/event",
+									"raw": "{{URL_BASE}}:3001/event/create",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
-										"event"
+										"event",
+										"create"
 									]
 								}
 							},
@@ -366,10 +367,9 @@
 								"method": "GET",
 								"header": [
 									{
-										"key": "",
-										"value": "",
-										"type": "text",
-										"disabled": true
+										"key": "Authorization",
+										"value": "{{TOKEN_USER}}",
+										"type": "text"
 									}
 								],
 								"url": {
@@ -390,10 +390,10 @@
 					]
 				},
 				{
-					"name": "event/categories",
+					"name": "event/themes",
 					"item": [
 						{
-							"name": "Listado de categorias",
+							"name": "Listado de temáticas",
 							"request": {
 								"method": "GET",
 								"header": [
@@ -405,14 +405,14 @@
 									}
 								],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/event/categories",
+									"raw": "{{URL_BASE}}:3001/event/themes",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"event",
-										"categories"
+										"themes"
 									]
 								}
 							},
@@ -421,7 +421,7 @@
 					]
 				},
 				{
-					"name": "tecnologias",
+					"name": "event/technologies",
 					"item": [
 						{
 							"name": "Listado de tecnologias",
@@ -557,7 +557,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Python Race Hackathon\",\r\n    \"technology\": \"Python\",\r\n    \"online_on_site\": \"online\",\r\n    \"city\": null,\r\n    \"start_date\": \"2024-05-22\",\r\n    \"finish_date\": \"2024-06-22\",\r\n    \"category\": \"Coding Race\",\r\n    \"description\": \"Cambio de descripción desde postman\",\r\n    \"organizer\": 1\r\n}",
+									"raw": "{\r\n    \"name\": \"Postman Masterclass\",\r\n    \"technology\": \"Python\",\r\n    \"online_on_site\": \"online\",\r\n    \"location\": \"Italia\",\r\n    \"start_date\": \"2024-05-22\",\r\n    \"finish_date\": \"2024-06-22\",\r\n    \"start_time\": \"10:00\",\r\n    \"finish_time\": \"20:00\",\r\n    \"theme\": \"Coding Race\",\r\n    \"description\": \"Cambio de descripción desde postman\",\r\n    \"organizer\": 1\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1127,7 +1127,13 @@
 							"name": "(error) No has participado",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN_USER}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userId\": 2,\r\n    \"eventId\": 1,\r\n    \"rating\": 5\r\n}",
@@ -1155,7 +1161,13 @@
 							"name": "(error) Rating debe ser entre 1 y 5",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN_USER}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userId\": 2,\r\n    \"eventId\": 2,\r\n    \"rating\": 7\r\n}",
@@ -1183,7 +1195,13 @@
 							"name": "Dar valoración",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN_USER}}",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"userId\": 2,\r\n    \"eventId\": 8,\r\n    \"rating\": 5\r\n}",

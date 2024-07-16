@@ -1,165 +1,180 @@
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+
+const MenuIcon = ({ isOpen }) => (
+    !isOpen ? (
+        <svg
+            className="block h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+        >
+            <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+            />
+        </svg>
+    ) : (
+        <svg
+            className="block h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+        >
+            <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+            />
+        </svg>
+    )
+);
+
+const NavItem = ({ to, onClick, children, className, isMobile }) => (
+    <NavLink
+        to={to}
+        onClick={onClick}
+        className={`${className} px-4 py-2 rounded-md transition-colors duration-300 ${isMobile ? 'text-base font-medium' : 'text-lg font-semibold'}`}
+    >
+        {children}
+    </NavLink>
+);
 
 const Header = () => {
     const { token, removeToken } = useAuth();
-
     const [isOpen, setIsOpen] = useState(false);
+    const menuRef = useRef(null);
 
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
+    const toggleMenu = () => setIsOpen(!isOpen);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isOpen]);
 
     return (
-        <nav className="bg-white text-black">
+        <header className="bg-white text-black sticky top-0 z-50 shadow-md">
             <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-                <div className="relative flex items-center justify-between h-16">
-                    <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
+                <div className="flex items-center justify-between h-20">
+                    <div className="flex-shrink-0">
+                        <img
+                            className="h-48 w-48"
+                            src="/logo_hackaverse.svg"
+                            alt="Hackaverse"
+                        />
+                    </div>
+                    <nav className="hidden sm:flex sm:space-x-6">
+                        <NavItem to="/" className="text-black hover:bg-black hover:text-white">
+                            Inicio
+                        </NavItem>
+                        {!token ? (
+                            <>
+                                <NavItem to="/users/login" className="text-black hover:bg-black hover:text-white">
+                                    Login
+                                </NavItem>
+                                <NavItem to="/register" className="text-black hover:bg-black hover:text-white">
+                                    Regístrate
+                                </NavItem>
+                            </>
+                        ) : (
+                            <>
+                                <NavItem to="/users/my-events" className="text-black hover:bg-black hover:text-white">
+                                    Mis inscripciones
+                                </NavItem>
+                                <NavItem to="#" onClick={removeToken} className="text-black hover:bg-black hover:text-white">
+                                    Cerrar sesión
+                                </NavItem>
+                            </>
+                        )}
+                    </nav>
+                    <div className="sm:hidden">
                         <button
                             onClick={toggleMenu}
                             type="button"
-                            className="inline-flex items-center justify-center p-2 rounded-md text-black hover:text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                            className="inline-flex items-center justify-center p-2 rounded-md text-black hover:text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition-colors duration-300"
                             aria-controls="mobile-menu"
-                            aria-expanded="false"
+                            aria-expanded={isOpen}
                         >
                             <span className="sr-only">Abrir menú</span>
-                            {!isOpen ? (
-                                <svg
-                                    className="block h-6 w-6"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    aria-hidden="true"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                </svg>
-                            ) : (
-                                <svg
-                                    className="block h-6 w-6"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    aria-hidden="true"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            )}
+                            <MenuIcon isOpen={isOpen} />
                         </button>
-                    </div>
-                    <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-                        <div className="flex-shrink-0">
-                            <img
-                                className="h-8 w-8"
-                                src="/logo.svg"
-                                alt="Hackaverse"
-                            />
-                        </div>
-                        <div className="hidden sm:block sm:ml-6">
-                            <div className="flex space-x-4">
-                                <NavLink
-                                    to="/"
-                                    className="text-black hover:bg-black hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                >
-                                    Inicio
-                                </NavLink>
-                                {!token ? (
-                                    <>
-                                        <NavLink
-                                            to="/users/login"
-                                            className="text-black hover:bg-black hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                        >
-                                            Identifícate
-                                        </NavLink>
-                                        <NavLink
-                                            to="/register"
-                                            className="text-black hover:bg-black hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                        >
-                                            Regístrate
-                                        </NavLink>
-                                    </>
-                                ) : (
-                                    <>
-                                        <NavLink
-                                            to="/users/my-events"
-                                            className="text-black hover:bg-black hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                        >
-                                            Mis inscripciones
-                                        </NavLink>
-
-                                        <NavLink
-                                            to="#"
-                                            onClick={removeToken}
-                                            className="text-black hover:bg-black hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                        >
-                                            Cerrar sesión
-                                        </NavLink>
-                                    </>
-                                )}
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Menú móvil*/}
-            {isOpen && (
-                <div className="sm:hidden" id="mobile-menu">
-                    <div className="px-2 pt-2 pb-3 space-y-1">
-                        <NavLink
-                            to="/"
-                            className="text-black hover:bg-black hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                        >
+            <nav ref={menuRef} className={`sm:hidden absolute top-20 right-0 bg-white z-50 border border-gray-200 opacity-0 transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto w-64' : 'opacity-0 pointer-events-none w-0'}`}>
+                <ul className={`px-2 pt-2 pb-3 space-y-6 ${isOpen ? 'block' : 'hidden'}`}>
+                    <li className='mt-2'>
+                        <NavItem to="/" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
                             Inicio
-                        </NavLink>
-                        {!token ? (
-                            <>
-                                <NavLink
-                                    to="/users/login"
-                                    className="text-black hover:bg-black hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                                >
-                                    Identifícate
-                                </NavLink>
-                                <NavLink
-                                    to="/register"
-                                    className="text-black hover:bg-black hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                                >
+                        </NavItem>
+                    </li>
+                    {!token ? (
+                        <>
+                            <li>
+                                <NavItem to="/users/login" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                                    Login
+                                </NavItem>
+                            </li>
+                            <li>
+                                <NavItem to="/register" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
                                     Regístrate
-                                </NavLink>
-                            </>
-                        ) : (
-                            <>
-                                <NavLink
-                                    to="/users/my-events"
-                                    className="text-black hover:bg-black hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                                >
+                                </NavItem>
+                            </li>
+                        </>
+                    ) : (
+                        <>
+                            <li>
+                                <NavItem to="/users/my-events" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
                                     Mis inscripciones
-                                </NavLink>
-                                <NavLink
-                                    to="#"
-                                    onClick={removeToken}
-                                    className="text-black hover:bg-black hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                                >
+                                </NavItem>
+                            </li>
+                            <li>
+                                <NavItem to="#" onClick={() => { removeToken(); toggleMenu(); }} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
                                     Cerrar sesión
-                                </NavLink>
-                            </>
-                        )}
-                    </div>
-                </div>
-            )}
-        </nav>
+                                </NavItem>
+                            </li>
+                        </>
+                    )}
+                    <li className='mt-2'>
+                        <NavItem to="/" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                            Hackatones
+                        </NavItem>
+                    </li>
+                    <li className='mt-2'>
+                        <NavItem to="/" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                            Preguntas frecuentes
+                        </NavItem>
+                    </li>
+                    <li className='mt-2'>
+                        <NavItem to="/" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                            Cerrar sesión
+                        </NavItem>
+                    </li>
+                </ul>
+            </nav>
+        </header>
     );
 };
 

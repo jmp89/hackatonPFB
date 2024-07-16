@@ -1,18 +1,18 @@
-import {getEventCategoriesService} from '../../services/entries/index.js';
+import { getEventThemesService } from '../../services/entries/index.js';
 import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
 
-const listEventCategoriesController = async (req, res, next) => {
+const listEventThemesController = async (req, res, next) => {
     try {
-        const categories = await getEventCategoriesService();
+        const themes = await getEventThemesService();
 
-        if (!categories) {
+        if (!themes) {
             const err = generateErrorsUtils(
                 'No se encontraron tematicas.',
                 404
             );
             throw err;
         }
-        const [rows, columns] = categories;
+        const [rows, columns] = themes;
 
         res.send({
             status: 'ok',
@@ -25,4 +25,4 @@ const listEventCategoriesController = async (req, res, next) => {
     }
 };
 
-export default listEventCategoriesController;
+export default listEventThemesController;

@@ -27,28 +27,35 @@ const ActivationFormPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="max-w-md px-6 py-12 bg-white shadow-lg rounded-lg text-center">
-        <h2 className="text-3xl font-bold mb-4">Activar Cuenta</h2>
-        <form onSubmit={handleSubmit} className="flex flex-col">
-          <input
-            type="text"
-            value={registrationCode}
-            onChange={(e) => setRegistrationCode(e.target.value)}
-            className="px-4 py-2 border rounded mb-4"
-            placeholder="Código de Registro"
-            required
-          />
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-          >
-            Activar
-          </button>
-        </form>
-        {error && <p className="text-red-500 mt-4">{error}</p>}
-      </div>
-    </div>
+    <main className="flex items-center justify-center min-h-screen bg-gray-100">
+      <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center bg-white p-6 rounded-lg shadow-md w-full max-w-md mx-4 md:mx-auto">
+        <h2 className="text-2xl font-bold text-center mb-6">Activar Cuenta</h2>
+
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+
+        <fieldset className="w-full">
+          <section className="mb-4">
+            <label htmlFor="registrationCode" className="block text-lg font-medium mb-2">
+              Código de Registro
+            </label>
+            <input
+              type="text"
+              id="registrationCode"
+              name="registrationCode"
+              placeholder="Código de Registro"
+              value={registrationCode}
+              onChange={(e) => setRegistrationCode(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              required
+            />
+          </section>
+        </fieldset>
+
+        <button type="submit" className="w-44 bg-black text-white py-2 rounded-lg font-bold text-lg mb-4 hover:scale-105 transition-transform duration-300">
+          Activar
+        </button>
+      </form>
+    </main>
   );
 };
 

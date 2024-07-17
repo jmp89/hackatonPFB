@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 const MenuIcon = ({ isOpen }) => (
@@ -51,27 +51,8 @@ const NavItem = ({ to, onClick, children, className, isMobile }) => (
 const Header = () => {
     const { token, removeToken } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
-    const menuRef = useRef(null);
 
     const toggleMenu = () => setIsOpen(!isOpen);
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setIsOpen(false);
-            }
-        };
-
-        if (isOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        } else {
-            document.removeEventListener('mousedown', handleClickOutside);
-        }
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [isOpen]);
 
     return (
         <header className="bg-white text-black sticky top-0 z-50 shadow-md">
@@ -123,7 +104,7 @@ const Header = () => {
                 </div>
             </div>
 
-            <nav ref={menuRef} className={`sm:hidden absolute top-20 right-0 bg-white z-50 border border-gray-200 opacity-0 transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto w-64' : 'opacity-0 pointer-events-none w-0'}`}>
+            <nav className={`sm:hidden absolute top-20 right-0 bg-white z-50 border border-gray-200 transition-all duration-300 ${isOpen ? 'opacity-100 pointer-events-auto w-64' : 'opacity-0 pointer-events-none w-0'}`}>
                 <ul className={`px-2 pt-2 pb-3 space-y-6 ${isOpen ? 'block' : 'hidden'}`}>
                     <li className='mt-2'>
                         <NavItem to="/" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
@@ -151,7 +132,7 @@ const Header = () => {
                                 </NavItem>
                             </li>
                             <li>
-                                <NavItem to="#" onClick={() => { removeToken(); toggleMenu(); }} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                                <NavItem to="#" onClick={() => { removeToken(); setIsOpen(false); }} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
                                     Cerrar sesión
                                 </NavItem>
                             </li>
@@ -165,11 +146,6 @@ const Header = () => {
                     <li className='mt-2'>
                         <NavItem to="/" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
                             Preguntas frecuentes
-                        </NavItem>
-                    </li>
-                    <li className='mt-2'>
-                        <NavItem to="/" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
-                            Cerrar sesión
                         </NavItem>
                     </li>
                 </ul>

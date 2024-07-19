@@ -4,25 +4,34 @@ import Joi from 'joi';
 
 const updateEventAdminController = async (req, res, next) => {
     try {
-        // const updateEventAdminSchema = Joi.object({
-        //     name: Joi.string().required(),
-        //     //TODO => technologies: Joi.string().required(),
-        //     online_on_site: Joi.string().required(),
-        //     location: Joi.string().required(),
-        //     start_date: Joi.date().required(),
-        //     finish_date: Joi.date().required(),
-        //     start_time: Joi.string().required(),
-        //     finish_time: Joi.string().required(),
-        //     //TODO => thematics: Joi.string().required(),
-        //     organizer: Joi.number().integer().required(),
-        //     description: Joi.string().min(15).max(255).required(),
-        // });
 
-        // const { error } = updateEventAdminSchema.validate(req.body);
+        const technologySchema = Joi.object({
+            name: Joi.string().required()
+        });
 
-        // if (error) {
-        //     throw generateErrorsUtils(error.message, 400);
-        // }
+        const thematicSchema = Joi.object({
+            name: Joi.string().required()
+        });
+
+        const updateEventAdminSchema = Joi.object({
+            name: Joi.string().required(),
+            technologies: Joi.array().items(technologySchema).required(),
+            online_on_site: Joi.string().required(),
+            location: Joi.string().required(),
+            start_date: Joi.date().required(),
+            finish_date: Joi.date().required(),
+            start_time: Joi.string().required(),
+            finish_time: Joi.string().required(),
+            thematics: Joi.array().items(thematicSchema).required(),
+            organizer: Joi.number().integer().required(),
+            description: Joi.string().min(15).max(255).required(),
+        });
+
+        const { error } = updateEventAdminSchema.validate(req.body);
+
+        if (error) {
+            throw generateErrorsUtils(error.message, 400);
+        }
 
         const {
             name,

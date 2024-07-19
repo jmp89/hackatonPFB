@@ -4,16 +4,25 @@ import Joi from 'joi';
 
 const createEventAdminController = async (req, res, next) => {
     try {
+
+        const technologySchema = Joi.object({
+            name: Joi.string().required()
+        });
+
+        const thematicSchema = Joi.object({
+            name: Joi.string().required()
+        });
+
         const createEventAdminSchema = Joi.object({
             name: Joi.string().required(),
-            //TODO => technologies: Joi.string().required(),
+            technologies: Joi.array().items(technologySchema).required(),
             online_on_site: Joi.string().required(),
             location: Joi.string().required(),
             start_date: Joi.date().required(),
             finish_date: Joi.date().required(),
             start_time: Joi.string().required(),
             finish_time: Joi.string().required(),
-            //TODO  => thematics: Joi.string().required(),
+            thematics: Joi.array().items(thematicSchema).required(),
             organizer: Joi.number().integer().required(),
             description: Joi.string().min(15).max(255).required(),
         });

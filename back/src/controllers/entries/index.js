@@ -1,7 +1,7 @@
 import createEventAdminController from './createEventAdminController.js';
 import eventRegistrationController from './eventRegistrationController.js';
 import eventUnlistController from './eventUnlistController.js';
-import listEventThemesController from './listEventThemesController.js';
+import listEventThematicsController from './listEventThematicsController.js';
 import listEventDetailsController from './listEventDetailsController.js';
 import listEventsController from './listEventsController.js';
 import technologyListController from './technologyListController.js';
@@ -14,7 +14,7 @@ export {
     createEventAdminController,
     eventRegistrationController,
     eventUnlistController,
-    listEventThemesController,
+    listEventThematicsController,
     listEventDetailsController,
     listEventsController,
     technologyListController,

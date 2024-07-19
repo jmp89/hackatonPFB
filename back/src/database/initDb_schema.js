@@ -39,20 +39,18 @@ const initDB = async () => {
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             )
-    `);
+        `);
 
         await pool.query(`
             CREATE TABLE events (
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
-                technology VARCHAR(100) NOT NULL,
+                name VARCHAR(255) UNIQUE NOT NULL,
                 online_on_site ENUM("online", "on_site") DEFAULT 'online' NOT NULL,
                 location VARCHAR(255) NOT NULL,
                 start_date DATE NOT NULL,
                 finish_date DATE NOT NULL,
                 start_time TIME NOT NULL,
                 finish_time TIME NOT NULL,
-                theme VARCHAR(255) NOT NULL,
                 description TEXT,
                 organizer INT,
                 image VARCHAR(100) DEFAULT NULL,
@@ -60,7 +58,7 @@ const initDB = async () => {
                 modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 FOREIGN KEY (organizer) REFERENCES users(id)
             )
-    `);
+        `);
 
         await pool.query(`
             CREATE TABLE participates (
@@ -74,22 +72,66 @@ const initDB = async () => {
                 FOREIGN KEY (user_id) REFERENCES users(id),
                 FOREIGN KEY (event_id) REFERENCES events(id),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                mofified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             )
-    `);
+        `);
+
+        await pool.query(`
+                CREATE TABLE technologies (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(50) NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                )
+            `)
+
+        await pool.query(`
+                CREATE TABLE technologies_events (
+                    event_id INT,
+                    technology_id INT,
+                    PRIMARY KEY (event_id, technology_id),
+                    FOREIGN KEY (event_id) REFERENCES events(id),
+                    FOREIGN KEY (technology_id) REFERENCES technologies(id),
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                )
+            `)
+
+        await pool.query(`
+                CREATE TABLE thematics (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(50) NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                )
+            `);
+
+        await pool.query(`
+                CREATE TABLE thematics_events (
+                    event_id INT,
+                    thematic_id INT,
+                    PRIMARY KEY (event_id, thematic_id),
+                    FOREIGN KEY (event_id) REFERENCES events(id),
+                    FOREIGN KEY (thematic_id) REFERENCES thematics(id),
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                )
+            `);
 
         console.log('Tablas creadas!');
 
         console.log('Creando usuario admin...');
 
         await pool.query(`
-      INSERT INTO users (name, email, password, role, active) 
-      VALUES ('${process.env.MYSQL_ADMIN_NAME}',
-      '${process.env.MYSQL_ADMIN_EMAIL}',
-      '${await bcrypt.hash(process.env.MYSQL_ADMIN_PASSWORD, 10)}',
-      'admin',
-      1)
-    `);
+            INSERT INTO users (name, email, password, role, active) 
+            VALUES (
+                '${process.env.MYSQL_ADMIN_NAME}',
+                '${process.env.MYSQL_ADMIN_EMAIL}',
+                '${await bcrypt.hash(process.env.MYSQL_ADMIN_PASSWORD, 10)}',
+                'admin',
+                1
+            )
+        `);
 
         console.log('Usuario admin creado!');
         console.log('Cerrando la conexión.');

@@ -8,7 +8,7 @@ import {
     validateEventParticipationController,
     eventRegistrationController,
     createEventAdminController,
-    listEventThemesController,
+    listEventThematicsController,
     eventUnlistController,
     technologyListController,
     listEventResultsController,
@@ -29,7 +29,7 @@ router
         authUser,
         validateEventParticipationController
     )
-    .get('/event/themes', listEventThemesController)
+    .get('/event/thematics', listEventThematicsController)
     .get('/event/technologies', technologyListController)
     .get('/event/results', listEventResultsController)
     .post(

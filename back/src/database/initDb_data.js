@@ -26,20 +26,21 @@ const initDb_data = async () => {
         console.log("Poblando tabla 'events'...");
 
         await pool.query(`
-                INSERT INTO events (technology, online_on_site, location, start_date, finish_date, start_time, finish_time, theme, name, description)
-                VALUES
-                ("Python", "on_site", "A Coruña", "2024-05-22", "2024-06-22", "09:00:00", "18:00:00", "Coding Race", "Python Race Hackathon", "esta es la descripcion del evento 1"),
-                ("JavaScript", "on_site", "A Coruña", "2024-08-13", "2024-10-13", "10:00:00", "17:00:00", "Gaming with JavaScript", "JSGaming", "esta es la descripcion del evento 2"),
-                ("React", "on_site", "Madrid", "2024-07-24", "2024-09-24", "09:30:00", "18:30:00", "Top Developers", "Selecting best React developers", "esta es la descripcion del evento 3"),
-                ("Next", "on_site", "Barcelona", "2024-02-05", "2024-04-05", "08:00:00", "16:00:00", "Coding Race", "App development Race with Next", "esta es la descripcion del evento 4"),
-                ("Python", "on_site", "Madrid", "2024-01-17", "2024-03-28", "09:15:00", "17:15:00", "Coding", "Python AI development", "esta es la descripcion del evento 5"),
-                ("JavaScript", "on_site", "Barcelona", "2024-06-08", "2024-09-08", "09:00:00", "18:00:00", "Coding Race", "API development with JS Race", "esta es la descripcion del evento 6"),
-                ("Python", "on_site", "Sevilla", "2024-01-15", "2024-03-15", "10:00:00", "17:00:00", "Python Masters", "Advanced Python Techniques", "esta es la descripcion del evento 7"),
-                ("JavaScript", "on_site", "Valencia", "2024-02-20", "2024-04-20", "08:30:00", "17:30:00", "JavaScript Summit", "Exploring JS Frameworks", "esta es la descripcion del evento 8"),
-                ("React", "on_site", "Bilbao", "2024-01-05", "2024-02-25", "09:00:00", "18:00:00", "React Bootcamp", "Intensive React Training", "esta es la descripcion del evento 9"),
-                ("Next", "on_site", "Alicante", "2024-03-10", "2024-05-10", "09:30:00", "18:30:00", "Next.js Conference", "Building Modern Apps with Next.js", "esta es la descripcion del evento 10"),
-                ("Python", "on_site", "Granada", "2024-04-18", "2024-06-18", "09:00:00", "18:00:00", "Python for AI", "Machine Learning with Python", "esta es la descripcion del evento 11")
-            `);
+            INSERT INTO events (name, online_on_site, location, start_date, finish_date, start_time, finish_time, description)
+            VALUES
+            ("Python Race Hackathon", "on_site", "A Coruña", "2024-05-22", "2024-06-22", "09:00:00", "18:00:00", "esta es la descripcion del evento 1"),
+            ("JSGaming", "on_site", "A Coruña", "2024-08-13", "2024-10-13", "10:00:00", "17:00:00", "esta es la descripcion del evento 2"),
+            ("Selecting best React developers", "on_site", "Madrid", "2024-07-24", "2024-09-24", "09:30:00", "18:30:00", "esta es la descripcion del evento 3"),
+            ("App development Race with Next", "on_site", "Barcelona", "2024-02-05", "2024-04-05", "08:00:00", "16:00:00", "esta es la descripcion del evento 4"),
+            ("Python AI development", "on_site", "Madrid", "2024-01-17", "2024-03-28", "09:15:00", "17:15:00", "esta es la descripcion del evento 5"),
+            ("API development with JS Race", "on_site", "Barcelona", "2024-06-08", "2024-09-08", "09:00:00", "18:00:00", "esta es la descripcion del evento 6"),
+            ("Advanced Python Techniques", "on_site", "Sevilla", "2024-01-15", "2024-03-15", "10:00:00", "17:00:00", "esta es la descripcion del evento 7"),
+            ("Exploring JS Frameworks", "on_site", "Valencia", "2024-02-20", "2024-04-20", "08:30:00", "17:30:00", "esta es la descripcion del evento 8"),
+            ("Intensive React Training", "on_site", "Bilbao", "2024-01-05", "2024-02-25", "09:00:00", "18:00:00", "esta es la descripcion del evento 9"),
+            ("Building Modern Apps with Next.js", "on_site", "Alicante", "2024-03-10", "2024-05-10", "09:30:00", "18:30:00", "esta es la descripcion del evento 10"),
+            ("Machine Learning with Python", "on_site", "Granada", "2024-04-18", "2024-06-18", "09:00:00", "18:00:00", "esta es la descripcion del evento 11")
+        `);
+        
 
         console.log("Tabla 'events' poblada correctamente.");
         console.log("Poblando tabla 'participates'...");
@@ -105,6 +106,120 @@ const initDb_data = async () => {
                 `);
 
         console.log("Tabla 'participates' poblada correctamente.");
+
+        console.log("Poblando tabla 'technologies'...");
+
+        await pool.query(`
+                INSERT INTO technologies ( name )
+                VALUES
+                ("Python"),
+                ("JavaScript"),
+                ("React"),
+                ("NextJS"),
+                ("NodeJS"),
+                ("Java"),
+                ("C#"),
+                ("Ruby"),
+                ("PHP"),
+                ("Swift"),
+                ("Kotlin"),
+                ("HTML/CSS"),
+                ("TypeScript"),
+                ("Angular"),
+                ("VueJS"),
+                ("Flutter"),
+                ("Django"),
+                ("Flask"),
+                ("Spring Boot"),
+                ("TensorFlow"),
+                ("PyTorch"),
+                ("Docker"),
+                ("Kubernetes"),
+                ("AWS"),
+                ("Azure"),
+                ("Google Cloud"),
+                ("PostgreSQL"),
+                ("MySQL"),
+                ("MongoDB"),
+                ("GraphQL"),
+                ("Solidity"),
+                ("Rust")
+            `);
+
+        console.log("Tabla 'technologies' poblada correctamente.");
+
+        console.log("Poblando tabla 'thematics'...");
+
+        await pool.query(`
+                INSERT INTO thematics ( name )
+                VALUES
+                ("Coding Race"),
+                ("Top Developers"),
+                ("AI Development"),
+                ("API Development"),
+                ("Machine Learning"),
+                ("Data Science"),
+                ("Cybersecurity"),
+                ("Web Development"),
+                ("Mobile App Development"),
+                ("Blockchain"),
+                ("Cloud Computing"),
+                ("IoT"),
+                ("Robotics"),
+                ("Game Development"),
+                ("Gaming"),
+                ("Healthcare Technology")
+            `);
+
+        console.log("Tabla 'thematics' poblada correctamente.");
+
+        console.log("Poblando tabla 'technologies_events'...");
+
+        await pool.query(`
+                INSERT INTO technologies_events ( event_id, technology_id )
+                VALUES
+                (1, 1),
+                (2, 2),
+                (3, 3),
+                (4, 4),
+                (5, 5),
+                (6, 6),
+                (7, 7),
+                (8, 8),
+                (9, 9),
+                (10, 10),
+                (11, 11),
+                (2, 4),
+                (4, 6),
+                (6, 8),
+                (8, 10),
+                (3, 1),
+                (5, 3),
+                (7, 9),
+                (9, 15)
+            `);
+
+        console.log("Tabla 'technologies_events' poblada correctamente.");
+
+        console.log("Poblando tabla 'thematics_events'...");
+
+        await pool.query(`
+                INSERT INTO thematics_events ( event_id, thematic_id )
+                VALUES
+                (1, 1),
+                (2, 2),
+                (3, 3),
+                (4, 4),
+                (5, 5),
+                (6, 6),
+                (7, 7),
+                (8, 8),
+                (9, 9),
+                (10, 10),
+                (11, 11)
+            `)
+
+        console.log("Tabla 'thematics_events' poblada correctamente.")
 
         console.log('Cerrando la conexión.');
 

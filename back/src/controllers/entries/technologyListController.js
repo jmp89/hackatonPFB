@@ -7,15 +7,16 @@ const technologyListController = async (req, res) => {
 
     // Consulta SQL para obtener las tecnologías distintas
     const query = `
-      SELECT DISTINCT technology
-      FROM events;
+      SELECT DISTINCT name
+      FROM technologies;
     `;
 
     // Ejecutar la consulta y obtener los resultados
     const [rows, fields] = await pool.query(query);
 
     // Extraer las tecnologías de los resultados
-    const technologies = rows.map((row) => row.technology);
+    // const technologies = rows.map((row) => row.technology);
+    const technologies = rows;
 
     res.json(technologies);
   } catch (error) {

@@ -7,16 +7,20 @@ const getEventsService = async (filter, sort, direction) => {
     let query = `
         SELECT e.id,
         e.name,
-        e.technology,
+        t.name AS technologies,
+        th.name AS thematics,
         e.online_on_site,
         e.location,
         e.organizer,
-        e.theme,
         e.start_date,
         e.finish_date,
         e.start_time,
         e.finish_time
         FROM events e
+        LEFT JOIN technologies_events te ON te.event_id = e.id
+        LEFT JOIN technologies t ON t.id = te.technology_id
+        LEFT JOIN thematics_events the ON the.event_id = e.id
+        LEFT JOIN thematics th ON th.id = the.thematic_id
     `;
 
     if (!filter) {
@@ -32,10 +36,10 @@ const getEventsService = async (filter, sort, direction) => {
     if (filter) {
         query += `
             WHERE e.name LIKE ?
-            OR e.technology LIKE ?
+            OR t.name LIKE ?
+            OR th.name LIKE ?
             OR e.online_on_site LIKE ?
             OR e.organizer LIKE ?
-            OR e.theme LIKE ?
         `;
     }
 

@@ -4,36 +4,36 @@ import Joi from 'joi';
 
 const updateEventAdminController = async (req, res, next) => {
     try {
-        const updateEventAdminSchema = Joi.object({
-            name: Joi.string().required(),
-            technology: Joi.string().required(),
-            online_on_site: Joi.string().required(),
-            location: Joi.string().required(),
-            start_date: Joi.date().required(),
-            finish_date: Joi.date().required(),
-            start_time: Joi.string().required(),
-            finish_time: Joi.string().required(),
-            theme: Joi.string().required(),
-            organizer: Joi.number().integer().required(),
-            description: Joi.string().min(15).max(255).required(),
-        });
+        // const updateEventAdminSchema = Joi.object({
+        //     name: Joi.string().required(),
+        //     //TODO => technologies: Joi.string().required(),
+        //     online_on_site: Joi.string().required(),
+        //     location: Joi.string().required(),
+        //     start_date: Joi.date().required(),
+        //     finish_date: Joi.date().required(),
+        //     start_time: Joi.string().required(),
+        //     finish_time: Joi.string().required(),
+        //     //TODO => thematics: Joi.string().required(),
+        //     organizer: Joi.number().integer().required(),
+        //     description: Joi.string().min(15).max(255).required(),
+        // });
 
-        const { error } = updateEventAdminSchema.validate(req.body);
+        // const { error } = updateEventAdminSchema.validate(req.body);
 
-        if (error) {
-            throw generateErrorsUtils(error.message, 400);
-        }
+        // if (error) {
+        //     throw generateErrorsUtils(error.message, 400);
+        // }
 
         const {
             name,
-            technology,
+            technologies,
+            thematics,
             online_on_site,
             location,
             start_date,
             finish_date,
             start_time,
             finish_time,
-            theme,
             organizer,
             description,
         } = req.body;
@@ -49,14 +49,14 @@ const updateEventAdminController = async (req, res, next) => {
         const eventID = req.params.id;
         const eventInfo = {
             name: name,
-            technology: technology,
+            technologies: technologies,
+            thematics: thematics,
             online_on_site: online_on_site,
             location: location,
             start_date: start_date,
             finish_date: finish_date,
             start_time: start_time,
             finish_time: finish_time,
-            theme: theme,
             organizer: organizer,
             description: description,
         };

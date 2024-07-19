@@ -1,6 +1,6 @@
 import createEventAdminService from './createEventAdminService.js';
 import eventUnlistService from './eventUnlistService.js';
-import getEventThemesService from './getEventThemesService.js';
+import getEventThematicsService from './getEventThematicsService.js';
 import getEventDetailsService from './getEventDetailsService.js';
 import getEventsService from './getEventsService.js';
 import updateParticipationService from './updateParticipationService.js';
@@ -11,7 +11,7 @@ import checkParticipationService from './checkParticipationService.js';
 export {
     createEventAdminService,
     eventUnlistService,
-    getEventThemesService,
+    getEventThematicsService,
     getEventDetailsService,
     getEventsService,
     updateParticipationService,

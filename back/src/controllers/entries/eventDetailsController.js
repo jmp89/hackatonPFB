@@ -1,7 +1,7 @@
 import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 import {getEventDetailsService} from "../../services/entries/index.js";
 
-const listEventDetailsController = async (req, res, next) => {
+const eventDetailsController = async (req, res, next) => {
 
     try {
         
@@ -28,4 +28,4 @@ const listEventDetailsController = async (req, res, next) => {
     };
 };
 
-export default listEventDetailsController;
+export default eventDetailsController;

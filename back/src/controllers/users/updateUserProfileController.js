@@ -1,6 +1,6 @@
 import Joi from 'joi';
-import updateUserProfile from '../../services/users/updateUserProfile.js';
 import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
+import {updateUserProfileService} from '../../services/users/index.js';
 
 const updateUserProfileController = async (req, res, next) => {
     const userId = req.params.id;
@@ -17,16 +17,16 @@ const updateUserProfileController = async (req, res, next) => {
     try {
         if (error) {
             throw generateErrorsUtils(error.message, 400);
-        }
+        };
 
         if (+userId !== +authUserId && role !== 'admin') {
             throw generateErrorsUtils(
                 'No tienes permiso para modificar este perfil',
                 403
             );
-        }
+        };
 
-        await updateUserProfile(userId, name, email, personal_info);
+        await updateUserProfileService(userId, name, email, personal_info);
 
         let resData = {
             status: "ok",

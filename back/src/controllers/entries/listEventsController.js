@@ -8,9 +8,8 @@ const listEventsController = async (req, res, next) => {
         const eventsList = await getEventsService(filter, sort, direction);
 
         if (eventsList.length < 1) {
-            const err = generateErrorsUtils('No se encontraron eventos', 404);
-            throw err;
-        }
+            throw generateErrorsUtils('No se encontraron eventos', 404);
+        };
 
         res.send({
             status: 'ok',

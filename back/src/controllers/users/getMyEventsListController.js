@@ -12,11 +12,11 @@ const getMyEventsListController = async (req, res, next) => {
                 'No tienes permiso para ver los eventos de otros usuarios',
                 403
             );
-        }
+        };
 
         if (userRole === 'admin' && req.query.userId) {
             queryUserId = req.query.userId;
-        }
+        };
 
         const myEvents = await getMyEventsListService(queryUserId);
 

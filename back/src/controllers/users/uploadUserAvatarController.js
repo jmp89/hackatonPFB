@@ -8,7 +8,7 @@ import { insertUserAvatarService } from '../../services/users/index.js';
 
 const { UPLOADS_DIR } = process.env;
 
-const uploadFilesController = async (req, res, next) => {
+const uploadUserAvatarController = async (req, res, next) => {
     try {
         if (!req.files || Object.keys(req.files).length === 0) {
             throw generateErrorsUtils('Faltan campos', 401);
@@ -52,4 +52,4 @@ const uploadFilesController = async (req, res, next) => {
     }
 };
 
-export default uploadFilesController;
+export default uploadUserAvatarController;

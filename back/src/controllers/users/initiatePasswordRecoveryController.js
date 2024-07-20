@@ -1,10 +1,10 @@
-import randomstring from "randomstring";
+import randomstring, { generate } from "randomstring";
 import Joi from "joi";
-
-import getPool from "../../database/getPool.js";
+import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 import {
   selectUserByEmailService,
-  sendRecoveryCodeEmailService
+  sendRecoveryCodeEmailService,
+  insertRecoveryPassCodeService
 } from "../../services/users/index.js";
 
 const initiatePasswordRecoveryController = async (req, res, next) => {
@@ -17,26 +17,18 @@ const initiatePasswordRecoveryController = async (req, res, next) => {
     const { error } = recoveryEmailSchema.validate(req.body);
 
     if (error) {
-      return res.status(400).send(error.message);
-    }
+      throw generateErrorsUtils(error.message, 400);
+    };
 
     const user = await selectUserByEmailService(email);
 
     if (!user) {
-      return res.status(404).send("Usuario no encontrado");
-    }
+      throw generateErrorsUtils("Usuario no encontrado", 404)
+    };
 
     const recoveryCode = randomstring.generate(10);
-    const pool = await getPool();
 
-    await pool.query(
-      `
-      UPDATE users
-      SET recover_pass_code=?
-      WHERE email=?
-      `,
-      [recoveryCode, email]
-    );
+    await insertRecoveryPassCodeService(recoveryCode, email);
 
     await sendRecoveryCodeEmailService(email, recoveryCode);
 

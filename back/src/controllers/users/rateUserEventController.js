@@ -1,6 +1,9 @@
 import Joi from 'joi';
-import getPool from '../../database/getPool.js';
 import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
+import {
+    isEventFinishedService,
+    rateEventService
+} from '../../services/users/index.js';
 
 const rateUserEventController = async (req, res, next) => {
     const loginUserControllerSchema = Joi.object({
@@ -17,38 +20,11 @@ const rateUserEventController = async (req, res, next) => {
                 'La valoración debe estar entre 1 y 5',
                 400
             );
-        }
+        };
 
-        const pool = await getPool();
-
-        const [[event]] = await pool.query(
-            `
-      SELECT id
-      FROM events
-      WHERE id = ? AND finish_date < NOW()
-    `,
-            [eventId]
-        );
-
-        if (!event) {
-            throw generateErrorsUtils(
-                'El evento no ha terminado o no existe',
-                404
-            );
-        }
-
-        const [result] = await pool.query(
-            `
-      UPDATE participates
-      SET rating_user_event = ?
-      WHERE user_id = ? AND event_id = ?
-    `,
-            [rating, userId, eventId]
-        );
-
-        if (result.affectedRows === 0) {
-            throw generateErrorsUtils('No has participado en este evento', 404);
-        }
+        await isEventFinishedService(eventId);
+                    
+        await  rateEventService(rating, userId, eventId);
 
         let resData = {
             status: "ok",

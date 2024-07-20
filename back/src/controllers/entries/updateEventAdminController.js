@@ -47,14 +47,6 @@ const updateEventAdminController = async (req, res, next) => {
             description,
         } = req.body;
 
-        if (online_on_site === 'on_site' && !location) {
-            const err = generateErrorsUtils(
-                'Se debe incluir una ciudad si el evento es presencial.',
-                401
-            );
-            throw err;
-        }
-
         const eventID = req.params.id;
         const eventInfo = {
             name: name,

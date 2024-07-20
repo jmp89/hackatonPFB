@@ -7,6 +7,9 @@ import updateParticipationService from './updateParticipationService.js';
 import getEventResultsService from './getEventResultsService.js';
 import insertEventResultsService from './insertEventResultsService.js';
 import checkParticipationService from './checkParticipationService.js';
+import eventExistsService from './eventExistsService.js';
+import inscriptionToEventService from './inscriptionToEventService.js';
+import sendEventRegistrationMailService from './sendEventRegistrationService.js';
 
 export {
     createEventAdminService,
@@ -18,4 +21,7 @@ export {
     getEventResultsService,
     insertEventResultsService,
     checkParticipationService,
+    eventExistsService,
+    inscriptionToEventService,
+    sendEventRegistrationMailService,
 };

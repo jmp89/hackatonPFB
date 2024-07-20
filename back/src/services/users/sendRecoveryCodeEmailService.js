@@ -1,4 +1,5 @@
 import sendMailUtils from "../../utils/sendMailUtils.js";
+import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 
 const sendRecoveryCodeEmailService = async (email, recoveryCode) => {
   const emailSubject = "Recuperación de contraseña";
@@ -17,7 +18,7 @@ const sendRecoveryCodeEmailService = async (email, recoveryCode) => {
   try {
     await sendMailUtils(email, emailSubject, emailBody);
   } catch (error) {
-    throw new Error("Error al enviar el correo electrónico de recuperación de contraseña.");
+    throw generateErrorsUtils("Error al enviar el correo electrónico de recuperación de contraseña.", 400);
   }
 };
 

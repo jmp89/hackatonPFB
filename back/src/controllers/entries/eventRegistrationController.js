@@ -1,17 +1,19 @@
-import {inscriptionToEvent} from '../../services/users/index.js';
-import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
-import sendMailUtils from '../../utils/sendMailUtils.js';
 import Randomstring from 'randomstring';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
-import getPool from '../../database/getPool.js';
 import Joi from 'joi';
+import {
+    inscriptionToEventService,
+    eventExistsService,
+    sendEventRegistrationMailService
+} from '../../services/entries/index.js';
+import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
 
 const { SECRET } = process.env;
 
 const eventRegistrationController = async (req, res, next) => {
     try {
-        const pool = await getPool();
+
         const eventCode = Randomstring.generate(10);
         const { eventID } = req.body;
         const auth = req.headers['authorization'];
@@ -26,63 +28,12 @@ const eventRegistrationController = async (req, res, next) => {
         if (error) {
             throw generateErrorsUtils(error.message, 400);
         }
-        const [[eventExists]] = await pool.query(
-            `
-      SELECT id 
-      FROM events 
-      WHERE id = ?
-      `,
-            [eventID]
-        );
 
-        if (!eventExists) {
-            throw generateErrorsUtils('No se ha encontrado el evento', 404);
-        }
-        // Validacion Joi
+        await eventExistsService(eventID);
 
-        await inscriptionToEvent(id, eventID, eventCode);
+        await inscriptionToEventService(id, eventID, eventCode);
 
-        const [[eventInfo]] = await pool.query(
-            `
-        SELECT name, description
-        FROM events
-        WHERE id = ?
-      `,
-            [eventID]
-        );
-
-        const [email] = await pool.query(
-            `
-      SELECT email
-      FROM users
-      WHERE id = ?
-      `,
-            [id]
-        );
-        const finalEmail = email[0].email;
-
-        const emailSubject = `Confirma tu inscripción en ${eventInfo.name}`;
-
-        const emailBody = `
-            Gracias por enviarnos tu solicitud, a continuación te mostramos un poco de qué va este Hackathon con más detalle:
-
-            
-
-            
-            <h2>¿De qué va ${eventInfo.name}?</h2>
-            
-            <p>${eventInfo.description}</p>
-            
-            Haz click en el siguiente botón para confirmar la inscripción.
-
-            
-            <a href="http://localhost:3001/event/confirm/${eventCode}" style="color: #fff; background-color: #000; padding: 15px 25px; border-radius: 10px; margin: 0 25px">¡Apúntate!</a>
-
-            <hr />
-            Hecho con ❤ por el equipo de Hackathon
-    `;
-
-        await sendMailUtils(finalEmail, emailSubject, emailBody);
+        await sendEventRegistrationMailService(eventID, id, eventCode);
 
         let resData = {
             status: "ok",

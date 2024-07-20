@@ -1,6 +1,5 @@
 import {getEventResultsService} from "../../services/entries/index.js";
 
-
 const listEventResultsController = async (req, res, next) => {
 
     try {

@@ -1,7 +1,7 @@
 import getPool from "../../database/getPool.js";
 import generateErrorsUtils from "../../utils/generateErrorsUtils.js";
 
-const inscriptionToEvent = async (userId, eventId, eventCode) => {
+const inscriptionToEventService = async (userId, eventId, eventCode) => {
 
     const pool = await getPool();
 
@@ -18,12 +18,12 @@ const inscriptionToEvent = async (userId, eventId, eventCode) => {
 
     await pool.query(
       `
-      INSERT INTO participates (user_id, event_id, reservation_code)
-      VALUES (?, ?, ?)
+        INSERT INTO participates (user_id, event_id, reservation_code)
+        VALUES (?, ?, ?)
       `,
       [userId, eventId, eventCode]
     );
 
 };
 
-export default inscriptionToEvent;
+export default inscriptionToEventService;

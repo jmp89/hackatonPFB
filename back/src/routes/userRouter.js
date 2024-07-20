@@ -7,7 +7,7 @@ import {
     editUserPasswordController,
     initiatePasswordRecoveryController,
     resetPasswordController,
-    uploadFilesController,
+    uploadUserAvatarController,
     updateUserProfileController,
     rateUserEventController,
     getMyEventsListController,
@@ -24,7 +24,7 @@ router
     .put('/users/edit-password', authUser, editUserPasswordController)
     .post('/users/initiate-password', initiatePasswordRecoveryController)
     .post('/users/reset-password', resetPasswordController)
-    .post('/upload', authUser, uploadFilesController)
+    .post('/upload', authUser, uploadUserAvatarController)
     .put('/users/edit/:id', authUser, updateUserProfileController)
     .post('/users/rate-event', authUser, rateUserEventController)
     .get('/users/my-events', authUser, getMyEventsListController);

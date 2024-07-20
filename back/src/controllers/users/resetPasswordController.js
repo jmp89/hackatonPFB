@@ -1,5 +1,6 @@
-import { resetPassService } from '../../services/users/index.js';
 import Joi from 'joi';
+import { resetPassService } from '../../services/users/index.js';
+import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
 
 const resetPasswordController = async (req, res, next) => {
     try {
@@ -19,10 +20,8 @@ const resetPasswordController = async (req, res, next) => {
         const { error } = passwordRecoverySchema.validate(req.body);
 
         if (error) {
-            return res
-                .status(400)
-                .send({ status: 'error', message: error.message });
-        }
+            throw generateErrorsUtils(error.message, 400);
+        };
 
         await resetPassService(email, recoverPassCode, newPassword);
 

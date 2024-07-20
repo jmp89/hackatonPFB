@@ -1,14 +1,12 @@
 import getPool from '../../database/getPool.js';
 import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
 
-const updateUserProfile = async (userId, name, email, personalInfo) => {
+const updateUserProfileService = async (userId, name, email, personalInfo) => {
     try {
         const pool = await getPool();
 
         let query = 'UPDATE users SET ';
         const values = [];
-
-        // Si el valor se manda vacío o undefined mantiene el valor anterior sin borrarlo
 
         if (name !== undefined && name !== '') {
             query += 'name = ?, ';
@@ -45,4 +43,4 @@ const updateUserProfile = async (userId, name, email, personalInfo) => {
     }
 };
 
-export default updateUserProfile;
+export default updateUserProfileService;

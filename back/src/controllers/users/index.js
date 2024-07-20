@@ -4,7 +4,7 @@ import loginUserController from './loginUserController.js';
 import editUserPasswordController from './editUserPasswordController.js';
 import initiatePasswordRecoveryController from './initiatePasswordRecoveryController.js';
 import resetPasswordController from './resetPasswordController.js';
-import uploadFilesController from './uploadFilesController.js';
+import uploadUserAvatarController from './uploadUserAvatarController.js';
 import rateUserEventController from './rateUserEventController.js';
 import updateUserProfileController from './updateUserProfileController.js';
 import getMyEventsListController from './getMyEventsListController.js';
@@ -16,7 +16,7 @@ export {
     editUserPasswordController,
     initiatePasswordRecoveryController,
     resetPasswordController,
-    uploadFilesController,
+    uploadUserAvatarController,
     rateUserEventController,
     updateUserProfileController,
     getMyEventsListController,

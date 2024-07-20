@@ -21,7 +21,7 @@ const insertEventResultsController = async (req, res, next) => {
 
         if (error) {
             throw generateErrorsUtils(error.message, 400);
-        }
+        };
 
         await checkParticipationService(eventInfo);
 

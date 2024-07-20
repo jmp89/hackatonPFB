@@ -3,6 +3,7 @@ import insertUserService from './insertUserService.js';
 import selectUserByEmailService from './selectUserByEmailService.js';
 import updateUserPassService from './updateUserPassService.js';
 import updateUserRegCodeService from './updateUserRegCodeService.js';
+import updateUserProfileService from './updateUserProfileService.js';
 import sendRecoveryCodeEmailService from './sendRecoveryCodeEmailService.js';
 import resetPassService from './resetPassService.js';
 import getMyEventsListService from './getMyEventsListService.js';
@@ -16,6 +17,7 @@ export {
     selectUserByEmailService,
     updateUserPassService,
     updateUserRegCodeService,
+    updateUserProfileService,
     sendRecoveryCodeEmailService,
     resetPassService,
     getMyEventsListService,

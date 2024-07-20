@@ -4,7 +4,7 @@ import authUser from '../middlewares/authUser.js';
 
 import {
     listEventsController,
-    listEventDetailsController,
+    eventDetailsController,
     validateEventParticipationController,
     eventRegistrationController,
     createEventAdminController,
@@ -20,7 +20,7 @@ const router = express.Router();
 
 router
     .get('/event/search', listEventsController)
-    .get('/event/details/:eventID', listEventDetailsController)
+    .get('/event/details/:eventID', eventDetailsController)
     .post('/event/create', authUser, authAdmin, createEventAdminController)
     .post('/event/register', authUser, eventRegistrationController)
     .delete('/event/unlist', authUser, eventUnlistController)

@@ -31,36 +31,10 @@ const updateEventAdminController = async (req, res, next) => {
 
         if (error) {
             throw generateErrorsUtils(error.message, 400);
-        }
-
-        const {
-            name,
-            technologies,
-            thematics,
-            online_on_site,
-            location,
-            start_date,
-            finish_date,
-            start_time,
-            finish_time,
-            organizer,
-            description,
-        } = req.body;
-
-        const eventID = req.params.id;
-        const eventInfo = {
-            name: name,
-            technologies: technologies,
-            thematics: thematics,
-            online_on_site: online_on_site,
-            location: location,
-            start_date: start_date,
-            finish_date: finish_date,
-            start_time: start_time,
-            finish_time: finish_time,
-            organizer: organizer,
-            description: description,
         };
+
+        const eventInfo = req.body;
+        const eventID = req.params.id;
 
         await updateEventAdminService(eventID, eventInfo);
 

@@ -32,33 +32,8 @@ const createEventAdminController = async (req, res, next) => {
         if (error) {
             throw generateErrorsUtils(error.message, 400);
         }
-        const {
-            name,
-            technologies,
-            online_on_site,
-            location,
-            start_date,
-            finish_date,
-            start_time,
-            finish_time,
-            thematics,
-            organizer,
-            description,
-        } = req.body;
 
-        const eventInfo = {
-            name: name,
-            technologies: technologies,
-            online_on_site: online_on_site,
-            location: location,
-            start_date: start_date,
-            finish_date: finish_date,
-            start_time: start_time,
-            finish_time: finish_time,
-            thematics: thematics,
-            organizer: organizer,
-            description: description,
-        };
+        const eventInfo = req.body;
 
         await createEventAdminService(eventInfo);
 

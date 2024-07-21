@@ -11,6 +11,8 @@ const sendRecoveryCodeEmailService = async (email, recoveryCode) => {
 
       Ingresa este código en la aplicación para completar el proceso de recuperación.
 
+      <a href="http://localhost:5173/users/reset-password" style="text-decoration: none; color: #fff; background-color: #000; padding: 15px 25px; border-radius: 10px; margin: 0 25px">Recuperar contraseña</a>
+
       Gracias,
       El equipo de Hackathon
   `;

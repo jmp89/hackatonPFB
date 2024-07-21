@@ -10,13 +10,9 @@ const resetPasswordController = async (req, res, next) => {
             newPassword: Joi.string()
                 .pattern(new RegExp('^[a-zA-Z0-9]{4,30}$'))
                 .required(),
-            repeatNewPassword: Joi.string()
-                .required()
-                .valid(Joi.ref('newPassword')),
         });
 
-        const { email, recoverPassCode, newPassword, repeatNewPassword } =
-            req.body;
+        const { email, recoverPassCode, newPassword } = req.body;
         const { error } = passwordRecoverySchema.validate(req.body);
 
         if (error) {

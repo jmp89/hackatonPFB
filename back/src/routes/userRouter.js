@@ -25,7 +25,7 @@ router
     .post('/users/initiate-password', initiatePasswordRecoveryController)
     .post('/users/reset-password', resetPasswordController)
     .post('/upload', authUser, uploadUserAvatarController)
-    .put('/users/edit/:id', authUser, updateUserProfileController)
+    .put('/users/edit', authUser, updateUserProfileController)
     .post('/users/rate-event', authUser, rateUserEventController)
     .get('/users/my-events', authUser, getMyEventsListController);
     

@@ -22,8 +22,8 @@ router
     .get('/event/search', listEventsController)
     .get('/event/details/:eventID', eventDetailsController)
     .post('/event/create', authUser, authAdmin, createEventAdminController)
-    .post('/event/register', authUser, eventRegistrationController)
-    .delete('/event/unlist', authUser, eventUnlistController)
+    .get('/event/register/:eventID', authUser, eventRegistrationController)
+    .delete('/event/unlist/:eventID', authUser, eventUnlistController)
     .get(
         '/event/confirm/:eventCode',
         authUser,

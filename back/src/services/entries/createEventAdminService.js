@@ -37,7 +37,6 @@ const createEventAdminService = async (eventInfo) => {
         `, [ eventInfo.name ]
     );
 
-    // TODO => necesita un WHERE
     for ( const tech of eventInfo.technologies ){
 
         const [[ techID ]] = await pool.query(`

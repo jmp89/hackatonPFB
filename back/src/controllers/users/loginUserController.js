@@ -51,9 +51,9 @@ const loginUserController = async (req, res, next) => {
 
     res
       .cookie("refreshToken", refreshToken, {
-        httpOnly: true, //? la cookie solo se puede ver en el servidor
-        sameSite: "strict", //? a la cookie solo se puede acceder en el mismo dominio
-        maxAge: 1000 * 60 * 60 * 24 * 7, //? tiempo validez 7 dias
+        httpOnly: true,
+        sameSite: "strict",
+        maxAge: 1000 * 60 * 60 * 24 * 7,
       })
       .send({
         status: "ok",

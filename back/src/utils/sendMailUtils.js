@@ -1,10 +1,5 @@
 import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
-import generateErrorsUtils from "./generateErrorsUtils.js";
-
-
-
-dotenv.config();
+import 'dotenv/config';
 
 const {SMTP_HOST, SMTP_PORT,SMTP_USER,SMTP_PASS} = process.env;
 
@@ -29,19 +24,10 @@ const sendMailUtils = async (email, subject, body) => {
 
         await transport.sendMail(mailOptions);
 
-        //otra forma
-        // await transport({
-        //     from: SMTP_USER,
-        //     to: email,
-        //     subject,
-        //     text: body
-        // });
-        
-        
     } catch (error) {
-        console.log(error);
-        generateErrorsUtils('Error al enviar email.', 500);
-    }
-}
+
+        next(error);
+    };
+};
 
 export default sendMailUtils;

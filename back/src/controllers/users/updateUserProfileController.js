@@ -3,8 +3,7 @@ import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
 import {updateUserProfileService} from '../../services/users/index.js';
 
 const updateUserProfileController = async (req, res, next) => {
-    const userId = req.params.id;
-    const { id: authUserId, role } = req.user;
+    const userId = req.user.id;
     const { name, email, personal_info } = req.body;
 
     const loginUserControllerSchema = Joi.object({
@@ -17,13 +16,6 @@ const updateUserProfileController = async (req, res, next) => {
     try {
         if (error) {
             throw generateErrorsUtils(error.message, 400);
-        };
-
-        if (+userId !== +authUserId && role !== 'admin') {
-            throw generateErrorsUtils(
-                'No tienes permiso para modificar este perfil',
-                403
-            );
         };
 
         await updateUserProfileService(userId, name, email, personal_info);

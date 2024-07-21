@@ -4,7 +4,7 @@ import Joi from 'joi';
 
 const eventUnlistController = async (req, res, next) => {
     try {
-        const { eventID } = req.body;
+        const { eventID } = req.params;
         const { id } = req.user;
 
         const eventUnlistControllerSchema = Joi.object({

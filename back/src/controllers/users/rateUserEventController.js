@@ -7,13 +7,13 @@ import {
 
 const rateUserEventController = async (req, res, next) => {
     const loginUserControllerSchema = Joi.object({
-        userId: Joi.number().required(),
         eventId: Joi.number().required(),
         rating: Joi.number().required(),
     });
 
     try {
-        const { userId, eventId, rating } = req.body;
+        const { eventId, rating } = req.body;
+        const userId = req.user.id;
 
         if (rating < 1 || rating > 5) {
             throw generateErrorsUtils(
@@ -24,7 +24,7 @@ const rateUserEventController = async (req, res, next) => {
 
         await isEventFinishedService(eventId);
                     
-        await  rateEventService(rating, userId, eventId);
+        await rateEventService(rating, userId, eventId);
 
         let resData = {
             status: "ok",

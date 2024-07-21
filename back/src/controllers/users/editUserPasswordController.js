@@ -8,9 +8,6 @@ const editUserPasswordController = async (req, res, next) => {
             email: Joi.string().email().required(),
             oldPassword: Joi.string().required(),
             newPassword: Joi.string().required(),
-            repeatNewPassword: Joi.string()
-                .required()
-                .valid(Joi.ref('newPassword')),
         });
 
         const { error } = Schema.validate(req.body);
@@ -18,7 +15,7 @@ const editUserPasswordController = async (req, res, next) => {
         if (error) {
             throw generateErrorsUtils(error.message, 400);
         }
-        const { email, oldPassword, newPassword, repeatNewPassword } = req.body;
+        const { email, oldPassword, newPassword } = req.body;
 
         await updateUserPassService(email, oldPassword, newPassword);
 

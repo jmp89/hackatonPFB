@@ -42,7 +42,7 @@ const NavItem = ({ to, onClick, children, className, isMobile }) => (
     <NavLink
         to={to}
         onClick={onClick}
-        className={`${className} px-4 py-2 rounded-md transition-colors duration-300 ${isMobile ? 'text-base font-medium' : 'text-lg font-semibold'}`}
+        className={`${className} flex items-center px-2 py-2 sm:px-3 sm:py-2 lg:px-4 lg:py-2 rounded-md transition-colors duration-300 ${isMobile ? 'text-base font-medium' : 'text-xs sm:text-sm md:text-base lg:text-lg font-semibold'}`}
     >
         {children}
     </NavLink>
@@ -65,7 +65,7 @@ const Header = () => {
                             alt="Hackaverse"
                         />
                     </div>
-                    <nav className="hidden sm:flex sm:space-x-6">
+                    <nav className="hidden sm:flex sm:space-x-2 md:space-x-4 lg:space-x-6">
                         <NavItem to="/" className="text-black hover:bg-black hover:text-white">
                             Inicio
                         </NavItem>
@@ -77,16 +77,27 @@ const Header = () => {
                                 <NavItem to="/register" className="text-black hover:bg-black hover:text-white">
                                     Regístrate
                                 </NavItem>
+                                <NavItem to="/events" className="text-black hover:bg-black hover:text-white">
+                                    Eventos
+                                </NavItem>
                             </>
                         ) : (
                             <>
+                                <NavItem to="/events" className="text-black hover:bg-black hover:text-white">
+                                    Eventos
+                                </NavItem>
                                 <NavItem to="/users/my-events" className="text-black hover:bg-black hover:text-white">
                                     Mis inscripciones
                                 </NavItem>
-                                <NavItem to="#" onClick={removeToken} className="text-black hover:bg-black hover:text-white">
-                                    Cerrar sesión
-                                </NavItem>
                             </>
+                        )}
+                        <NavItem to="/faq" className="text-black hover:bg-black hover:text-white">
+                            Preguntas frecuentes
+                        </NavItem>
+                        {token && (
+                            <NavItem to="#" onClick={removeToken} className="text-black hover:bg-black hover:text-white">
+                                Cerrar sesión
+                            </NavItem>
                         )}
                     </nav>
                     <div className="sm:hidden">
@@ -123,12 +134,27 @@ const Header = () => {
                                     Regístrate
                                 </NavItem>
                             </li>
+                            <li>
+                                <NavItem to="/events" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                                    Eventos
+                                </NavItem>
+                            </li>
                         </>
                     ) : (
                         <>
                             <li>
+                                <NavItem to="/events" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                                    Eventos
+                                </NavItem>
+                            </li>
+                            <li>
                                 <NavItem to="/users/my-events" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
                                     Mis inscripciones
+                                </NavItem>
+                            </li>
+                            <li>
+                                <NavItem to="/faq" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                                    Preguntas frecuentes
                                 </NavItem>
                             </li>
                             <li>
@@ -139,12 +165,7 @@ const Header = () => {
                         </>
                     )}
                     <li className='mt-2'>
-                        <NavItem to="/" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
-                            Hackatones
-                        </NavItem>
-                    </li>
-                    <li className='mt-2'>
-                        <NavItem to="/" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                        <NavItem to="/faq" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
                             Preguntas frecuentes
                         </NavItem>
                     </li>

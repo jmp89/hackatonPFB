@@ -17,4 +17,7 @@ SMTP_PASS=tu_clave_SMPTP
 SECRET=secretosuperpoderoso
 REFRESH_SECRET=secretoaunmassuperpoderoso
 
+FRONT_URL=localhost
+FRONT_PORT=5173
+
 UPLOADS_DIR=public

@@ -2,6 +2,9 @@ import bcrypt from 'bcrypt';
 import getPool from '../../database/getPool.js';
 import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
 import sendMailUtils from '../../utils/sendMailUtils.js';
+import 'dotenv/config';
+
+const { FRONT_URL, FRONT_PORT } = process.env;
 
 const insertUserService = async (
     username,
@@ -31,7 +34,7 @@ const insertUserService = async (
             Gracias por registrarse en Hackathon.
             Para activar tu cuenta debes hace click en el siguiente enlace
 
-            <a href="http://localhost:5173/users/validate/activate">Activar Cuenta</a>
+            <a href="http://${FRONT_URL}:${FRONT_PORT}/users/validate/activate">Activar Cuenta</a>
             
             <small>O si lo prefieres, este es tu código de activación: ${registrationCode}</small>
 

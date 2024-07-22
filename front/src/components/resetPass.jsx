@@ -157,11 +157,7 @@ const ResetPass = () => {
             </p>
           </>
         )}
-        {message && (
-          <p className="text-green-500 text-center mt-4 w-full max-w-md mx-4 md:mx-auto">
-            {message}
-          </p>
-        )}
+        
       </form>
     </main>
   );

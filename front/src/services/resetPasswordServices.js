@@ -14,13 +14,13 @@ export const resetPassword = async ({ email, recoverPassCode, newPassword, repea
         });
   
         if (!response.ok) {
-            throw new Error('Error en la solicitud: ' + response.statusText);
+            throw new Error('Error en la solicitud ');
         }
   
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error en el restablecimiento de contraseña:', error);
+        console.error('Error en el restablecimiento de contraseña:');
         throw error;
     }
   };

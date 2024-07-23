@@ -1,4 +1,4 @@
-export const resetPassword = async ({ email, recoverPassCode, newPassword, repeatNewPassword }) => {
+export const resetPassword = async ({ email, recoverPassCode, newPassword }) => {
     try {
         const response = await fetch('http://localhost:3001/users/reset-password', {
             method: 'POST',
@@ -9,7 +9,6 @@ export const resetPassword = async ({ email, recoverPassCode, newPassword, repea
                 email,
                 recoverPassCode,
                 newPassword,
-                repeatNewPassword,
             }),
         });
   

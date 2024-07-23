@@ -10,17 +10,15 @@ const ResetPass = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [step, setStep] = useState(1);
-  const [countdown, setCountdown] = useState(5); // Estado para la cuenta regresiva
+  const [countdown, setCountdown] = useState(5);
   const navigate = useNavigate();
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await initiatePassword(email);
+    const response = await initiatePassword(email).catch((error) => setMessage(error.message));
+    if (response) {
       setMessage('Código de verificación enviado a tu correo electrónico.');
       setStep(2);
-    } catch (error) {
-      setMessage(error.message);
     }
   };
 
@@ -30,17 +28,15 @@ const ResetPass = () => {
       setMessage('Las contraseñas no coinciden.');
       return;
     }
-    try {
-      const response = await resetPassword({
-        email,
-        recoverPassCode,
-        newPassword,
-        repeatNewPassword: confirmPassword,
-      });
+    const response = await resetPassword({
+      email,
+      recoverPassCode,
+      newPassword,
+    }).catch((error) => setMessage(`Error en la solicitud: ${error.message}`));
+
+    if (response) {
       setMessage(response.message || 'Contraseña cambiada correctamente.');
       setStep(3);
-    } catch (error) {
-      setMessage(`Error en la solicitud: ${error.message}`);
     }
   };
 
@@ -70,12 +66,11 @@ const ResetPass = () => {
   }, [step, navigate]);
 
   return (
-    <main className="flex items-start justify-center">
+    <main className="flex items-start justify-center px-4">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center justify-center bg-white p-6 rounded-lg shadow-md w-full max-w-3xl mt-10"
       >
-        
         {step === 1 && (
           <div className="w-full flex flex-col items-center">
             <h2 className="text-2xl font-bold text-center mb-6">Recuperar Contraseña</h2>
@@ -139,6 +134,9 @@ const ResetPass = () => {
                 />
               </section>
             </fieldset>
+            {message && (
+              <p className="text-red-500 text-sm mb-4">{message}</p>
+            )}
             <button
               type="submit"
               className="w-44 bg-black text-white py-2 rounded-lg font-bold text-lg mb-4 hover:scale-105 transition-transform duration-300"
@@ -157,11 +155,9 @@ const ResetPass = () => {
             </p>
           </>
         )}
-        
       </form>
     </main>
   );
 };
 
 export default ResetPass;
-

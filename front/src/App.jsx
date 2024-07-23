@@ -10,6 +10,7 @@ import MyEventsPage from './pages/MyEventsPage';
 import NotFound from './pages/NotFound';
 import MainLayout from './layout/MainLayout';
 import FAQPage from './pages/FAQPage';
+import ProfilePage from './pages/ProfilePage';
 
 import './styles.css';
 
@@ -25,6 +26,7 @@ const App = () => {
                 <Route path="/users/validate/activation-success" element={<ActivationSuccessPage />} />
                 <Route path="/users/login" element={<LoginFormPage />} />
                 <Route path="/users/my-events" element={<MyEventsPage />} />
+                <Route path="/users/profile" element={<ProfilePage />} />
                 <Route path="/faq" element={<FAQPage />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>

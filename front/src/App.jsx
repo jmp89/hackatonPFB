@@ -10,10 +10,10 @@ import MyEventsPage from './pages/MyEventsPage';
 import NotFound from './pages/NotFound';
 import MainLayout from './layout/MainLayout';
 import FAQPage from './pages/FAQPage';
-import ProfilePage from './pages/ProfilePage';
 import RateEventPage from './pages/RateEventPage';
 
 import './styles.css';
+import EventSearchPage from './pages/EventSearchPage';
 
 const App = () => {
     return (
@@ -23,19 +23,13 @@ const App = () => {
                 <Route path="/admin/:eventId?" element={<AdminPage />} />
                 <Route path="/register" element={<RegisterFormPage />} />
                 <Route path="/reset-password" element={<ResetPass />} />
-                <Route
-                    path="/users/validate/activate"
-                    element={<ActivationFormPage />}
-                />
-                <Route
-                    path="/users/validate/activation-success"
-                    element={<ActivationSuccessPage />}
-                />
+                <Route path="/users/validate/activate" element={<ActivationFormPage />} />
+                <Route path="/users/validate/activation-success" element={<ActivationSuccessPage />} />
                 <Route path="/users/login" element={<LoginFormPage />} />
-                <Route path="/users/my-events" element={<MyEventsPage />} />
-                <Route path="/users/profile" element={<ProfilePage />} />
                 <Route path="/users/rate-event" element={<RateEventPage />} />
+                <Route path="/users/my-events" element={<MyEventsPage />} />
                 <Route path="/faq" element={<FAQPage />} />
+                <Route path="/event/search" element={<EventSearchPage />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </MainLayout>

@@ -4,9 +4,13 @@ import { useAuth } from '../context/AuthContext';
 const ProfilePage = () => {
     const { currentUser } = useAuth();
 
+    console.log("currentUser:", currentUser);
+
     let user;
     try {
         user = typeof currentUser === 'string' ? JSON.parse(currentUser) : currentUser;
+        
+        console.log("Parsed user:", user);
     } catch (error) {
         console.error("Error al parsear currentUser:", error);
         return <p>Error al procesar los datos del usuario.</p>;

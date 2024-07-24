@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
-const MenuIcon = ({ isOpen }) => (
+const MenuIcon = ({ isOpen }) =>
     !isOpen ? (
         <svg
             className="block h-6 w-6"
@@ -35,14 +36,17 @@ const MenuIcon = ({ isOpen }) => (
                 d="M6 18L18 6M6 6l12 12"
             />
         </svg>
-    )
-);
+    );
 
 const NavItem = ({ to, onClick, children, className, isMobile }) => (
     <NavLink
         to={to}
         onClick={onClick}
-        className={`${className} flex items-center px-2 py-2 sm:px-3 sm:py-2 lg:px-4 lg:py-2 rounded-md transition-colors duration-300 ${isMobile ? 'text-base font-medium' : 'text-xs sm:text-sm md:text-base lg:text-lg font-semibold'}`}
+        className={`${className} flex items-center px-2 py-2 sm:px-3 sm:py-2 lg:px-4 lg:py-2 rounded-md transition-colors duration-300 ${
+            isMobile
+                ? 'text-base font-medium'
+                : 'text-xs sm:text-sm md:text-base lg:text-lg font-semibold'
+        }`}
     >
         {children}
     </NavLink>
@@ -66,36 +70,67 @@ const Header = () => {
                         />
                     </div>
                     <nav className="hidden sm:flex sm:space-x-2 md:space-x-4 lg:space-x-6">
-                        <NavItem to="/" className="text-black hover:bg-black hover:text-white">
+                        <NavItem
+                            to="/"
+                            className="text-black hover:bg-black hover:text-white"
+                        >
                             Inicio
                         </NavItem>
                         {!token ? (
                             <>
-                                <NavItem to="/users/login" className="text-black hover:bg-black hover:text-white">
+                                <NavItem
+                                    to="/users/login"
+                                    className="text-black hover:bg-black hover:text-white"
+                                >
                                     Login
                                 </NavItem>
-                                <NavItem to="/register" className="text-black hover:bg-black hover:text-white">
+                                <NavItem
+                                    to="/register"
+                                    className="text-black hover:bg-black hover:text-white"
+                                >
                                     Regístrate
                                 </NavItem>
-                                <NavItem to="/events" className="text-black hover:bg-black hover:text-white">
+                                <NavItem
+                                    to="/events"
+                                    className="text-black hover:bg-black hover:text-white"
+                                >
                                     Eventos
                                 </NavItem>
                             </>
                         ) : (
                             <>
-                                <NavItem to="/events" className="text-black hover:bg-black hover:text-white">
+                                <NavItem
+                                    to="/events"
+                                    className="text-black hover:bg-black hover:text-white"
+                                >
                                     Eventos
                                 </NavItem>
-                                <NavItem to="/users/my-events" className="text-black hover:bg-black hover:text-white">
+                                <NavItem
+                                    to="/users/my-events"
+                                    className="text-black hover:bg-black hover:text-white"
+                                >
                                     Mis inscripciones
+                                </NavItem>
+                                <NavItem
+                                    to="/users/rate-event"
+                                    className="text-black hover:bg-black hover:text-white"
+                                >
+                                    Valoraciones
                                 </NavItem>
                             </>
                         )}
-                        <NavItem to="/faq" className="text-black hover:bg-black hover:text-white">
+                        <NavItem
+                            to="/faq"
+                            className="text-black hover:bg-black hover:text-white"
+                        >
                             Preguntas frecuentes
                         </NavItem>
                         {token && (
-                            <NavItem to="#" onClick={removeToken} className="text-black hover:bg-black hover:text-white">
+                            <NavItem
+                                to="#"
+                                onClick={removeToken}
+                                className="text-black hover:bg-black hover:text-white"
+                            >
                                 Cerrar sesión
                             </NavItem>
                         )}
@@ -115,27 +150,57 @@ const Header = () => {
                 </div>
             </div>
 
-            <nav className={`sm:hidden absolute top-20 right-0 bg-white z-50 border border-gray-200 transition-all duration-300 ${isOpen ? 'opacity-100 pointer-events-auto w-64' : 'opacity-0 pointer-events-none w-0'}`}>
-                <ul className={`px-2 pt-2 pb-3 space-y-6 ${isOpen ? 'block' : 'hidden'}`}>
-                    <li className='mt-2'>
-                        <NavItem to="/" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+            <nav
+                className={`sm:hidden absolute top-20 right-0 bg-white z-50 border border-gray-200 transition-all duration-300 ${
+                    isOpen
+                        ? 'opacity-100 pointer-events-auto w-64'
+                        : 'opacity-0 pointer-events-none w-0'
+                }`}
+            >
+                <ul
+                    className={`px-2 pt-2 pb-3 space-y-6 ${
+                        isOpen ? 'block' : 'hidden'
+                    }`}
+                >
+                    <li className="mt-2">
+                        <NavItem
+                            to="/"
+                            onClick={toggleMenu}
+                            className="text-black hover:bg-black hover:text-white text-base font-medium"
+                            isMobile
+                        >
                             Inicio
                         </NavItem>
                     </li>
                     {!token ? (
                         <>
                             <li>
-                                <NavItem to="/users/login" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                                <NavItem
+                                    to="/users/login"
+                                    onClick={toggleMenu}
+                                    className="text-black hover:bg-black hover:text-white text-base font-medium"
+                                    isMobile
+                                >
                                     Login
                                 </NavItem>
                             </li>
                             <li>
-                                <NavItem to="/register" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                                <NavItem
+                                    to="/register"
+                                    onClick={toggleMenu}
+                                    className="text-black hover:bg-black hover:text-white text-base font-medium"
+                                    isMobile
+                                >
                                     Regístrate
                                 </NavItem>
                             </li>
                             <li>
-                                <NavItem to="/events" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                                <NavItem
+                                    to="/events"
+                                    onClick={toggleMenu}
+                                    className="text-black hover:bg-black hover:text-white text-base font-medium"
+                                    isMobile
+                                >
                                     Eventos
                                 </NavItem>
                             </li>
@@ -143,29 +208,58 @@ const Header = () => {
                     ) : (
                         <>
                             <li>
-                                <NavItem to="/events" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                                <NavItem
+                                    to="/events"
+                                    onClick={toggleMenu}
+                                    className="text-black hover:bg-black hover:text-white text-base font-medium"
+                                    isMobile
+                                >
                                     Eventos
                                 </NavItem>
                             </li>
                             <li>
-                                <NavItem to="/users/my-events" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                                <NavItem
+                                    to="/users/my-events"
+                                    onClick={toggleMenu}
+                                    className="text-black hover:bg-black hover:text-white text-base font-medium"
+                                    isMobile
+                                >
                                     Mis inscripciones
                                 </NavItem>
                             </li>
                             <li>
-                                <NavItem to="/faq" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
-                                    Preguntas frecuentes
+                                <NavItem
+                                    to="/users/rate-event"
+                                    onClick={toggleMenu}
+                                    className="text-black hover:bg-black hover:text-white text-base font-medium"
+                                    isMobile
+                                >
+                                    Valoraciones
                                 </NavItem>
                             </li>
+
                             <li>
-                                <NavItem to="#" onClick={() => { removeToken(); setIsOpen(false); }} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                                <NavItem
+                                    to="#"
+                                    onClick={() => {
+                                        removeToken();
+                                        setIsOpen(false);
+                                    }}
+                                    className="text-black hover:bg-black hover:text-white text-base font-medium"
+                                    isMobile
+                                >
                                     Cerrar sesión
                                 </NavItem>
                             </li>
                         </>
                     )}
-                    <li className='mt-2'>
-                        <NavItem to="/faq" onClick={toggleMenu} className="text-black hover:bg-black hover:text-white text-base font-medium" isMobile>
+                    <li className="mt-2">
+                        <NavItem
+                            to="/faq"
+                            onClick={toggleMenu}
+                            className="text-black hover:bg-black hover:text-white text-base font-medium"
+                            isMobile
+                        >
                             Preguntas frecuentes
                         </NavItem>
                     </li>

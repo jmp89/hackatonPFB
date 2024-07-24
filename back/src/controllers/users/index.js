@@ -8,7 +8,7 @@ import uploadUserAvatarController from './uploadUserAvatarController.js';
 import rateUserEventController from './rateUserEventController.js';
 import updateUserProfileController from './updateUserProfileController.js';
 import getMyEventsListController from './getMyEventsListController.js';
-
+import getMyFinishedEventsListController from './getMyFinishedEventsListController.js';
 export {
     userRegisterController,
     validateUserController,
@@ -20,4 +20,5 @@ export {
     rateUserEventController,
     updateUserProfileController,
     getMyEventsListController,
+    getMyFinishedEventsListController,
 };

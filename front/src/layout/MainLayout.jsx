@@ -4,11 +4,11 @@ import Footer from '../components/Footer.jsx';
 
 const MainLayout = ({ children }) => {
     return (
-        <>
+        <div className="flex flex-col min-h-screen">
             <Header />
-            {children}
-            <Footer/>
-        </>
+            <main className="flex-grow">{children}</main>
+            <Footer />
+        </div>
     );
 };
 export default MainLayout;

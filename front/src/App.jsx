@@ -14,6 +14,7 @@ import ProfilePage from './pages/ProfilePage';
 import RateEventPage from './pages/RateEventPage';
 
 import './styles.css';
+import EventDetails from './pages/EventDetails';
 
 const App = () => {
     return (
@@ -37,6 +38,8 @@ const App = () => {
                 <Route path="/users/rate-event" element={<RateEventPage />} />
                 <Route path="/faq" element={<FAQPage />} />
                 <Route path="*" element={<NotFound />} />
+                <Route path="/event/details/:eventId" element={<EventDetails />} />
+
             </Routes>
         </MainLayout>
     );

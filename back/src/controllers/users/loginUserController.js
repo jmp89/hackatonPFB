@@ -49,6 +49,9 @@ const loginUserController = async (req, res, next) => {
       expiresIn: "7d",
     });
 
+    delete user.password;
+    delete user.active;
+
     res
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
@@ -58,6 +61,7 @@ const loginUserController = async (req, res, next) => {
       .send({
         status: "ok",
         token: token,
+        userInfo: user
       });
 
   } catch (error) {

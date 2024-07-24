@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem('token') || null);
+    const [currentUser, setCurrentUser] = useState(localStorage.getItem('currentUser') || null);
 
     const updateToken = (newToken) => {
         setToken(newToken);
@@ -17,9 +18,15 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem('token');
     };
 
+    const updateCurrentUser = (newUser) => {
+        setCurrentUser(newUser);
+        localStorage.removeItem('currentUser');
+        localStorage.setItem('currentUser', newUser);
+    };
+
     return (
         <AuthContext.Provider
-            value={{ token, setToken, updateToken, removeToken }}
+            value={{ token, updateToken, removeToken, currentUser, updateCurrentUser }}
         >
             {children}
         </AuthContext.Provider>

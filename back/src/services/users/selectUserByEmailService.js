@@ -5,7 +5,7 @@ const selectUserByEmailService = async (email) => {
 
   const [user] = await pool.query(
     `
-            SELECT id, password, email, role, recover_pass_code, active
+            SELECT id, name, password, email, role, personal_info, avatar, active
             FROM users
             WHERE email = ?
         `,

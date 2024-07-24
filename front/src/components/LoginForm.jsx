@@ -4,7 +4,7 @@ import fetchUserLoginService from "../services/fetchUserLoginService.js";
 import { useAuth } from "../context/AuthContext";
 
 const LoginForm = () => {
-  const { token, updateToken } = useAuth();
+  const { token, updateToken, updateCurrentUser } = useAuth();
 
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
@@ -28,6 +28,8 @@ const LoginForm = () => {
       }
 
       updateToken(data.token);
+      updateCurrentUser(JSON.stringify(data.userInfo));
+
       setFormData({ email: "", password: "" });
       setLoginOk("Inicio de sesión exitoso, redirigiendo a la página principal...");
       setError(null);

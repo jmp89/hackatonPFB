@@ -12,15 +12,17 @@ import fileUpload from 'express-fileupload';
 const server = express();
 
 // Recursos estáticos
-const { UPLOADS_DIR } = process.env;
+const { UPLOADS_DIR, FRONT_URL, FRONT_PORT } = process.env;
 const PUBLIC_FOLDER = path.join(process.cwd(), UPLOADS_DIR);
 server.use(express.static(PUBLIC_FOLDER));
 
 server.use(morgan('dev'));
 server.use(
     cors({
-        origin: 'http://localhost:5173',
+        origin: 'http://' + FRONT_URL + ':' + FRONT_PORT,
         credentials: true,
+        methods: ['GET', 'POST', 'PUT'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
     })
 );
 server.use(cookieParser());

@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import AdminPage from './pages/AdminPage';
-import Home from './pages/Home';
+import Home from './pages/HomePage';
 import ResetPass from './components/resetPass';
 import ActivationSuccessPage from './pages/ActivationSuccessPage';
 import ActivationFormPage from './components/ActivationFormPage';
@@ -11,7 +11,7 @@ import NotFound from './pages/NotFound';
 import MainLayout from './layout/MainLayout';
 import FAQPage from './pages/FAQPage';
 import RateEventPage from './pages/RateEventPage';
-import EventDetails from './pages/EventDetails';
+import EventDetails from './pages/EventDetailsPage';
 import EventSearchPage from './pages/EventSearchPage';
 import './styles.css';
 

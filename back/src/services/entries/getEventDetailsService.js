@@ -6,6 +6,7 @@ const getEventDetailsService = async (eventID) => {
     const eventDetails = await pool.query(
         `
             SELECT
+                e.id,
                 e.name,
                 th.name AS thematics,
                 t.name AS technologies,
@@ -25,6 +26,7 @@ const getEventDetailsService = async (eventID) => {
             LEFT JOIN thematics th ON th.id = the.thematic_id
             WHERE e.id = ?
             GROUP BY 
+                e.id,
                 e.name,
                 th.name,
                 t.name,

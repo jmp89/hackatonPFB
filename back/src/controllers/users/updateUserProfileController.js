@@ -18,11 +18,14 @@ const updateUserProfileController = async (req, res, next) => {
             throw generateErrorsUtils(error.message, 400);
         };
 
-        await updateUserProfileService(userId, name, email, personal_info);
+        const newUserInfo = await updateUserProfileService(userId, name, email, personal_info);
 
         let resData = {
             status: "ok",
-            messge: "Perfil actualizado con éxito",
+            message: "Perfil actualizado con éxito",
+            data: {
+                newUserInfo
+            }
         };
 
         let newToken = {};

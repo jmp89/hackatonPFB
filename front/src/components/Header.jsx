@@ -93,7 +93,7 @@ const Header = () => {
                                     Regístrate
                                 </NavItem>
                                 <NavItem
-                                    to="/events"
+                                    to="/event/search"
                                     className="text-black hover:bg-black hover:text-white"
                                 >
                                     Eventos
@@ -102,7 +102,7 @@ const Header = () => {
                         ) : (
                             <>
                                 <NavItem
-                                    to="/events"
+                                    to="/event/search"
                                     className="text-black hover:bg-black hover:text-white"
                                 >
                                     Eventos
@@ -198,7 +198,7 @@ const Header = () => {
                             </li>
                             <li>
                                 <NavItem
-                                    to="/events"
+                                    to="/event/search"
                                     onClick={toggleMenu}
                                     className="text-black hover:bg-black hover:text-white text-base font-medium"
                                     isMobile
@@ -211,7 +211,7 @@ const Header = () => {
                         <>
                             <li>
                                 <NavItem
-                                    to="/events"
+                                    to="/event/search"
                                     onClick={toggleMenu}
                                     className="text-black hover:bg-black hover:text-white text-base font-medium"
                                     isMobile

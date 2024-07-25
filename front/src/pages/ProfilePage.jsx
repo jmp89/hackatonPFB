@@ -28,7 +28,7 @@ const ProfilePage = () => {
                 <div className="w-full">
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">Nombre de usuario</label>
-                        <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">{user.username || 'No disponible'}</p>
+                        <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">{user.name || 'No disponible'}</p>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
@@ -36,11 +36,11 @@ const ProfilePage = () => {
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">Información personal</label>
-                        <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">{user.personalInfo || 'No disponible'}</p>
+                        <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">{user.personal_info || 'No disponible'}</p>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">Perfil verificado</label>
-                        <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">{user.isVerified ? 'Sí' : 'No'}</p>
+                        <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">{user.active === 1 ? 'Sí' : 'No'}</p>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">Role</label>
@@ -48,11 +48,11 @@ const ProfilePage = () => {
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">Perfil creado</label>
-                        <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'No disponible'}</p>
+                        <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">{user.created_at ? new Date(user.created_at).toLocaleDateString() : 'No disponible'}</p>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">Perfil modificado</label>
-                        <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">{user.updatedAt ? new Date(user.updatedAt).toLocaleDateString() : 'No disponible'}</p>
+                        <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">{user.modified_at ? new Date(user.modified_at).toLocaleDateString() : 'No disponible'}</p>
                     </div>
                 </div>
             </section>

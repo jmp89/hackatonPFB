@@ -2,7 +2,7 @@ import getPool from '../../database/getPool.js';
 
 const createEventAdminService = async (eventInfo) => {
     const pool = await getPool();
-    console.log(eventInfo);
+
     await pool.query(
         `
             INSERT INTO events (
@@ -30,41 +30,52 @@ const createEventAdminService = async (eventInfo) => {
         ]
     );
 
-    const [[ eventID ]] = await pool.query(`
+    const [[eventID]] = await pool.query(
+        `
             SELECT id
             FROM events
             WHERE name = ?    
-        `, [ eventInfo.name ]
+        `,
+        [eventInfo.name]
     );
 
-    for ( const tech of eventInfo.technologies ){
-
-        const [[ techID ]] = await pool.query(`
+    for (const tech of eventInfo.technologies) {
+        const [[techID]] = await pool.query(
+            `
                 SELECT id
                 FROM technologies
                 WHERE name = ?
-            `, [ tech.name ]);
+            `,
+            [tech.name]
+        );
 
-        await pool.query(`
+        await pool.query(
+            `
                 INSERT INTO technologies_events (event_id, technology_id)
                 VALUES ( ?, ? )
-            `, [ eventID.id, techID.id ]);
-    };
+            `,
+            [eventID.id, techID.id]
+        );
+    }
 
-    for ( const them of eventInfo.thematics ){
-
-        const [[ themID ]] = await pool.query(`
+    for (const them of eventInfo.thematics) {
+        const [[themID]] = await pool.query(
+            `
                 SELECT id
                 FROM thematics
                 WHERE name = ?
-            `, [ them.name ]);
+            `,
+            [them.name]
+        );
 
-        await pool.query(`
+        await pool.query(
+            `
                 INSERT INTO thematics_events ( event_id, thematic_id )
                 VALUES ( ?, ? )
-            `, [ eventID.id, themID.id ]);
+            `,
+            [eventID.id, themID.id]
+        );
     }
-
 };
 
 export default createEventAdminService;

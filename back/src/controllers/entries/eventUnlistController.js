@@ -11,28 +11,27 @@ const eventUnlistController = async (req, res, next) => {
             eventID: Joi.number().positive().integer().required(),
         });
 
-        const { error } = eventUnlistControllerSchema.validate(req.body);
+        const { error } = eventUnlistControllerSchema.validate(req.params);
 
         if (error) {
             throw generateErrorsUtils(error.message, 400);
-        };
+        }
 
         await eventUnlistService(id, eventID);
 
         let resData = {
-            status: "ok",
-            message: "Registro al evento cancelado correctamente.",
+            status: 'ok',
+            message: 'Registro al evento cancelado correctamente.',
         };
 
         let newToken = {};
-        
-        if (req.newAccessToken && req.newAccessToken.length > 1){
-            newToken = {newAccessToken: req.newAccessToken};
-            resData = {...resData, ...newToken};
-        };
-        
-        res.send(resData);
 
+        if (req.newAccessToken && req.newAccessToken.length > 1) {
+            newToken = { newAccessToken: req.newAccessToken };
+            resData = { ...resData, ...newToken };
+        }
+
+        res.send(resData);
     } catch (error) {
         next(error);
     }

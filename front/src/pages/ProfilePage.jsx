@@ -1,36 +1,35 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 const ProfilePage = () => {
-    const { currentUser } = useAuth();
+    const { currentUser, token } = useAuth();
     const [editingField, setEditingField] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        personal_info: ''
+        personal_info: '',
     });
 
-    let user;
-    try {
-        user = typeof currentUser === 'string' ? JSON.parse(currentUser) : currentUser;
-        if (!user) throw new Error("User data is missing");
-    } catch (error) {
-        console.error("Error al parsear currentUser:", error);
-        return <p>Error al procesar los datos del usuario.</p>;
-    }
+    useEffect(() => {
+        if (currentUser) {
+            let user =
+                typeof currentUser === 'string'
+                    ? JSON.parse(currentUser)
+                    : currentUser;
+            setFormData({
+                name: user.name || '',
+                email: user.email || '',
+                personal_info: user.personal_info || '',
+            });
+        }
+    }, [currentUser]);
 
-    if (editingField === null && formData.name === '') {
-        setFormData({
-            name: user.name || '',
-            email: user.email || '',
-            personal_info: user.personal_info || ''
-        });
-    }
+    let user = JSON.parse(currentUser);
 
     const handleChange = (e) => {
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         });
     };
 
@@ -38,20 +37,25 @@ const ProfilePage = () => {
         setEditingField(field);
     };
 
-    const handleSaveClick = async (field) => {
+    const handleSaveClick = async () => {
         if (!formData.name || !formData.email) {
-            alert("Por favor, completa todos los campos.");
+            alert('Por favor, completa todos los campos.');
             return;
         }
 
         try {
-            const response = await fetch('http://localhost:3001/users/edit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/users/edit`,
+                {
+                    method: 'PUT',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `${token}`,
+                    },
+                    body: JSON.stringify(formData),
+                }
+            );
             const data = await response.json();
             if (response.ok) {
                 console.log('Perfil actualizado con éxito:', data);
@@ -67,24 +71,30 @@ const ProfilePage = () => {
     return (
         <main className="flex items-center justify-center px-4">
             <section className="flex flex-col items-center justify-center bg-white p-6 rounded-lg shadow-md w-full max-w-3xl mt-10">
-                <img className="w-24 h-24 rounded-full mb-4" src={user.avatarUrl || '/default-avatar.png'} alt="Avatar" />
+                <img
+                    className="w-24 h-24 rounded-full mb-4"
+                    src={formData.avatar || '/default-avatar.png'}
+                    alt="Avatar"
+                />
                 <h2 className="text-2xl font-bold mb-4">Perfil del usuario</h2>
                 <form className="w-full">
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Nombre de usuario</label>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            Nombre de usuario
+                        </label>
                         {editingField === 'name' ? (
                             <>
                                 <input
                                     type="text"
                                     name="name"
-                                    placeholder={formData.name}
+                                    value={formData.name}
                                     onChange={handleChange}
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                                     required
                                 />
                                 <button
                                     type="button"
-                                    onClick={() => handleSaveClick('name')}
+                                    onClick={handleSaveClick}
                                     className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
                                 >
                                     Guardar
@@ -93,7 +103,7 @@ const ProfilePage = () => {
                         ) : (
                             <>
                                 <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">
-                                    {user.name || 'No disponible'}
+                                    {formData.name || 'No disponible'}
                                 </p>
                                 <button
                                     type="button"
@@ -106,20 +116,22 @@ const ProfilePage = () => {
                         )}
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            Email
+                        </label>
                         {editingField === 'email' ? (
                             <>
                                 <input
                                     type="email"
                                     name="email"
-                                    placeholder={formData.email}
+                                    value={formData.email}
                                     onChange={handleChange}
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                                     required
                                 />
                                 <button
                                     type="button"
-                                    onClick={() => handleSaveClick('email')}
+                                    onClick={handleSaveClick}
                                     className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
                                 >
                                     Guardar
@@ -128,7 +140,7 @@ const ProfilePage = () => {
                         ) : (
                             <>
                                 <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">
-                                    {user.email || 'No disponible'}
+                                    {formData.email || 'No disponible'}
                                 </p>
                                 <button
                                     type="button"
@@ -141,19 +153,21 @@ const ProfilePage = () => {
                         )}
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Información personal</label>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            Información personal
+                        </label>
                         {editingField === 'personal_info' ? (
                             <>
                                 <input
                                     type="text"
                                     name="personal_info"
-                                    placeholder={formData.personal_info}
+                                    value={formData.personal_info}
                                     onChange={handleChange}
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                                 />
                                 <button
                                     type="button"
-                                    onClick={() => handleSaveClick('personal_info')}
+                                    onClick={handleSaveClick}
                                     className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
                                 >
                                     Guardar
@@ -162,11 +176,13 @@ const ProfilePage = () => {
                         ) : (
                             <>
                                 <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">
-                                    {user.personal_info || 'No disponible'}
+                                    {formData.personal_info || 'No disponible'}
                                 </p>
                                 <button
                                     type="button"
-                                    onClick={() => handleEditClick('personal_info')}
+                                    onClick={() =>
+                                        handleEditClick('personal_info')
+                                    }
                                     className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
                                 >
                                     Editar
@@ -175,21 +191,31 @@ const ProfilePage = () => {
                         )}
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Role</label>
-                        <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            Role
+                        </label>
+                        <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight capitalize">
                             {user.role || 'No asignado'}
                         </p>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Perfil creado</label>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            Perfil creado
+                        </label>
                         <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">
-                            {user.created_at ? new Date(user.created_at).toLocaleDateString() : 'No disponible'}
+                            {user.created_at.slice(0, 10)}
                         </p>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Perfil modificado</label>
+                        <label className="block text-gray-700 text-sm font-bold mb-2">
+                            Perfil modificado
+                        </label>
                         <p className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">
-                            {user.modified_at ? new Date(user.modified_at).toLocaleDateString() : 'No disponible'}
+                            {user.modified_at
+                                ? new Date(
+                                      user.modified_at
+                                  ).toLocaleDateString()
+                                : 'No disponible'}
                         </p>
                     </div>
                 </form>

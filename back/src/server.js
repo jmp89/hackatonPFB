@@ -20,9 +20,9 @@ server.use(morgan('dev'));
 server.use(
     cors({
         origin: 'http://' + FRONT_URL + ':' + FRONT_PORT,
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'credentials'],
         credentials: true,
-        methods: ['GET', 'POST', 'PUT'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
     })
 );
 server.use(cookieParser());

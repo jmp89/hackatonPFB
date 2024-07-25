@@ -48,7 +48,7 @@ const Home = () => {
                 {error ? (
                     <p className="text-red-500">{error}</p>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-6xl mx-auto">
+                    <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 w-full max-w-6xl mx-auto">
                         {Array.isArray(events) && events.map((event, index) => (
                             <article 
                                 key={event.id || index} 

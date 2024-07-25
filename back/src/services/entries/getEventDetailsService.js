@@ -17,6 +17,7 @@ const getEventDetailsService = async (eventID) => {
                 e.finish_date,
                 e.start_time,
                 e.finish_time,
+                e.description,
                 COUNT(DISTINCT p.user_id) AS total_participants
             FROM events e
             LEFT JOIN participates p ON p.event_id = e.id
@@ -36,7 +37,8 @@ const getEventDetailsService = async (eventID) => {
                 e.start_date,
                 e.finish_date,
                 e.start_time,
-                e.finish_time;
+                e.finish_time,
+                e.description;
         `,
         [eventID]
     );
@@ -56,7 +58,8 @@ const getEventDetailsService = async (eventID) => {
                 start_date: row.start_date,
                 finish_date: row.finish_date,
                 start_time: row.start_time,
-                finish_time: row.finish_time
+                finish_time: row.finish_time,
+                description: row.description
             });
         };
         

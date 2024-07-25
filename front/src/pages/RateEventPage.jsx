@@ -30,10 +30,10 @@ const RateEventPage = () => {
                         import.meta.env.VITE_API_URL +
                             '/users/my-finished-events',
                         {
+                            credentials: 'include',
                             headers: {
                                 'Content-Type': 'application/json',
                                 Authorization: `${token}`,
-                                credentials: 'include',
                             },
                         }
                     );
@@ -74,10 +74,10 @@ const RateEventPage = () => {
                 import.meta.env.VITE_API_URL + '/users/rate-event',
                 {
                     method: 'POST',
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `${token}`,
-                        credentials: 'include',
                     },
                     body: JSON.stringify({ eventId, rating }),
                 }

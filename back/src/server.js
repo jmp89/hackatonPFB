@@ -21,7 +21,7 @@ server.use(
     cors({
         origin: 'http://' + FRONT_URL + ':' + FRONT_PORT,
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        allowedHeaders: ['Content-Type', 'Authorization', 'credentials'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
     })
 );

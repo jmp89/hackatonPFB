@@ -57,7 +57,7 @@ const Home = () => {
                             >
                                 <h3 className="text-xl font-bold">{event.name}</h3>
                                 <p>{event.start_date.split('T')[0]} / {event.finish_date.split('T')[0]}</p>
-                                <p>Localidad: {event.location}</p>
+                                {/* <p>Localidad: {event.location}</p> */}
                                 <p>Creado por: {event.organizer}</p>
                                 <p>Tecnología: {event.technologies}</p>
                                 <p>Temática: {event.thematics}</p>

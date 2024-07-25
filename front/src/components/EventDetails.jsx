@@ -30,14 +30,14 @@ const EventDetails = () => {
         return !!token;
     };
 
-// Esto es para cuando el usuario ya este registrado a este evento salga error
+// Esto es para cuando el usuario ya este registrado 
 
-    const isUserRegistered = (eventID) => {
-        if (!currentUser) {
-            return false;
-        }
-        return false;
-    };
+    // const isUserRegistered = (eventID) => {
+    //     if (!currentUser) {
+    //         return false;
+    //     }
+    //     return false;
+    // };
 
     const handleButtonClick = () => {
         if (!isLoggedIn()) {
@@ -45,7 +45,7 @@ const EventDetails = () => {
         } else if (isUserRegistered(event.id)) {
             setMessage('Ya estas registrado a este hackaton');
         } else {
-            navigate(`/register/${event.id}`);
+            navigate(`/register/${event.id}`);// ruta para apuntarse al hackathon
         }
     };
 

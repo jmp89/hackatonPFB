@@ -13,6 +13,7 @@ import FAQPage from './pages/FAQPage';
 import RateEventPage from './pages/RateEventPage';
 import EventDetails from './pages/EventDetailsPage';
 import EventSearchPage from './pages/EventSearchPage';
+import ProfilePage from './pages/ProfilePage';
 import './styles.css';
 
 
@@ -33,7 +34,7 @@ const App = () => {
                 <Route path="/event/search" element={<EventSearchPage />} />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/event/details/:eventId" element={<EventDetails />} />
-
+                <Route path="/users/profile" element={<ProfilePage />} />
             </Routes>
         </MainLayout>
     );

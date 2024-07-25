@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import getEventById from '../services/eventDetailsService';
+import { useAuth } from '../context/AuthContext';
 
 const EventDetails = () => {
     const { eventId } = useParams();
     const [event, setEvent] = useState(null);
     const [error, setError] = useState(null);
+    const [message, setMessage] = useState('');
+    const navigate = useNavigate();
+    const { token, currentUser } = useAuth();
 
     useEffect(() => {
         const fetchEvent = async () => {
@@ -22,6 +26,29 @@ const EventDetails = () => {
         fetchEvent();
     }, [eventId]);
 
+    const isLoggedIn = () => {
+        return !!token;
+    };
+
+// Esto es para cuando el usuario ya este registrado 
+
+    // const isUserRegistered = (eventID) => {
+    //     if (!currentUser) {
+    //         return false;
+    //     }
+    //     return false;
+    // };
+
+    const handleButtonClick = () => {
+        if (!isLoggedIn()) {
+            setMessage('Necesitas loguearte primero');
+        } else if (isUserRegistered(event.id)) {
+            setMessage('Ya estas registrado a este hackaton');
+        } else {
+            navigate(`/register/${event.id}`);// ruta para apuntarse al hackathon
+        }
+    };
+
     if (error) {
         return <p className="text-red-500">{error}</p>;
     }
@@ -31,17 +58,32 @@ const EventDetails = () => {
     }
 
     return (
-        <div>
-            <h1>{event.name}</h1>
-            <p>Location: {event.location}</p>
-            <p>Start Date: {new Date(event.start_date).toLocaleDateString()}</p>
-            <p>Finish Date: {new Date(event.finish_date).toLocaleDateString()}</p>
-            <p>Thematics: {event.thematics}</p>
-            <p>Technologies: {event.technologies}</p>
-            <p>Online/On-site: {event.online_on_site}</p>
-            <p>Organizer: {event.organizer || 'Not available'}</p>
-            <p>Total Participants: {event.total_participants}</p>
-        </div>
+        <main className="flex flex-col items-center justify-center px-4 py-3">
+            <section className="text-center">
+                <h1 className="text-xl font-bold mt-10">{event.name}</h1>
+                <p className="font-medium mt-4">Organizador: {event.organizer || 'Not available'}</p>
+                <p className="my-2 font-medium">
+                    {new Date(event.start_date).toLocaleDateString()} - {new Date(event.finish_date).toLocaleDateString()}
+                </p>
+                <p className="my-2 font-medium">{event.online_on_site} - {event.location}</p>
+                <p className="my-2 font-medium">Thematics: {event.thematics}</p>
+                <p className="my-2 font-medium">Technologies: {event.technologies}</p>
+            </section>
+            <section className="text-center mt-10 mb-5">
+                <h2 className="font-bold">¿QUÉ VAMOS A HACER?</h2>
+                <p className="mt-5">{event.description}</p>
+            </section>
+            <p className="font-medium mt-5">Total Participants: {event.total_participants}</p>
+
+            <button 
+    onClick={handleButtonClick} 
+    className="mt-5 bg-black text-white py-3 px-6 rounded-lg font-bold text-lg mb-4 hover:scale-105 transition-transform duration-300 flex items-center justify-center">
+    Apúntate
+</button>
+  
+
+            {message && <p className="mt-3 text-red-500">{message}</p>}
+        </main>
     );
 };
 

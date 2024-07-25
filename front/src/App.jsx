@@ -11,9 +11,10 @@ import NotFound from './pages/NotFound';
 import MainLayout from './layout/MainLayout';
 import FAQPage from './pages/FAQPage';
 import RateEventPage from './pages/RateEventPage';
-
-import './styles.css';
+import EventDetails from './pages/EventDetails';
 import EventSearchPage from './pages/EventSearchPage';
+import './styles.css';
+
 
 const App = () => {
     return (
@@ -31,6 +32,8 @@ const App = () => {
                 <Route path="/faq" element={<FAQPage />} />
                 <Route path="/event/search" element={<EventSearchPage />} />
                 <Route path="*" element={<NotFound />} />
+                <Route path="/event/details/:eventId" element={<EventDetails />} />
+
             </Routes>
         </MainLayout>
     );

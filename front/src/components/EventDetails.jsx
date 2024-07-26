@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import getEventById from '../services/eventDetailsService';
+import registerForEvent from '../services/registerEventService';
 import { useAuth } from '../context/AuthContext';
 
 const EventDetails = () => {
     const { eventId } = useParams();
+    const { token } = useAuth(); // Obtén el token del contexto
     const [event, setEvent] = useState(null);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState('');
     const [message, setMessage] = useState('');
-    const navigate = useNavigate();
-    const { token, currentUser } = useAuth();
 
     useEffect(() => {
         const fetchEvent = async () => {
@@ -26,26 +26,20 @@ const EventDetails = () => {
         fetchEvent();
     }, [eventId]);
 
-    const isLoggedIn = () => {
-        return !!token;
-    };
+    const isLoggedIn = () => !!token;
 
-    // Esto es para cuando el usuario ya este registrado
-
-    const isUserRegistered = (eventID) => {
-        if (!currentUser) {
-            return false;
-        }
-        return false;
-    };
-
-    const handleButtonClick = () => {
+    const handleButtonClick = async () => {
         if (!isLoggedIn()) {
             setMessage('Necesitas loguearte primero');
-        } else if (isUserRegistered(event.id)) {
-            setMessage('Ya estas registrado a este hackaton');
-        } else {
-            navigate(`/register/${event.id}`); // ruta para apuntarse al hackathon
+            return;
+        }
+
+        try {
+            await registerForEvent(eventId, token); 
+            setMessage('Te has inscrito correctamente al evento. Te llegará un correo con la confirmación');
+        } catch (err) {
+            console.error('Error registering for event:', err);
+            setMessage('Ya estás registrado a este evento');
         }
     };
 

@@ -73,7 +73,7 @@ const ProfilePage = () => {
             <section className="flex flex-col items-center justify-center bg-white p-6 rounded-lg shadow-md w-full max-w-3xl mt-10">
                 <img
                     className="w-24 h-24 rounded-full mb-4"
-                    src={formData.avatar || '/default-avatar.png'}
+                    src={formData.avatar || '/userProfil.png'}
                     alt="Avatar"
                 />
                 <h2 className="text-2xl font-bold mb-4">Perfil del usuario</h2>

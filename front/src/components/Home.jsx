@@ -69,6 +69,9 @@ const Home = () => {
                                         {event.name}
                                     </h3>
                                     <p>
+                                        Organizador: {event.organizer_name}
+                                    </p>
+                                    <p>
                                         {event.start_date.split('T')[0]} /{' '}
                                         {event.finish_date.split('T')[0]}
                                     </p>

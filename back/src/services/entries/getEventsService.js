@@ -11,6 +11,7 @@ const getEventsService = async (filter, sort, direction) => {
         th.name AS thematics,
         e.online_on_site,
         e.location,
+        u.name AS organizer_name,
         e.organizer,
         e.start_date,
         e.finish_date,
@@ -21,6 +22,7 @@ const getEventsService = async (filter, sort, direction) => {
         LEFT JOIN technologies t ON t.id = te.technology_id
         LEFT JOIN thematics_events the ON the.event_id = e.id
         LEFT JOIN thematics th ON th.id = the.thematic_id
+        LEFT JOIN users u ON e.organizer = u.id
     `;
 
     if (!filter) {
@@ -42,6 +44,7 @@ const getEventsService = async (filter, sort, direction) => {
                     online_on_site: row.online_on_site,
                     location: row.location,
                     organizer: row.organizer,
+                    organizer_name: row.organizer_name,
                     start_date: row.start_date,
                     finish_date: row.finish_date,
                     start_time: row.start_time,

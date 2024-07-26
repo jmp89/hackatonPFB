@@ -16,6 +16,7 @@ const EventDetails = () => {
             try {
                 console.log('Fetching event with ID:', eventId);
                 const eventData = await getEventById(eventId);
+                console.log('Event data:', eventData);
                 setEvent(eventData);
             } catch (err) {
                 console.error('Error fetching event:', err);
@@ -56,7 +57,7 @@ const EventDetails = () => {
             <section className="text-center">
                 <h1 className="text-xl font-bold mt-10">{event.name}</h1>
                 <p className="font-medium mt-4">
-                    Organizador: {event.organizer || 'Not available'}
+                    Organizador: {event.organizer_name}
                 </p>
                 <p className="my-2 font-medium">
                     {new Date(event.start_date).toLocaleDateString()} -

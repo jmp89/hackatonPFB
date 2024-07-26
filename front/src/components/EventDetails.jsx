@@ -65,11 +65,13 @@ const EventDetails = () => {
                     Organizador: {event.organizer || 'Not available'}
                 </p>
                 <p className="my-2 font-medium">
-                    {new Date(event.start_date).toLocaleDateString()} -{' '}
+                    {new Date(event.start_date).toLocaleDateString()} -
                     {new Date(event.finish_date).toLocaleDateString()}
                 </p>
                 <p className="my-2 font-medium">
-                    {event.online_on_site} - {event.location}
+                    {event.online_on_site !== 'on_site'
+                        ? 'Online'
+                        : `Ciudad: ${event.location}`}
                 </p>
                 <p className="my-2 font-medium">Thematics: {event.thematics}</p>
                 <p className="my-2 font-medium">

@@ -73,7 +73,9 @@ const Home = () => {
                                         {event.finish_date.split('T')[0]}
                                     </p>
                                     {/* <p>Localidad: {event.location}</p> */}
-                                    <p>Creado por: {event.organizer}</p>
+                                    <p>{event.online_on_site !== 'on_site'
+                        ? 'Online'
+                        : `Ciudad: ${event.location}`}</p>
                                     <p>Tecnología: {event.technologies}</p>
                                     <p>Temática: {event.thematics}</p>
                                 </article>

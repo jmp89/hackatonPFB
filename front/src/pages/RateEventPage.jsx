@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import EventCard from '../components/EventCard';
 import { useAuth } from '../context/AuthContext';
+import PushNotification from '../components/PushNotification';
 
 const RateEventPage = () => {
     const [events, setEvents] = useState([]);
@@ -39,6 +40,10 @@ const RateEventPage = () => {
                     );
 
                     if (!response.ok) {
+                        PushNotification(
+                            `Ha ocurrido un error, status: ${response.status}`,
+                            { type: 'error' }
+                        );
                         throw new Error(
                             `Ha ocurrido un error, status: ${response.status}`
                         );
@@ -49,12 +54,17 @@ const RateEventPage = () => {
                     if (data.status === 'ok') {
                         setEvents(data.events);
                     } else {
+                        PushNotification(
+                            `Fallo al recuperar los eventos: ${data.message}`,
+                            { type: 'error' }
+                        );
                         console.error(
                             'Fallo al recuperar los eventos:',
                             data.message
                         );
                     }
                 } catch (error) {
+                    PushNotification(error.message, { type: 'error' });
                     console.error('Error recuperando eventos:', error);
                 }
             };
@@ -66,6 +76,7 @@ const RateEventPage = () => {
     const handleRate = async (eventId, rating) => {
         if (!token) {
             console.error('Debes iniciar sesión.');
+            PushNotification('Debes iniciar sesión', { type: 'error' });
             return;
         }
 
@@ -84,6 +95,10 @@ const RateEventPage = () => {
             );
 
             if (!response.ok) {
+                PushNotification(
+                    `Ha ocurrido un error, status: ${response.status}`,
+                    { type: 'error' }
+                );
                 throw new Error(
                     `Ha ocurrido un error, status: ${response.status}`
                 );
@@ -93,10 +108,17 @@ const RateEventPage = () => {
 
             if (data.status === 'ok') {
                 console.log('Valoración enviada con éxito');
+                PushNotification('Valoración enviada con éxito', {
+                    type: 'success',
+                });
             } else {
+                PushNotification('Fallo al enviar valoración', {
+                    type: 'error',
+                });
                 console.error('Fallo al enviar valoración');
             }
         } catch (error) {
+            PushNotification(error.message, { type: 'error' });
             console.error('Error enviando la valoración:', error);
         }
     };

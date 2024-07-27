@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import getEvents from '../services/lastEventService';
+import PushNotification from './PushNotification.jsx';
 
 const Home = () => {
     const [events, setEvents] = useState([]);
@@ -29,6 +30,7 @@ const Home = () => {
             } catch (err) {
                 console.error('Error fetching events:', err);
                 setError('Error fetching events. Please try again later.');
+                PushNotification(err.message, { type: 'error' });
             }
         };
 

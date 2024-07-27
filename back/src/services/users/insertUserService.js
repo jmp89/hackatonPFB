@@ -31,16 +31,18 @@ const insertUserService = async (
     const emailBody = `
             Bienvenid@
 
-            Gracias por registrarse en Hackathon.
-            Para activar tu cuenta debes hace click en el siguiente enlace
+            Gracias por registrarse en HackaVerse.
+            Para activar tu cuenta debes copiar el siguiente código:
 
-            <a href="http://${FRONT_URL}:${FRONT_PORT}/users/validate/activate">Activar Cuenta</a>
+              <div style="color: #fff; background-color: #000; padding: 5px 15px; border-radius: 10px; margin: 0 25px; width: fit-content; height: fit-content; font-weight: bold; font-size: 1.2rem">${registrationCode}</div>
+
+            Y luego insertarlo en la siguiente página:
+
+            <a href="http://${FRONT_URL}:${FRONT_PORT}/users/validate/activate" style="text-decoration: none; color: #fff; background-color: #000; padding: 15px 25px; border-radius: 10px; margin: 0 25px">Activar Cuenta</a>
             
-            <small>O si lo prefieres, este es tu código de activación: ${registrationCode}</small>
-
-            Saludos.
+       
             <hr />
-            Hecho con ❤ por el equipo de Hackathon
+            Hecho con ❤ por el equipo de HackaVerse
     `;
 
     try {

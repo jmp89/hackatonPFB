@@ -4,6 +4,7 @@ import getEventById from '../services/eventDetailsService';
 import registerForEvent from '../services/registerEventService';
 import { useAuth } from '../context/AuthContext';
 import PushNotification from './PushNotification.jsx';
+// TODO: Testear Toastify, borrar elementos inncesarios al tener toastify
 
 const EventDetails = () => {
     const { eventId } = useParams();
@@ -100,7 +101,9 @@ const EventDetails = () => {
                 Apúntate
             </button>
 
-            {message && <p className="mt-3 text-red-500">{message}</p>}
+            {/*
+            PASADO A TOASTIFY
+            {message && <p className="mt-3 text-red-500">{message}</p>} */}
         </main>
     );
 };

@@ -35,6 +35,7 @@ const EventDetails = () => {
     const handleButtonClick = async () => {
         if (!isLoggedIn()) {
             setMessage('Necesitas loguearte primero');
+            PushNotification('Necesitas loguearte primero', { type: 'error' });
             return;
         }
 

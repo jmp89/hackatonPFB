@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import PushNotification from '../components/PushNotification';
+
+// TODO: Testear Toastify, borrar elementos inncesarios al tener toastify
 
 const ProfilePage = () => {
     const { currentUser, token } = useAuth();
@@ -59,12 +62,19 @@ const ProfilePage = () => {
             const data = await response.json();
             if (response.ok) {
                 console.log('Perfil actualizado con éxito:', data);
+                PushNotification('Perfil actualizado con éxito: ' + data, {
+                    type: 'success',
+                });
                 setEditingField(null);
             } else {
                 console.error('Error al actualizar el perfil:', data);
+                PushNotification('Error al actualizar el perfil: ' + data, {
+                    type: 'error',
+                });
             }
         } catch (error) {
             console.error('Error al enviar los datos:', error);
+            PushNotification(error.message, { type: 'error' });
         }
     };
 

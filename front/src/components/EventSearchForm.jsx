@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import fetchEventSearchService from '../services/fetchEventSearchService';
+import PushNotification from './PushNotification.jsx';
+
+// TODO: Testear Toastify, borrar elementos inncesarios al tener toastify
 
 const EventSearchForm = () => {
     const [formData, setFormData] = useState({
@@ -14,7 +17,7 @@ const EventSearchForm = () => {
         const fetchEventSearch = async () => {
             try {
                 const response = await fetch(
-                    'http://localhost:3001/event/search'
+                    import.meta.env.VITE_API_URL + '/event/search'
                 );
 
                 const data = await response.json();
@@ -23,6 +26,7 @@ const EventSearchForm = () => {
             } catch (error) {
                 setError(error.message);
                 setResponseData(null);
+                PushNotification(error.message, { type: 'error' });
             }
         };
 
@@ -52,6 +56,7 @@ const EventSearchForm = () => {
         } catch (error) {
             setError(error.message);
             setResponseData(null);
+            PushNotification(error.message, { type: 'error' });
         }
     };
 

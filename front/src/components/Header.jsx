@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
-const MenuIcon = ({ isOpen }) =>
+// Icono del menú hamburguesa que cambia de estado abierto/cerrado
+const MenuIcon = ({ isOpen }) => (
     !isOpen ? (
         <svg
             className="block h-6 w-6"
@@ -36,237 +37,175 @@ const MenuIcon = ({ isOpen }) =>
                 d="M6 18L18 6M6 6l12 12"
             />
         </svg>
-    );
+    )
+);
 
-const NavItem = ({ to, onClick, children, className, isMobile }) => (
+// Componente de ítem de navegación, se adapta a móvil y escritorio
+const NavItem = ({ to, onClick, children, isMobile }) => (
     <NavLink
         to={to}
         onClick={onClick}
-        className={`${className} flex items-center px-2 py-2 sm:px-3 sm:py-2 lg:px-4 lg:py-2 rounded-md transition-colors duration-300 ${
-            isMobile
-                ? 'text-base font-medium'
-                : 'text-xs sm:text-sm md:text-base lg:text-lg font-semibold'
-        }`}
+        className={`block px-4 py-2 rounded-md transition-colors duration-300 ${
+            isMobile ? 'text-base' : 'text-sm'
+        } hover:bg-gray-200`}
     >
         {children}
     </NavLink>
 );
 
-const Header = () => {
-    const { token, removeToken } = useAuth();
-    const [isOpen, setIsOpen] = useState(false);
+// Menú desplegable con transición (puede ser reutilizado para avatar y hamburguesa)
+const DropdownMenu = ({ items, isOpen, toggleMenu, className }) => {
+    return (
+        <div
+            className={`absolute right-0 mt-2 bg-white rounded-lg overflow-hidden transition-max-h duration-300 ease-in-out ${
+                isOpen ? 'max-h-96 border border-gray-200 shadow-lg' : 'max-h-0'
+            } ${className}`}
+        >
+            <ul className="py-1 w-44 space-y-1">
+                {items.map((item, index) => (
+                    <li key={index}>
+                        {item.onClick ? (
+                            <button
+                                onClick={() => {
+                                    item.onClick();
+                                    toggleMenu();
+                                }}
+                                className="block w-full text-left px-4 py-2 rounded-md transition-colors duration-300 text-sm hover:bg-gray-200"
+                            >
+                                {item.label}
+                            </button>
+                        ) : (
+                            <NavItem to={item.to} onClick={toggleMenu} isMobile={item.isMobile}>
+                                {item.label}
+                            </NavItem>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
 
-    const toggleMenu = () => setIsOpen(!isOpen);
+// Encabezado principal del sitio
+const Header = () => {
+    const { token, removeToken, currentUser } = useAuth();
+    const [isAvatarMenuOpen, setIsAvatarMenuOpen] = useState(false);
+    const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
+
+    const toggleAvatarMenu = () => {
+        setIsAvatarMenuOpen(!isAvatarMenuOpen);
+        if (!isAvatarMenuOpen) {
+            setIsHamburgerMenuOpen(false);
+        }
+    };
+
+    const toggleHamburgerMenu = () => {
+        setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
+        if (!isHamburgerMenuOpen) {
+            setIsAvatarMenuOpen(false);
+        }
+    };
+
+    const avatarUrl = currentUser && currentUser.avatar ? currentUser.avatar : '/userProfil.png';
+
+    const avatarMenuItems = [
+        { to: '/users/profile', label: 'Perfil' },
+        { to: '/users/my-events', label: 'Mis inscripciones' },
+        { to: '/users/rate-event', label: 'Valoraciones' },
+        { onClick: removeToken, label: 'Cerrar sesión' },
+    ];
+
+    const hamburgerMenuItems = token
+        ? [
+              { to: '/event/search', label: 'Eventos', isMobile: true },
+              { to: '/faq', label: 'FAQ', isMobile: true },
+          ]
+        : [
+              { to: '/users/login', label: 'Login', isMobile: true },
+              { to: '/register', label: 'Registrarse', isMobile: true },
+              { to: '/event/search', label: 'Eventos', isMobile: true },
+              { to: '/faq', label: 'FAQ', isMobile: true },
+          ];
 
     return (
         <header className="bg-white text-black sticky top-0 z-50 shadow-md">
-            <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-between h-16">
                     <div className="flex-shrink-0">
                         <NavLink to="/">
-                        <img
-                            className="h-48 w-48"
-                            src="/logo_hackaverse.svg"
-                            alt="Hackaverse"
-                        />
-                    </NavLink>
+                            <img
+                                className="h-24 w-auto"
+                                src="/logo_hackaverse.svg"
+                                alt="Hackaverse"
+                            />
+                        </NavLink>
                     </div>
-                    <nav className="hidden sm:flex sm:space-x-2 md:space-x-4 lg:space-x-6">
-                        <NavItem
-                            to="/"
-                            className="text-black hover:bg-black hover:text-white"
-                        >
-                            Inicio
-                        </NavItem>
+                    <nav className="hidden sm:flex space-x-4">
                         {!token ? (
                             <>
-                                <NavItem
-                                    to="/users/login"
-                                    className="text-black hover:bg-black hover:text-white"
-                                >
-                                    Login
-                                </NavItem>
-                                <NavItem
-                                    to="/register"
-                                    className="text-black hover:bg-black hover:text-white"
-                                >
-                                    Regístrate
-                                </NavItem>
-                                <NavItem
-                                    to="/event/search"
-                                    className="text-black hover:bg-black hover:text-white"
-                                >
-                                    Eventos
-                                </NavItem>
+                                <NavItem to="/users/login">Login</NavItem>
+                                <NavItem to="/register">Registrarse</NavItem>
+                                <NavItem to="/event/search">Eventos</NavItem>
+                                <NavItem to="/faq">FAQ</NavItem>
                             </>
                         ) : (
                             <>
-                                <NavItem
-                                    to="/event/search"
-                                    className="text-black hover:bg-black hover:text-white"
-                                >
-                                    Eventos
-                                </NavItem>
-                                <NavItem
-                                    to="/users/my-events"
-                                    className="text-black hover:bg-black hover:text-white"
-                                >
-                                    Mis inscripciones
-                                </NavItem>
-                                <NavItem
-                                    to="/users/rate-event"
-                                    className="text-black hover:bg-black hover:text-white"
-                                >
-                                    Valoraciones
-                                </NavItem>
+                                <NavItem to="/event/search">Eventos</NavItem>
+                                <NavItem to="/faq">FAQ</NavItem>
+                                <div className="relative">
+                                    <img
+                                        className="w-10 h-10 rounded-full cursor-pointer"
+                                        src={avatarUrl}
+                                        alt="User Avatar"
+                                        onClick={toggleAvatarMenu}
+                                    />
+                                    <DropdownMenu
+                                        items={avatarMenuItems}
+                                        isOpen={isAvatarMenuOpen}
+                                        toggleMenu={toggleAvatarMenu}
+                                        className="top-14"
+                                    />
+                                </div>
                             </>
                         )}
-                        <NavItem
-                            to="/faq"
-                            className="text-black hover:bg-black hover:text-white"
-                        >
-                            Preguntas frecuentes
-                        </NavItem>
-                        {token && (
-                            <NavItem
-                                to="#"
-                                onClick={removeToken}
-                                className="text-black hover:bg-black hover:text-white"
-                            >
-                                Cerrar sesión
-                            </NavItem>
-                        )}
                     </nav>
-                    <div className="sm:hidden">
+                    {/* Menú móvil */}
+                    <div className="sm:hidden flex items-center space-x-4 relative">
+                        {token && (
+                            <div className="relative">
+                                <img
+                                    className="w-10 h-10 rounded-full cursor-pointer"
+                                    src={avatarUrl}
+                                    alt="User Avatar"
+                                    onClick={toggleAvatarMenu}
+                                />
+                                <DropdownMenu
+                                    items={avatarMenuItems}
+                                    isOpen={isAvatarMenuOpen}
+                                    toggleMenu={toggleAvatarMenu}
+                                    className="top-11"
+                                />
+                            </div>
+                        )}
                         <button
-                            onClick={toggleMenu}
+                            onClick={toggleHamburgerMenu}
                             type="button"
                             className="inline-flex items-center justify-center p-2 rounded-md text-black hover:text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition-colors duration-300"
                             aria-controls="mobile-menu"
-                            aria-expanded={isOpen}
+                            aria-expanded={isHamburgerMenuOpen}
                         >
                             <span className="sr-only">Abrir menú</span>
-                            <MenuIcon isOpen={isOpen} />
+                            <MenuIcon isOpen={isHamburgerMenuOpen} />
                         </button>
+                        <DropdownMenu
+                            items={hamburgerMenuItems}
+                            isOpen={isHamburgerMenuOpen}
+                            toggleMenu={toggleHamburgerMenu}
+                            className="top-11"
+                        />
                     </div>
                 </div>
             </div>
-
-            <nav
-                className={`sm:hidden absolute top-20 right-0 bg-white z-50 border border-gray-200 transition-all duration-300 ${
-                    isOpen
-                        ? 'opacity-100 pointer-events-auto w-64'
-                        : 'opacity-0 pointer-events-none w-0'
-                }`}
-            >
-                <ul
-                    className={`px-2 pt-2 pb-3 space-y-6 ${
-                        isOpen ? 'block' : 'hidden'
-                    }`}
-                >
-                    <li className="mt-2">
-                        <NavItem
-                            to="/"
-                            onClick={toggleMenu}
-                            className="text-black hover:bg-black hover:text-white text-base font-medium"
-                            isMobile
-                        >
-                            Inicio
-                        </NavItem>
-                    </li>
-                    {!token ? (
-                        <>
-                            <li>
-                                <NavItem
-                                    to="/users/login"
-                                    onClick={toggleMenu}
-                                    className="text-black hover:bg-black hover:text-white text-base font-medium"
-                                    isMobile
-                                >
-                                    Login
-                                </NavItem>
-                            </li>
-                            <li>
-                                <NavItem
-                                    to="/register"
-                                    onClick={toggleMenu}
-                                    className="text-black hover:bg-black hover:text-white text-base font-medium"
-                                    isMobile
-                                >
-                                    Regístrate
-                                </NavItem>
-                            </li>
-                            <li>
-                                <NavItem
-                                    to="/event/search"
-                                    onClick={toggleMenu}
-                                    className="text-black hover:bg-black hover:text-white text-base font-medium"
-                                    isMobile
-                                >
-                                    Eventos
-                                </NavItem>
-                            </li>
-                        </>
-                    ) : (
-                        <>
-                            <li>
-                                <NavItem
-                                    to="/event/search"
-                                    onClick={toggleMenu}
-                                    className="text-black hover:bg-black hover:text-white text-base font-medium"
-                                    isMobile
-                                >
-                                    Eventos
-                                </NavItem>
-                            </li>
-                            <li>
-                                <NavItem
-                                    to="/users/my-events"
-                                    onClick={toggleMenu}
-                                    className="text-black hover:bg-black hover:text-white text-base font-medium"
-                                    isMobile
-                                >
-                                    Mis inscripciones
-                                </NavItem>
-                            </li>
-                            <li>
-                                <NavItem
-                                    to="/users/rate-event"
-                                    onClick={toggleMenu}
-                                    className="text-black hover:bg-black hover:text-white text-base font-medium"
-                                    isMobile
-                                >
-                                    Valoraciones
-                                </NavItem>
-                            </li>
-
-                            <li>
-                                <NavItem
-                                    to="#"
-                                    onClick={() => {
-                                        removeToken();
-                                        setIsOpen(false);
-                                    }}
-                                    className="text-black hover:bg-black hover:text-white text-base font-medium"
-                                    isMobile
-                                >
-                                    Cerrar sesión
-                                </NavItem>
-                            </li>
-                        </>
-                    )}
-                    <li className="mt-2">
-                        <NavItem
-                            to="/faq"
-                            onClick={toggleMenu}
-                            className="text-black hover:bg-black hover:text-white text-base font-medium"
-                            isMobile
-                        >
-                            Preguntas frecuentes
-                        </NavItem>
-                    </li>
-                </ul>
-            </nav>
         </header>
     );
 };

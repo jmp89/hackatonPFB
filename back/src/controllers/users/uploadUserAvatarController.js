@@ -16,26 +16,29 @@ const uploadUserAvatarController = async (req, res, next) => {
 
         const file = req.files.fileName;
 
-        const uploadDir = path.join(process.cwd(), UPLOADS_DIR + '/uploads');
+        const uploadDir = path.join(process.cwd(), UPLOADS_DIR);
 
         if (!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir, { recursive: true });
         }
 
         const randomName = randomstring.generate(15);
-        const finalName = randomName + '_' + file.name;
+        const finalName = "/uploads/" + randomName + '_' + file.name;
 
         const uploadPath = path.join(uploadDir, finalName);
 
         const userID = req.user.id;
 
-        await insertUserAvatarService(finalName, userID);
+        const newAvatar = await insertUserAvatarService(finalName, userID);
 
         await file.mv(uploadPath);
 
         let resData = {
             status: "ok",
             message: "Archivo subido correctamente",
+            data: {
+                newAvatar
+            }
         };
 
         let newToken = {};

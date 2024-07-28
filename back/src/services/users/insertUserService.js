@@ -7,6 +7,8 @@ import 'dotenv/config';
 const { FRONT_URL, FRONT_PORT } = process.env;
 
 const insertUserService = async (
+    name,
+    surname,
     username,
     email,
     password,
@@ -55,10 +57,10 @@ const insertUserService = async (
 
     await pool.query(
         `
-            INSERT INTO users (name, email, password, registration_code)
-            VALUES (?,?,?,?)
+            INSERT INTO users (name, surname, username, email, password, registration_code)
+            VALUES (?,?,?,?,?,?)
         `,
-        [username, email, passwordHashed, registrationCode]
+        [name, surname, username, email, passwordHashed, registrationCode]
     );
 };
 

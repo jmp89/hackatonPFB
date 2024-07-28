@@ -29,7 +29,7 @@ const LoginForm = () => {
             }
 
             updateToken(data.token);
-            updateCurrentUser(JSON.stringify(data.userInfo));
+            updateCurrentUser(data.userInfo);
 
             setFormData({ email: '', password: '' });
             setLoginOk(

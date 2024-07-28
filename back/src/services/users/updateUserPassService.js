@@ -12,7 +12,7 @@ const updateUserPassService = async (email, oldPassword, newPassword) => {
 
   if (!passOk) {
 
-    throw generateErrorsUtils("Las contraseñas no coinciden", 409);
+    throw generateErrorsUtils("Contraseña incorrecta", 409);
   }
 
   const hashPassword = await bcrypt.hash(newPassword, 10);

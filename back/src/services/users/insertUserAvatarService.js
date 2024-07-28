@@ -10,6 +10,13 @@ const insertUserAvatarService = async (avatar, userID) => {
             WHERE id = ?
         `, [ avatar, userID ]);
 
+    const [[results]] = await pool.query(`
+            SELECT avatar
+            FROM users
+            WHERE id = ?
+        `, [userID]);
+
+    return results;
 };
 
 export default insertUserAvatarService;

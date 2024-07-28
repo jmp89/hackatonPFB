@@ -5,7 +5,7 @@ import generateErrorsUtils from "../utils/generateErrorsUtils.js";
 const authUser = (req, res, next) => {
 
   try {
-
+    
     const { authorization } = req.headers;
 
     if (!authorization) {
@@ -13,17 +13,14 @@ const authUser = (req, res, next) => {
     }
 
     try {
-
       const accessToken = jwt.verify(authorization, process.env.SECRET);
 
       req.user = accessToken;
-
       next();
 
     } catch (error) {
 
       if (error.message.includes("jwt expired")) {
-
         const { refreshToken } = req.cookies;
 
 
@@ -56,7 +53,7 @@ const authUser = (req, res, next) => {
         };
 
       } else {
-        
+
         throw generateErrorsUtils("Debe iniciar sesión.", 401);
       };
     };

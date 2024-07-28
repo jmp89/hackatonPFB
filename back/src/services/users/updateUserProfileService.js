@@ -1,7 +1,7 @@
 import getPool from '../../database/getPool.js';
 import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
 
-const updateUserProfileService = async (userId, name, email, personalInfo) => {
+const updateUserProfileService = async (userId, name, surname, username, email, personalInfo) => {
     try {
         const pool = await getPool();
 
@@ -11,6 +11,16 @@ const updateUserProfileService = async (userId, name, email, personalInfo) => {
         if (name !== undefined && name !== '') {
             query += 'name = ?, ';
             values.push(name);
+        }
+
+        if (surname !== undefined && surname !== '') {
+            query += 'surname = ?, ';
+            values.push(surname);
+        }
+
+        if (username !== undefined && username !== '') {
+            query += 'username = ?, ';
+            values.push(username);
         }
 
         if (email !== undefined && email !== '') {
@@ -38,6 +48,8 @@ const updateUserProfileService = async (userId, name, email, personalInfo) => {
         const [newUserInfo] = await pool.query(`
                 SELECT
                     name,
+                    surname,
+                    username,
                     email,
                     role,
                     personal_info,

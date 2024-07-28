@@ -27,7 +27,9 @@ const initDB = async () => {
         await pool.query(`
             CREATE TABLE users (
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(100) UNIQUE NOT NULL,
+                name VARCHAR(100) NOT NULL,
+                surname VARCHAR(150) NOT NULL,
+                username VARCHAR(100) UNIQUE NOT NULL,
                 email VARCHAR(100) UNIQUE NOT NULL,
                 password VARCHAR(100) NOT NULL,
                 avatar VARCHAR(100) DEFAULT NULL,
@@ -123,8 +125,10 @@ const initDB = async () => {
         console.log('Creando usuario admin...');
 
         await pool.query(`
-            INSERT INTO users (name, email, password, role, active) 
+            INSERT INTO users (name, surname, username, email, password, role, active) 
             VALUES (
+                'Administrador',
+                'Web Master',
                 '${process.env.MYSQL_ADMIN_NAME}',
                 '${process.env.MYSQL_ADMIN_EMAIL}',
                 '${await bcrypt.hash(process.env.MYSQL_ADMIN_PASSWORD, 10)}',

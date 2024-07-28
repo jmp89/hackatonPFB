@@ -4,10 +4,12 @@ import {updateUserProfileService} from '../../services/users/index.js';
 
 const updateUserProfileController = async (req, res, next) => {
     const userId = req.user.id;
-    const { name, email, personal_info } = req.body;
+    const { name, surname, username, email, personal_info } = req.body;
 
     const loginUserControllerSchema = Joi.object({
         name: Joi.string().required(),
+        surname: Joi.string().required(),
+        username: Joi.string().required(),
         email: Joi.string().email().required(),
         personal_info: Joi.string(),
     });
@@ -18,7 +20,7 @@ const updateUserProfileController = async (req, res, next) => {
             throw generateErrorsUtils(error.message, 400);
         };
 
-        const newUserInfo = await updateUserProfileService(userId, name, email, personal_info);
+        const newUserInfo = await updateUserProfileService(userId, name, surname, username, email, personal_info);
 
         let resData = {
             status: "ok",

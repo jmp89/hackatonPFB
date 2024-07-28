@@ -8,14 +8,15 @@ const selectUserByEmailService = async (email) => {
             SELECT
               id,
               name,
+              surname,
+              username,
               password,
               email,
               role,
               personal_info,
               avatar,
               active,
-              created_at,
-              modified_at
+              created_at
             FROM users
             WHERE email = ?
         `,

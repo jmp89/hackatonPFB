@@ -50,7 +50,9 @@ const loginUserController = async (req, res, next) => {
     });
 
     delete user.password;
-    
+    delete user.id;
+    delete user.active;
+
     res
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,

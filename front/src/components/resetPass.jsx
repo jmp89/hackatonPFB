@@ -4,7 +4,7 @@ import { initiatePassword } from '../services/initiatePasswordServices';
 import { resetPassword } from '../services/resetPasswordServices';
 import PushNotification from './PushNotification.jsx';
 
-// TODO: Testear Toastify, borrar elementos inncesarios al tener toastify
+// TODO: Testear Toastify, borrar elementos innecesarios al tener toastify
 
 const ResetPass = () => {
     const [email, setEmail] = useState('');
@@ -18,18 +18,16 @@ const ResetPass = () => {
 
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
-        const response = await initiatePassword(email).catch((error) =>
-            setMessage(error.message)
-        );
-        if (response) {
-            setMessage(
-                'Código de verificación enviado a tu correo electrónico.'
-            );
-            setStep(2);
-            PushNotification(
-                'Código de verificación enviado a tu correo electrónico.',
-                { type: 'info' }
-            );
+        try {
+            const response = await initiatePassword(email);
+            if (response) {
+                setMessage('Código de verificación enviado a tu correo electrónico.');
+                setStep(2);
+                PushNotification('Código de verificación enviado a tu correo electrónico.', { type: 'info' });
+            }
+        } catch (error) {
+            setMessage(error.message);
+            PushNotification(error.message, { type: 'error' });
         }
     };
 
@@ -37,29 +35,25 @@ const ResetPass = () => {
         e.preventDefault();
         if (newPassword !== confirmPassword) {
             setMessage('Las contraseñas no coinciden.');
-            PushNotification(message, { type: 'error' });
+            PushNotification('Las contraseñas no coinciden.', { type: 'error' });
             return;
         }
-        const response = await resetPassword({
-            email,
-            recoverPassCode,
-            newPassword,
-        }).catch((error) =>
-            /* setMessage(`Error en la solicitud: ${error.message}`)*/ PushNotification(
-                `Error en la solicitud: ${error.message}`,
-                { type: 'error' }
-            )
-        );
 
-        if (response) {
-            setMessage(
-                response.message || 'Contraseña cambiada correctamente.'
-            );
-            PushNotification(
-                response.message || 'Contraseña cambiada correctamente.',
-                { type: 'success' }
-            );
-            setStep(3);
+        try {
+            const response = await resetPassword({
+                email,
+                recoverPassCode,
+                newPassword,
+            });
+
+            if (response) {
+                setMessage(response.message || 'Contraseña cambiada correctamente.');
+                PushNotification(response.message || 'Contraseña cambiada correctamente.', { type: 'success' });
+                setStep(3);
+            }
+        } catch (error) {
+            setMessage(`Error en la solicitud: ${error.message}`);
+            PushNotification(`Error en la solicitud: ${error.message}`, { type: 'error' });
         }
     };
 
@@ -96,14 +90,10 @@ const ResetPass = () => {
             >
                 {step === 1 && (
                     <div className="w-full flex flex-col items-center">
-                        <h2 className="text-2xl font-bold text-center mb-6">
-                            Recuperar Contraseña
-                        </h2>
+                        <h2 className="text-2xl font-bold text-center mb-6">Recuperar Contraseña</h2>
                         <fieldset className="w-full">
                             <section className="mb-4 w-full">
-                                <label className="block text-lg font-medium mb-2 text-center">
-                                    Email
-                                </label>
+                                <label className="block text-lg font-medium mb-2 text-center">Email</label>
                                 <input
                                     type="email"
                                     value={email}
@@ -126,15 +116,11 @@ const ResetPass = () => {
                     <div className="w-full flex flex-col items-center">
                         <fieldset className="w-full">
                             <section className="mb-4 w-full">
-                                <label className="block text-lg font-medium mb-2 text-center">
-                                    Código de verificación
-                                </label>
+                                <label className="block text-lg font-medium mb-2 text-center">Código de verificación</label>
                                 <input
                                     type="text"
                                     value={recoverPassCode}
-                                    onChange={(e) =>
-                                        setRecoverPassCode(e.target.value)
-                                    }
+                                    onChange={(e) => setRecoverPassCode(e.target.value)}
                                     required
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                     placeholder="Escribe el código de verificación"
@@ -142,15 +128,11 @@ const ResetPass = () => {
                             </section>
 
                             <section className="mb-4 w-full">
-                                <label className="block text-lg font-medium mb-2 text-center">
-                                    Nueva contraseña
-                                </label>
+                                <label className="block text-lg font-medium mb-2 text-center">Nueva contraseña</label>
                                 <input
                                     type="password"
                                     value={newPassword}
-                                    onChange={(e) =>
-                                        setNewPassword(e.target.value)
-                                    }
+                                    onChange={(e) => setNewPassword(e.target.value)}
                                     required
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                     placeholder="Escribe tu nueva contraseña"
@@ -158,27 +140,17 @@ const ResetPass = () => {
                             </section>
 
                             <section className="mb-4 w-full">
-                                <label className="block text-lg font-medium mb-2 text-center">
-                                    Repita la contraseña
-                                </label>
+                                <label className="block text-lg font-medium mb-2 text-center">Repita la contraseña</label>
                                 <input
                                     type="password"
                                     value={confirmPassword}
-                                    onChange={(e) =>
-                                        setConfirmPassword(e.target.value)
-                                    }
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
                                     required
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                     placeholder="Repite tu nueva contraseña"
                                 />
                             </section>
                         </fieldset>
-
-                        {/*
-            PASADO A TOASTIFY
-            {message && (
-              <p className="text-red-500 text-sm mb-4">{message}</p>
-            )} */}
                         <button
                             type="submit"
                             className="w-44 bg-black text-white py-2 rounded-lg font-bold text-lg mb-4 hover:scale-105 transition-transform duration-300"
@@ -192,9 +164,7 @@ const ResetPass = () => {
                         <p className="bg-black text-white py-2 rounded-lg font-bold text-lg text-center w-full max-w-md mx-4 md:mx-auto mb-4 shadow-md">
                             Contraseña cambiada correctamente
                         </p>
-                        <p className="text-center text-lg font-medium">
-                            Redirigiendo en {countdown} segundos...
-                        </p>
+                        <p className="text-center text-lg font-medium">Redirigiendo en {countdown} segundos...</p>
                     </>
                 )}
             </form>

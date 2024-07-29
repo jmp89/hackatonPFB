@@ -16,7 +16,8 @@ const selectUserByEmailService = async (email) => {
               personal_info,
               avatar,
               active,
-              created_at
+              created_at,
+              recover_pass_code
             FROM users
             WHERE email = ?
         `,

@@ -53,13 +53,13 @@ const Home = () => {
             </section>
 
             <section className="mt-10 text-center">
-                <h2 className="text-2xl font-semibold mb-6">
+                <h2 className="text-2xl font-semibold mb-20">
                     ÚLTIMOS HACKATHONES
                 </h2>
                 {error ? (
                     <p className="text-red-500">{error}</p>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-6xl mx-auto ">
                         {Array.isArray(events) &&
                             events.map((event, index) => (
                                 <article

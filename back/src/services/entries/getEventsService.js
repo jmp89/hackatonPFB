@@ -149,7 +149,7 @@ const getEventsService = async (filter, sort, direction) => {
 
     const finalEventsList = Array.from(eventsMap.values()).map((event) => ({
         ...event,
-        technologies: Array.from(event.technologies.join(', ')),
+        technologies: Array.from(event.technologies),
         thematics: Array.from(event.thematics),
     }));
 

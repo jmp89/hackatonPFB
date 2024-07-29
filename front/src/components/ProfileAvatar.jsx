@@ -1,14 +1,91 @@
+import { useState, useRef } from "react";
+
+const API_URL = import.meta.env.VITE_API_URL;
+const API_URL_FOR_AVATAR = API_URL + "/upload"
+
 const ProfileAvatar = ({
+    token,
+    currentUser,
+    updateCurrentUser,
     placeholders,
-    formDataAvatar,
     editingAvatar,
-    handleAvatarSubmit,
-    handleAvatarEdit,
-    handleAvatarChange,
-    handleAvatarBack,
-    handleFileInputClick,
-    fileInputRef
+    setEditingAvatar,
+    setEditingProfile,
+    setEditingPassword,
+    PushNotification
 }) => {
+
+    const [ formDataAvatar, setFormDataAvatar ] = useState(null);
+    const fileInputRef = useRef(null);
+
+    const handleAvatarSubmit = async (e) => {
+
+        e.preventDefault();
+
+        try {
+
+            if (!formDataAvatar){
+                PushNotification("Por favor, seleccione un nuevo avatar", { type: "error"});
+                return;
+            };
+
+            const updatedFormDataAvatar = new FormData();
+            updatedFormDataAvatar.append('fileName', formDataAvatar);
+
+            const response = await fetch(API_URL_FOR_AVATAR, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Authorization": token
+                },
+                body: updatedFormDataAvatar
+            });
+
+            const data = await response.json();
+
+            if (!response.ok){
+                throw new Error(data.message);
+            };
+
+            updateCurrentUser({...currentUser, avatar: data.data.newAvatar.avatar});
+            setFormDataAvatar(null);
+
+            PushNotification("Avatar actualizado correctamente", { type: "success"});
+
+        } catch (error) {
+            
+            PushNotification(error.message, { type: "error"});
+        };
+    };
+
+    const handleAvatarChange = (e) => {
+
+        setFormDataAvatar(e.target.files[0]);
+    };
+
+    const handleAvatarEdit = (e) => {
+        
+        e.preventDefault();
+
+        setEditingAvatar(true);
+        setEditingProfile(false);
+        setEditingPassword(false);
+    };
+
+    const handleAvatarBack = (e) => {
+
+        e.preventDefault();
+
+        setEditingAvatar(false);
+        setFormDataAvatar({
+            fileName: "",
+        });
+    };
+
+    const handleFileInputClick = () => {
+
+        fileInputRef.current.click();
+    };
 
     return (
 
@@ -16,11 +93,11 @@ const ProfileAvatar = ({
 
             <section className="h-48 w-48 relative flex justify-center items-center">
 
-                <img src={`http://localhost:3001${placeholders.avatar}`} alt="user-avatar"
+                <img src={`${API_URL}${placeholders.avatar}`} alt="user-avatar"
                     className="mt-2 mx-auto w-48" />
                         
                 <button type="button" className="absolute top-[calc(85%)] left-[calc(80%)] ">
-                    <img src="http://localhost:3001/media/edit.svg" alt="edit-svg"
+                    <img src={`${API_URL}/media/edit.svg`} alt="edit-svg"
                         className="w-6 h-6"
                         onClick={handleAvatarEdit} />
                 </button>
@@ -40,7 +117,7 @@ const ProfileAvatar = ({
                             ref={fileInputRef} onChange={handleAvatarChange} />
                         <button type="button" className="mx-auto w-11 h-11 hover:scale-105 transition-transform duration-300"
                             onClick={handleFileInputClick}>
-                            <img src="http://localhost:3001/media/upload.svg" alt="upload-file-svg" />
+                            <img src={`${API_URL}/media/upload.svg`} alt="upload-file-svg" />
                         </button>
 
                         {formDataAvatar?.name && <p className="mx-auto text-lg">{formDataAvatar.name}</p>}
@@ -51,7 +128,7 @@ const ProfileAvatar = ({
 
                         <button className="w-11 h-11 rounded-lg overflow-hidden  hover:scale-105 transition-transform duration-300"
                             onClick={handleAvatarBack}>
-                            <img src="http://localhost:3001/media/back-arrow.svg" alt="back-arrow-svg" />
+                            <img src={`${API_URL}/media/back-arrow.svg`} alt="back-arrow-svg" />
                         </button>
 
                         <button className="ml-6 w-44 bg-black text-white py-2 rounded-lg font-bold text-lg hover:scale-105 transition-transform duration-300"

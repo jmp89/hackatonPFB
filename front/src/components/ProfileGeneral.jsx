@@ -1,13 +1,102 @@
+import { useState } from "react";
+
+const API_URL = import.meta.env.VITE_API_URL;
+const API_URL_FOR_PROFILE = API_URL + "/users/edit";
+
 const ProfileGeneral = ({
+    token,
+    updateCurrentUser,
     placeholders,
-    formDataProfile,
+    setEditingAvatar,
     editingProfile,
-    handleProfileSubmit,
-    handleProfileEdit,
-    handleProfileChange,
-    handleProfileBack,
-    personalInfoRef
+    setEditingProfile,
+    setEditingPassword,
+    PushNotification
 }) => {
+
+    const [ formDataProfile, setFormDataProfile ] = useState({
+        name: "",
+        surname: "",
+        username: "",
+        email: "",
+        personal_info: "",
+    });
+
+    const handleProfileSubmit = async (e) => {
+        
+        e.preventDefault();
+        
+        try {
+
+            const updatedFormDataProfile = {
+                name: formDataProfile.name.length > 0 ? formDataProfile.name : placeholders.name,
+                surname: formDataProfile.surname.length > 0 ? formDataProfile.surname : placeholders.surname,
+                username: formDataProfile.username.length > 0 ? formDataProfile.username : placeholders.username,
+                email: formDataProfile.email.length > 0 ? formDataProfile.email : placeholders.email,
+                personal_info: formDataProfile.personal_info.length > 0 ? formDataProfile.personal_info : placeholders.personal_info,
+            };
+
+            const response = await fetch(API_URL_FOR_PROFILE, {
+                method: "PUT",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token
+                },
+                body: JSON.stringify(updatedFormDataProfile)
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok){
+                throw new Error(data.message);
+            };
+
+            updateCurrentUser(data.data.newUserInfo[0]);
+            setFormDataProfile({
+                name: "",
+                surname: "",
+                username: "",
+                email: "",
+                personal_info: "",
+            });
+            setEditingProfile(false);
+
+            PushNotification("Perfil actualizado correctamente", { type: "success"});
+            
+        } catch (error) {
+            
+            PushNotification(error.message, { type: "error"});
+        };
+    };
+    
+    const handleProfileChange = (e) => {
+
+        setFormDataProfile({...formDataProfile, [e.target.name]: e.target.value});
+    };
+
+    const handleProfileEdit = (e) => {
+
+        e.preventDefault();
+
+        setEditingProfile(true);
+        setEditingPassword(false);
+        setEditingAvatar(false);
+    };
+
+    const handleProfileBack = (e) => {
+
+        e.preventDefault();
+
+        setEditingProfile(false);
+        setFormDataProfile({
+            name: "",
+            surname: "",
+            username: "",
+            email: "",
+            personal_info: "",
+        });
+    };
 
     return (
         <>
@@ -18,19 +107,19 @@ const ProfileGeneral = ({
                 <fieldset className="flex flex-col text-lg">
 
                     <label htmlFor="username" className="mt-6 flex flex-row items-center">
-                        <img src="http://localhost:3001/media/user.svg" alt="user-svg" className="w-7 h-7 mr-4" />
+                        <img src={`${API_URL}/media/user.svg`} alt="user-svg" className="w-7 h-7 mr-4" />
                         <input className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                             type="text" name="username" value={placeholders.username} disabled />
                     </label>
 
                     <label htmlFor="email" className="mt-4 flex flex-row items-center">
-                        <img src="http://localhost:3001/media/email.svg" alt="email-svg" className="w-6 h-6 mr-4" />
+                        <img src={`${API_URL}/media/email.svg`} alt="email-svg" className="w-6 h-6 mr-4" />
                         <input className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                             type="text" name="email" value={placeholders.email} disabled />
                     </label>
 
                     <label htmlFor="personal_info" className="mt-4 flex flex-row items-start">
-                        <img src="http://localhost:3001/media/description.svg" alt="email-svg" className="w-6 h-6 mr-4 mt-2" />
+                        <img src={`${API_URL}/media/description.svg`} alt="email-svg" className="w-6 h-6 mr-4 mt-2" />
                         {/* <textarea ref={personalInfoRef} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black mb-2"*/}
                         <textarea className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black mb-2"    
                             name="personal_info" value={placeholders.personal_info}
@@ -44,7 +133,7 @@ const ProfileGeneral = ({
                     </label> */}
 
                     <label htmlFor="created_at" className="mt-4 flex flex-row items-center">
-                        <img src="http://localhost:3001/media/date.svg" alt="email-svg" className="w-6 h-6 mr-4" />
+                        <img src={`${API_URL}/media/date.svg`} alt="email-svg" className="w-6 h-6 mr-4" />
                         <input className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                             type="text" name="created_at" value={"Desde: " + placeholders.created_at.slice(0, 10)} disabled />
                     </label>
@@ -88,7 +177,7 @@ const ProfileGeneral = ({
                         ref={personalInfoRef} type="text" name="personal_info" placeholder={placeholders.personal_info} value={formDataProfile.personal_info} onChange={handleProfileChange} />
                 </label> */}
 
-                <label htmlFor="personal_info" className="block font-medium mb-2">Descripción
+                <label htmlFor="personal_info" className="mt-4">Descripción
                     {/* <textarea ref={personalInfoRef} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black mb-2"*/}
                         <textarea className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black mb-2"
                         name="personal_info" placeholder={placeholders.personal_info} value={formDataProfile.personal_info} 
@@ -99,7 +188,7 @@ const ProfileGeneral = ({
 
                     <button className="w-11 h-11 rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300"
                         onClick={handleProfileBack}>
-                            <img src="http://localhost:3001/media/back-arrow.svg" alt="back-arrow-svg" />
+                            <img src={`${API_URL}/media/back-arrow.svg`} alt="back-arrow-svg" />
                         </button>
 
                     <button className="w-44 bg-black text-white py-2 rounded-lg font-bold hover:scale-105 transition-transform duration-300"

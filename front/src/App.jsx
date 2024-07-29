@@ -4,8 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import AdminPage from './pages/AdminPage';
 import Home from './pages/HomePage';
 import ResetPass from './components/resetPass';
-import ActivationSuccessPage from './pages/ActivationSuccessPage';
-import ActivationFormPage from './components/ActivationFormPage';
+import ActivationPage from './pages/ActivationPage'; 
 import LoginFormPage from './pages/LoginFormPage';
 import RegisterFormPage from './pages/RegisterFormPage';
 import MyEventsPage from './pages/MyEventsPage';
@@ -26,24 +25,14 @@ const App = () => {
                 <Route path="/admin/:eventId?" element={<AdminPage />} />
                 <Route path="/register" element={<RegisterFormPage />} />
                 <Route path="/reset-password" element={<ResetPass />} />
-                <Route
-                    path="/users/validate/activate"
-                    element={<ActivationFormPage />}
-                />
-                <Route
-                    path="/users/validate/activation-success"
-                    element={<ActivationSuccessPage />}
-                />
+                <Route path="/users/validate/activate" element={<ActivationPage />} />
                 <Route path="/users/login" element={<LoginFormPage />} />
                 <Route path="/users/rate-event" element={<RateEventPage />} />
                 <Route path="/users/my-events" element={<MyEventsPage />} />
                 <Route path="/faq" element={<FAQPage />} />
                 <Route path="/event/search" element={<EventSearchPage />} />
                 <Route path="*" element={<NotFound />} />
-                <Route
-                    path="/event/details/:eventId"
-                    element={<EventDetails />}
-                />
+                <Route path="/event/details/:eventId" element={<EventDetails />} />
                 <Route path="/users/profile" element={<ProfilePage />} />
             </Routes>
             <ToastContainer
@@ -63,3 +52,4 @@ const App = () => {
 };
 
 export default App;
+

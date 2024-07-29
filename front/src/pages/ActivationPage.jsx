@@ -1,11 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PushNotification from './PushNotification.jsx';
+import { FaCheckCircle } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const ActivationFormPage = () => {
+const ActivationPage = () => {
+    const navigate = useNavigate();
     const [registrationCode, setRegistrationCode] = useState('');
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
+    const [isActivated, setIsActivated] = useState(false);
+    const [message, setMessage] = useState('');
+    const [counter, setCounter] = useState(5);
+
+    useEffect(() => {
+        if (isActivated) {
+            const timer = setInterval(() => {
+                setCounter((prevCounter) => {
+                    if (prevCounter === 1) {
+                        clearInterval(timer);
+                        navigate('/users/login');
+                    }
+                    return prevCounter - 1;
+                });
+            }, 1000);
+
+            return () => clearInterval(timer);
+        }
+    }, [isActivated, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -13,8 +34,7 @@ const ActivationFormPage = () => {
 
         try {
             const response = await fetch(
-                import.meta.env.VITE_API_URL +
-                    `/users/validate/${registrationCode}`,
+                import.meta.env.VITE_API_URL + `/users/validate/${registrationCode}`,
                 {
                     method: 'GET',
                 }
@@ -25,15 +45,30 @@ const ActivationFormPage = () => {
             }
 
             const result = await response.json();
-            navigate('/users/validate/activation-success', {
-                state: { message: result.message },
-            });
-            PushNotification('Cuenta activada con éxito', { type: 'success' });
+            setMessage(result.message);
+            setIsActivated(true);
+            toast.success('Cuenta activada con éxito');
         } catch (error) {
             setError(error.message || 'Error en la activación');
-            PushNotification(error.message, { type: 'error' });
+            toast.error(error.message);
         }
     };
+
+    if (isActivated) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+                <div className="max-w-md px-6 py-12 bg-white shadow-lg rounded-lg text-center">
+                    <FaCheckCircle className="text-green-500 text-6xl mb-4" />
+                    <h2 className="text-3xl font-bold mb-4">Activación Exitosa</h2>
+                    <p className="text-lg mb-8">{message}</p>
+                    <p className="text-lg mb-8">Redirigiendo en {counter} segundos...</p>
+                    <a href="/users/login" className="text-blue-500 underline hover:text-blue-700">
+                        Volver al login
+                    </a>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <section className="flex items-center justify-center mt-20 bg-gray-100">
@@ -45,9 +80,7 @@ const ActivationFormPage = () => {
                     Activar Cuenta
                 </h2>
 
-                {/* 
-        AHORA USA TOASTIFY 
-        {error && <p className="text-red-500 mb-4">{error}</p>} */}
+                {error && <p className="text-red-500 mb-4">{error}</p>}
 
                 <fieldset className="w-full">
                     <section className="mb-4">
@@ -63,9 +96,7 @@ const ActivationFormPage = () => {
                             name="registrationCode"
                             placeholder="Código de Registro"
                             value={registrationCode}
-                            onChange={(e) =>
-                                setRegistrationCode(e.target.value)
-                            }
+                            onChange={(e) => setRegistrationCode(e.target.value)}
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                             required
                         />
@@ -83,4 +114,6 @@ const ActivationFormPage = () => {
     );
 };
 
-export default ActivationFormPage;
+export default ActivationPage;
+
+

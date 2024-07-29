@@ -72,7 +72,11 @@ const DropdownMenu = ({ items, isOpen, toggleMenu, className }) => {
                                 }}
                                 className="block w-full text-left px-4 py-2 rounded-md transition-colors duration-300 text-sm hover:bg-gray-200"
                             >
-                                {item.label}
+                                {item.icon ? (
+                                    <img src={item.icon} alt={item.label} className="w-5 h-5 inline mr-2"/>
+                                ) : (
+                                    item.label
+                                )}
                             </button>
                         ) : (
                             <NavItem to={item.to} onClick={toggleMenu} isMobile={item.isMobile}>
@@ -112,7 +116,7 @@ const Header = () => {
         { to: '/users/profile', label: 'Perfil' },
         { to: '/users/my-events', label: 'Mis inscripciones' },
         { to: '/users/rate-event', label: 'Valoraciones' },
-        { onClick: removeToken, label: 'Cerrar sesión' },
+        { onClick: removeToken, label: '', icon: '/public/power-icon.png' }, 
     ];
 
     const hamburgerMenuItems = token

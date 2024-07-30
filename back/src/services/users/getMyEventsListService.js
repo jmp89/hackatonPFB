@@ -15,7 +15,8 @@ const getMyEventsListService = async (queryUserId) => {
         e.start_date,
         e.finish_date,
         e.start_time,
-        e.finish_time
+        e.finish_time,
+        e.image
         FROM events e
         JOIN participates p ON e.id = p.event_id
         JOIN technologies_events te ON te.event_id = e.id
@@ -41,7 +42,8 @@ const getMyEventsListService = async (queryUserId) => {
                 start_date: row.start_date,
                 finish_date: row.finish_date,
                 start_time: row.start_time,
-                finish_time: row.finish_time
+                finish_time: row.finish_time,
+                image: row.image
             });
         };
         

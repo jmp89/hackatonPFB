@@ -9,7 +9,12 @@ export default {
             gridTemplateColumns: {
                 'auto-fit-minmax': 'repeat(auto-fit, minmax(260px, 320px))',
             },
+            clipPath: {
+                'polygonImage': 'polygon(0% 0%, 80% 0%, 80% 30%, 100% 50%, 80% 70%, 80% 100%, 0 100%)'
+            }
         },
     },
-    plugins: [],
+    plugins: [
+        require('tailwind-clip-path'),
+    ],
 };

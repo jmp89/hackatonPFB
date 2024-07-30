@@ -10,16 +10,16 @@ const initDb_data = async () => {
         await pool.query(`
                 INSERT INTO users (name, surname, username, email, password, active, personal_info, avatar)
                 VALUES
-                ("Juan", "Macias Pérez", "user01_test123", "juanmaciasperez89@gmail.com", "$2b$10$81b3IBiTE3ISeyEBbCHwp.whmEzZkKN1pLuLarbyFzY7wMAHfoMxK", 1, "dasdasdds", "/uploads/avatar_01.png"),
-                ("José", "García Costas", "user02_test321", "jj69cost@gmail.com", "$2b$10$0WfVbW07bLFPwmt/qL7qQ.lNz9U5xadAoAw5sj5eQpNZ8E9bggCUK", 1, "dasdasdds", "/uploads/avatar_02.png"),
-                ("Pedro", "López Martínez", "user03_123test", "user03@test.com", "$2b$10$ghy3imG2g0Ms06E0jtUNG.W6X2fevVl86lnRTMZ2DoIQyGaXME7pW", 1, "dasdasdds", "/uploads/avatar_03.png"),
-                ("María", "Sánchez Rodríguez", "user04_321test", "user04@test.com", "$2b$10$2oSdypiBYIPuGrfuY7/4lu9bHmU4umgzOZqOykHP2bE9Y/t9CcJOy", 1, "dasdasdds", "/uploads/avatar_04.png"),
-                ("Ana", "González Fernández", "user05_user123", "user05@test.com", "$2b$10$9vm4fUJwr6P0DUjbW.ASSOxDRYZSEGaHpx1as/WbA78tsuc3KkHPW", 1, "dasdasdds", "/uploads/avatar_05.png"),
-                ("Miguel", "Torres Gómez", "user06_user321", "user06@test.com", "$2b$10$nK1Ewz.JqL1ZpLqukArhMOpxN1up9CFscb48DzyaWiM6zyaEKHlsO", 1, "dasdasdds", "/uploads/avatar_06.png"),
-                ("Laura", "Díaz Muñoz", "user07_123user", "user07@test.com", "$2b$10$GYdtxP8HgK0..hQXJYGjZe4ca7M8VdLuF2n2gGNsrJVGhVlCYoFGu", 1, "dasdasdds", "/uploads/avatar_07.png"),
-                ("Luis", "Ruiz Romero", "user08_321user", "user08@test.com", "$2b$10$cCBrRBxWoH4/txgcHxtWf.II07mAAl/ZcH1eTDaWs2LD5rtg2iRcS", 1, "dasdasdds", "/uploads/avatar_08.png"),
-                ("Carmen", "Hernández Jiménez", "user09_pass123", "user09@test.com", "$2b$10$caWQ36hFqdWmOlKvUPxkzeLyAx0aA26UDD6HUFmHXcnhbqdXOGF.e", 1, "dasdasdds", "/uploads/avatar_09.png"),
-                ("Alberto", "Moreno Pérez", "user10_pass321", "user10@test.com", "$2b$10$LjitD6YxmKy.MzqB/zVehePco3GGxAh7h9Ack2vXAcfKSvRAxr/ce", 1, "dasdasdds", "/uploads/avatar_01.png")
+                ("Juan", "Macias Pérez", "user01_test123", "juanmaciasperez89@gmail.com", "$2b$10$81b3IBiTE3ISeyEBbCHwp.whmEzZkKN1pLuLarbyFzY7wMAHfoMxK", 1, "dasdasdds", "/uploads/avatar_01.jpg"),
+                ("José", "García Costas", "user02_test321", "jj69cost@gmail.com", "$2b$10$0WfVbW07bLFPwmt/qL7qQ.lNz9U5xadAoAw5sj5eQpNZ8E9bggCUK", 1, "dasdasdds", "/uploads/avatar_02.jpg"),
+                ("Pedro", "López Martínez", "user03_123test", "user03@test.com", "$2b$10$ghy3imG2g0Ms06E0jtUNG.W6X2fevVl86lnRTMZ2DoIQyGaXME7pW", 1, "dasdasdds", "/uploads/avatar_03.jpg"),
+                ("María", "Sánchez Rodríguez", "user04_321test", "user04@test.com", "$2b$10$2oSdypiBYIPuGrfuY7/4lu9bHmU4umgzOZqOykHP2bE9Y/t9CcJOy", 1, "dasdasdds", "/uploads/avatar_04.jpg"),
+                ("Ana", "González Fernández", "user05_user123", "user05@test.com", "$2b$10$9vm4fUJwr6P0DUjbW.ASSOxDRYZSEGaHpx1as/WbA78tsuc3KkHPW", 1, "dasdasdds", "/uploads/avatar_05.jpg"),
+                ("Miguel", "Torres Gómez", "user06_user321", "user06@test.com", "$2b$10$nK1Ewz.JqL1ZpLqukArhMOpxN1up9CFscb48DzyaWiM6zyaEKHlsO", 1, "dasdasdds", "/uploads/avatar_06.jpg"),
+                ("Laura", "Díaz Muñoz", "user07_123user", "user07@test.com", "$2b$10$GYdtxP8HgK0..hQXJYGjZe4ca7M8VdLuF2n2gGNsrJVGhVlCYoFGu", 1, "dasdasdds", "/uploads/avatar_07.jpg"),
+                ("Luis", "Ruiz Romero", "user08_321user", "user08@test.com", "$2b$10$cCBrRBxWoH4/txgcHxtWf.II07mAAl/ZcH1eTDaWs2LD5rtg2iRcS", 1, "dasdasdds", "/uploads/avatar_08.jpg"),
+                ("Carmen", "Hernández Jiménez", "user09_pass123", "user09@test.com", "$2b$10$caWQ36hFqdWmOlKvUPxkzeLyAx0aA26UDD6HUFmHXcnhbqdXOGF.e", 1, "dasdasdds", "/uploads/avatar_09.jpg"),
+                ("Alberto", "Moreno Pérez", "user10_pass321", "user10@test.com", "$2b$10$LjitD6YxmKy.MzqB/zVehePco3GGxAh7h9Ack2vXAcfKSvRAxr/ce", 1, "dasdasdds", "/uploads/avatar_01.jpg")
             `);
 
         console.log("Tabla 'users' poblada correctamente.");

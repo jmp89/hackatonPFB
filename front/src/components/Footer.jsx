@@ -1,4 +1,7 @@
 const Footer = () => {
+
+    const API_URL = import.meta.env.VITE_API_URL;
+
     return (
         <footer className="bg-white text-black shadow-md w-full mt-4">
             <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -6,7 +9,7 @@ const Footer = () => {
                     <div className="flex-shrink-0">
                         <img
                             className="h-48 w-48"
-                            src="/logo_hackaverse.svg"
+                            src={`${API_URL}/media/logo_hackaverse.svg`}
                             alt="Hackaverse"
                         />
                     </div>

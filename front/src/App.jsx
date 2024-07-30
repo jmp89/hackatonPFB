@@ -16,6 +16,7 @@ import EventDetails from './pages/EventDetailsPage';
 import EventSearchPage from './pages/EventSearchPage';
 import ProfilePage from './pages/ProfilePage';
 import './styles.css';
+import EventConfirm from './components/EventConfirm';
 
 const App = () => {
     return (
@@ -34,6 +35,7 @@ const App = () => {
                 <Route path="*" element={<NotFound />} />
                 <Route path="/event/details/:eventId" element={<EventDetails />} />
                 <Route path="/users/profile" element={<ProfilePage />} />
+                <Route path="/event/confirm/:eventCode" element={<EventConfirm />} />
             </Routes>
             <ToastContainer
                 position="bottom-right"

@@ -8,7 +8,7 @@ import PushNotification from './PushNotification.jsx';
 
 const EventDetails = () => {
     const { eventId } = useParams();
-    const { token } = useAuth(); // Obtén el token del contexto
+    const { token } = useAuth(); 
     const [event, setEvent] = useState(null);
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');

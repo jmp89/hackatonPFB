@@ -16,7 +16,8 @@ const getEventsService = async (filter, sort, direction) => {
         e.start_date,
         e.finish_date,
         e.start_time,
-        e.finish_time
+        e.finish_time,
+        e.image
         FROM events e
         LEFT JOIN technologies_events te ON te.event_id = e.id
         LEFT JOIN technologies t ON t.id = te.technology_id
@@ -49,6 +50,7 @@ const getEventsService = async (filter, sort, direction) => {
                     finish_date: row.finish_date,
                     start_time: row.start_time,
                     finish_time: row.finish_time,
+                    image: row.image
                 });
             }
 

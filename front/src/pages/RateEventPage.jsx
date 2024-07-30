@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import EventCard from '../components/EventCard';
-import { useAuth } from '../context/AuthContext';
-import PushNotification from '../components/PushNotification';
 
-const RateEventPage = () => {
+const RateEventPage = ({
+    token,
+    PushNotification
+}) => {
     const [events, setEvents] = useState([]);
     const [countdown, setCountdown] = useState(5);
     const [redirect, setRedirect] = useState(false);
-    const { token } = useAuth();
 
     useEffect(() => {
         if (!token) {
@@ -58,14 +58,9 @@ const RateEventPage = () => {
                             `Fallo al recuperar los eventos: ${data.message}`,
                             { type: 'error' }
                         );
-                        console.error(
-                            'Fallo al recuperar los eventos:',
-                            data.message
-                        );
                     }
                 } catch (error) {
                     PushNotification(error.message, { type: 'error' });
-                    console.error('Error recuperando eventos:', error);
                 }
             };
 
@@ -75,7 +70,6 @@ const RateEventPage = () => {
 
     const handleRate = async (eventId, rating) => {
         if (!token) {
-            console.error('Debes iniciar sesión.');
             PushNotification('Debes iniciar sesión', { type: 'error' });
             return;
         }
@@ -107,7 +101,6 @@ const RateEventPage = () => {
             const data = await response.json();
 
             if (data.status === 'ok') {
-                console.log('Valoración enviada con éxito');
                 PushNotification('Valoración enviada con éxito', {
                     type: 'success',
                 });
@@ -115,11 +108,9 @@ const RateEventPage = () => {
                 PushNotification('Fallo al enviar valoración', {
                     type: 'error',
                 });
-                console.error('Fallo al enviar valoración');
             }
         } catch (error) {
             PushNotification(error.message, { type: 'error' });
-            console.error('Error enviando la valoración:', error);
         }
     };
 
@@ -141,11 +132,14 @@ const RateEventPage = () => {
     }
 
     return (
-        <article className="grid grid-cols-auto-fit-minmax gap-4 p-4 mx-auto max-w-screen-lg justify-center">
+        <>
+        <h2 className='mt-10 text-2xl font-bold text-center'>Mis eventos finalizados</h2>
+        <section className="mt-4 w-full grid grid-cols-auto-fit-minmax justify-evenly items-center">
             {events.map((event, i) => (
                 <EventCard key={i} event={event} onRate={handleRate} />
             ))}
-        </article>
+        </section>
+        </>
     );
 };
 

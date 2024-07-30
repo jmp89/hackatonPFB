@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import ProfileGeneral from "./ProfileGeneral";
 import ProfileAvatar from "./ProfileAvatar";
 import ProfilePassword from "./ProfilePassword";
+import MyInscriptions from "./MyInscriptions";
 import PushNotification from "./PushNotification";
 
 const UserProfile = () => {
@@ -83,6 +84,10 @@ const UserProfile = () => {
                             editingPassword={editingPassword}
                             setEditingPassword={setEditingPassword}
                             PushNotification={PushNotification}
+                        />
+
+                        <MyInscriptions 
+                            token={token}
                         />
 
                     </form>

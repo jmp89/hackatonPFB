@@ -110,13 +110,15 @@ const Header = () => {
         }
     };
 
-    const avatarUrl = currentUser && currentUser.avatar ? currentUser.avatar : '/userProfil.png';
+    const API_URL = import.meta.env.VITE_API_URL;
+    const avatar = currentUser && currentUser.avatar ? currentUser.avatar : '/media/userProfile.svg';
+    const avatarUrl = API_URL + avatar;
 
     const avatarMenuItems = [
         { to: '/users/profile', label: 'Perfil' },
         { to: '/users/my-events', label: 'Mis inscripciones' },
         { to: '/users/rate-event', label: 'Valoraciones' },
-        { onClick: removeToken, label: '', icon: '/public/power-icon.png' }, 
+        { onClick: removeToken, label: '', icon: `${API_URL}/media/power-icon.svg` }, 
     ];
 
     const hamburgerMenuItems = token
@@ -139,7 +141,7 @@ const Header = () => {
                         <NavLink to="/">
                             <img
                                 className="h-24 w-auto"
-                                src="/logo_hackaverse.svg"
+                                src={`${API_URL}/media/logo_hackaverse.svg`}
                                 alt="Hackaverse"
                             />
                         </NavLink>

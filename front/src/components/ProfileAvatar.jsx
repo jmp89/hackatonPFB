@@ -18,6 +18,8 @@ const ProfileAvatar = ({
     const [ formDataAvatar, setFormDataAvatar ] = useState(null);
     const fileInputRef = useRef(null);
 
+    const avatar = placeholders.avatar.length < 1 ? "/media/userProfile.svg" : placeholders.avatar;
+
     const handleAvatarSubmit = async (e) => {
 
         e.preventDefault();
@@ -93,7 +95,7 @@ const ProfileAvatar = ({
 
             <section className="h-48 w-48 relative flex justify-center items-center">
 
-                <img src={`${API_URL}${placeholders.avatar}`} alt="user-avatar"
+                <img src={`${API_URL}${avatar}`} alt="user-avatar"
                     className="mt-2 mx-auto w-48" />
                         
                 <button type="button" className="absolute top-[calc(85%)] left-[calc(80%)] ">

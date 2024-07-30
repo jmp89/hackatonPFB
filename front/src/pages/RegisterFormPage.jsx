@@ -5,7 +5,9 @@ import PushNotification from '../components/PushNotification';
 
 const RegisterFormPage = () => {
     const [formData, setFormData] = useState({
+        username: '',
         name: '',
+        surname: '',
         email: '',
         password: '',
     });
@@ -33,7 +35,9 @@ const RegisterFormPage = () => {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        username: formData.name,
+                        username: formData.username,
+                        name: formData.name,
+                        surname: formData.surname,
                         email: formData.email,
                         password: formData.password,
                     }),
@@ -58,7 +62,9 @@ const RegisterFormPage = () => {
             setSuccess(responseData.message);
             PushNotification(responseData.message, { type: 'success' });
             setFormData({
+                username: '',
                 name: '',
+                surname: '',
                 email: '',
                 password: '',
             });
@@ -92,17 +98,55 @@ const RegisterFormPage = () => {
                 <fieldset>
                     <section className="mb-4">
                         <label
-                            htmlFor="name"
+                            htmlFor="username"
                             className="block text-lg font-medium mb-2"
                         >
                             Usuario
                         </label>
                         <input
                             type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Nombre de usuario"
+                            value={formData.username}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                            required
+                        />
+                    </section>
+
+                    <section className="mb-4">
+                        <label
+                            htmlFor="name"
+                            className="block text-lg font-medium mb-2"
+                        >
+                            Nombre
+                        </label>
+                        <input
+                            type="text"
                             id="name"
                             name="name"
-                            placeholder="Nombre de usuario"
+                            placeholder="Nombre"
                             value={formData.name}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                            required
+                        />
+                    </section>
+
+                    <section className="mb-4">
+                        <label
+                            htmlFor="surname"
+                            className="block text-lg font-medium mb-2"
+                        >
+                            Apellidos
+                        </label>
+                        <input
+                            type="text"
+                            id="surname"
+                            name="surname"
+                            placeholder="Apellidos"
+                            value={formData.surname}
                             onChange={handleChange}
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                             required

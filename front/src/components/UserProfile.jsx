@@ -5,6 +5,7 @@ import ProfileGeneral from "./ProfileGeneral";
 import ProfileAvatar from "./ProfileAvatar";
 import ProfilePassword from "./ProfilePassword";
 import MyInscriptions from "./MyInscriptions";
+import RateEvent from "../pages/RateEventPage"
 import PushNotification from "./PushNotification";
 
 const UserProfile = () => {
@@ -49,7 +50,7 @@ const UserProfile = () => {
 
             :    <main className="flex flex-col justify-center items-center px-4">
 
-                    <form className="mt-10 mx-auto flex flex-col bg-white px-6 rounded-lg shadow-md w-full max-w-3xl">
+                    <form className="mt-10 mx-auto flex flex-col bg-white px-6 rounded-t-lg shadow-md w-full max-w-3xl">
 
                         <h2 className="mt-6 text-2xl font-bold text-center">{placeholders.name + ", " + placeholders.surname}</h2>
 
@@ -63,7 +64,12 @@ const UserProfile = () => {
                             setEditingProfile={setEditingProfile}
                             setEditingPassword={setEditingPassword}
                             PushNotification={PushNotification}
-                        />
+                            />
+
+    
+                        {/* <button className="mt-10">Información</button>
+                        <button>Mis eventos activos</button>
+                        <button>Mis eventos finalizados</button> */}
 
                         <ProfileGeneral
                             token={token}
@@ -86,11 +92,21 @@ const UserProfile = () => {
                             PushNotification={PushNotification}
                         />
 
+                    </form>
+
+                    <section className="mx-auto flex flex-col bg-white px-6 rounded-b-lg shadow-md w-full max-w-3xl">
+
                         <MyInscriptions 
                             token={token}
+                            PushNotification={PushNotification}
                         />
 
-                    </form>
+                        <RateEvent
+                            token={token}
+                            PushNotification={PushNotification}
+                        />
+
+                    </section>
 
                 </main>
         }

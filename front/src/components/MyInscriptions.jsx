@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fetchMyInscriptionsService from "../services/fetchMyInscriptionsService";
-import PushNotification from "./PushNotification";
+import MyEventCard from "./MyEventCard";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const eventDetailsURL = "/event/details/";
 
-const MyInscriptions = ({token}) => {
+const MyInscriptions = ({
+    token,
+    PushNotification
+}) => {
 
     const [ responseData, setResponseData ] = useState([]);
     const navigate = useNavigate();
@@ -41,7 +44,7 @@ const MyInscriptions = ({token}) => {
     return (
         <>
 
-        <h2 className="mt-6 text-2xl font-bold text-center">Mis inscripciones</h2>
+        <h2 className="mt-10 text-2xl font-bold text-center">Mis eventos activos</h2>
 
         <ul className="mt-4 w-full grid grid-cols-auto-fit-minmax justify-evenly items-center">
 
@@ -51,22 +54,11 @@ const MyInscriptions = ({token}) => {
 
                 <li key={event.id} className="w-full my-auto">
 
-                    <article className="mt-4 mb-4 h-36 overflow-hidden text-lg flex flex-row justify-between border rounded-lg shadow-md text-center cursor-pointer transition-transform transform hover:scale-105 hover:shadow-xl"
-                        onClick={(e) => handleEventClick(e, event.id)}>
-
-                        <section className="w-20 clip-path-polygonImage ">
-                            <img src={API_URL + event.image} alt="event-image" className="w-full h-full object-cover" />
-                        </section>
-
-                        <section className="w-full">
-                            <ul className="mr-2">
-                                <li className="mt-4 font-bold">{event.name}</li>
-                                <li className="mt-2">{event.thematics.join(", ")}</li>
-                                <li className="mb-4">{event.technologies.join(", ")}</li>
-                            </ul>
-                        </section>
-
-                    </article>
+                    <MyEventCard 
+                        event={event}
+                        API_URL={API_URL}
+                        handleEventClick={handleEventClick}
+                    />
 
                 </li>
             ))}

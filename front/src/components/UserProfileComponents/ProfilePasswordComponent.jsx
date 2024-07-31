@@ -1,10 +1,11 @@
 import { useState } from "react";
+import fetchChangePasswordService from "../../services/fetchChangePasswordService";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const API_URL_FOR_PASSWORD = API_URL + "/users/edit-password";
 
 
-const ProfilePassword = ({
+const ProfilePasswordComponent = ({
     token,
     placeholders,
     setEditingAvatar,
@@ -44,21 +45,11 @@ const ProfilePassword = ({
                 newPassword: formDataPassword.newPassword,
             });
 
-            const response = await fetch(API_URL_FOR_PASSWORD, {
-                method: "PUT",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: token
-                },
-                body: JSON.stringify(updatedFormDataPassword)
-            });
-
-            const data = await response.json();
-
-            if (!response.ok){
-                throw new Error(data.message);
-            };
+            await fetchChangePasswordService(
+                API_URL_FOR_PASSWORD,
+                token,
+                updatedFormDataPassword
+            );
 
             setFormDataPassword({
                 oldPassword: "",
@@ -159,4 +150,4 @@ const ProfilePassword = ({
     );
 };
 
-export default ProfilePassword;
+export default ProfilePasswordComponent;

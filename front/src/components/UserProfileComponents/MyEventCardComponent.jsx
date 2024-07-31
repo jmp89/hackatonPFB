@@ -1,4 +1,4 @@
-const MyEventCard = ({
+const MyEventCardComponent = ({
     event,
     API_URL,
     handleEventClick
@@ -13,7 +13,7 @@ const MyEventCard = ({
                 <img src={API_URL + event.image} alt="event-image" className="w-full h-full object-cover" />
             </section>
 
-            <section className="w-full">
+            <section className="w-full my-auto">
                 <ul className="mr-2">
                     <li className="mt-4 font-bold">{event.name}</li>
                     <li className="mt-2">{event.thematics.join(", ")}</li>
@@ -25,4 +25,4 @@ const MyEventCard = ({
     );
 };
 
-export default MyEventCard;
+export default MyEventCardComponent;

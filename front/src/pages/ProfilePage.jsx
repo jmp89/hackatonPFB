@@ -1,9 +1,9 @@
-import UserProfile from "../components/UserProfile";
+import UserProfileComponent from "../components/UserProfileComponents/UserProfileComponent";
 
 const ProfilePage = () => {
     
     return (
-        <UserProfile />
+        <UserProfileComponent />
     );
 };
 

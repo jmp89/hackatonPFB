@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { Navigate } from 'react-router-dom';
-import { useAuth } from "../context/AuthContext";
-import ProfileGeneral from "./ProfileGeneral";
-import ProfileAvatar from "./ProfileAvatar";
-import ProfilePassword from "./ProfilePassword";
-import MyInscriptions from "./MyInscriptions";
-import RateEvent from "../pages/RateEventPage"
-import PushNotification from "./PushNotification";
+import { useAuth } from "../../context/AuthContext";
+import ProfileAvatarComponent from "./ProfileAvatarComponent";
+import ProfileGeneralComponent from "./ProfileGeneralComponent";
+import ProfilePasswordComponent from "./ProfilePasswordComponent";
+import MyInscriptionsComponent from "./MyInscriptionsComponent";
+import RateEventComponent from "./RateEventComponent"
+import PushNotification from "../PushNotification";
 
-const UserProfile = () => {
+const UserProfileComponent = () => {
     
     const { token, currentUser, updateCurrentUser } = useAuth();
     const [ placeholders, setPlaceHolders ] = useState({
@@ -54,7 +54,7 @@ const UserProfile = () => {
 
                         <h2 className="mt-6 text-2xl font-bold text-center">{placeholders.name + ", " + placeholders.surname}</h2>
 
-                        <ProfileAvatar
+                        <ProfileAvatarComponent
                             token={token}
                             currentUser={currentUser}
                             updateCurrentUser={updateCurrentUser}
@@ -66,12 +66,7 @@ const UserProfile = () => {
                             PushNotification={PushNotification}
                             />
 
-    
-                        {/* <button className="mt-10">Información</button>
-                        <button>Mis eventos activos</button>
-                        <button>Mis eventos finalizados</button> */}
-
-                        <ProfileGeneral
+                        <ProfileGeneralComponent
                             token={token}
                             updateCurrentUser={updateCurrentUser}
                             placeholders={placeholders}
@@ -82,7 +77,7 @@ const UserProfile = () => {
                             PushNotification={PushNotification}
                         />
 
-                        <ProfilePassword
+                        <ProfilePasswordComponent
                             token={token}
                             placeholders={placeholders}
                             setEditingAvatar={setEditingAvatar}
@@ -96,12 +91,12 @@ const UserProfile = () => {
 
                     <section className="mx-auto flex flex-col bg-white px-6 rounded-b-lg shadow-md w-full max-w-3xl">
 
-                        <MyInscriptions 
+                        <MyInscriptionsComponent
                             token={token}
                             PushNotification={PushNotification}
                         />
 
-                        <RateEvent
+                        <RateEventComponent
                             token={token}
                             PushNotification={PushNotification}
                         />
@@ -114,4 +109,4 @@ const UserProfile = () => {
     );
 };
 
-export default UserProfile;
+export default UserProfileComponent;

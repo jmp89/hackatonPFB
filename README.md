@@ -1,4 +1,4 @@
-![Logo HackaVerse](/front/public/logo_hackaverse.svg)
+![Logo HackaVerse](./back/public/media/logo_hackaverse.svg)
 
 ## Índice / FAQ
 

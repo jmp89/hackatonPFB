@@ -15,12 +15,9 @@ const EventCardComponent = ({ event, onRate }) => {
     return (
         <article className="mt-4 mb-4 w-full cursor-pointer transition-transform transform hover:scale-105 hover:shadow-xl">
             <div className="h-44 border rounded-lg shadow-md p-4 min-w-72 flex flex-col justify-center">
-                {/* <img
-                    src={event.image}
-                    alt={event.event_name}
-                    className="w-full h-48 object-cover rounded-t-lg"
-                /> */}
-                <h3 className="text-lg font-bold mt-2 text-center">{event.name}</h3>
+                <h3 className="text-lg font-bold mt-2 text-center">
+                    {event.name}
+                </h3>
                 <p className="text-sm text-gray-600">{event.description}</p>
                 <p className="text-center ">
                     <Link to={`/event/details/${event.id}`}>

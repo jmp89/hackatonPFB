@@ -1,22 +1,28 @@
-import sendMailUtils from "../../utils/sendMailUtils.js";
-import getPool from "../../database/getPool.js";
+import sendMailUtils from '../../utils/sendMailUtils.js';
+import getPool from '../../database/getPool.js';
+import 'dotenv/config';
+
+const { FRONT_PORT, FRONT_URL } = process.env;
 
 const sendEventRegistrationMailService = async (eventID, id, eventCode) => {
-
     const pool = await getPool();
 
-    const [[eventInfo]] = await pool.query(`
+    const [[eventInfo]] = await pool.query(
+        `
                 SELECT name, description
                 FROM events
                 WHERE id = ?
-            `, [eventID]
+            `,
+        [eventID]
     );
 
-    const [email] = await pool.query(`
+    const [email] = await pool.query(
+        `
                 SELECT email
                 FROM users
                 WHERE id = ?
-            `, [id]
+            `,
+        [id]
     );
 
     const finalEmail = email[0].email;
@@ -31,14 +37,13 @@ const sendEventRegistrationMailService = async (eventID, id, eventCode) => {
         <p>${eventInfo.description}</p>
         
         
-        <a href="http://localhost:5173/event/confirm/${eventCode}" style="color: #fff; background-color: #000; padding: 15px 25px; border-radius: 10px; margin: 0 25px">Haz click aqui para confirmar la inscripción.</a>
+        <a href="http://${FRONT_URL}:${FRONT_PORT}/event/confirm/${eventCode}" style="color: #fff; background-color: #000; padding: 15px 25px; border-radius: 10px; margin: 0 25px">Haz click aqui para confirmar la inscripción.</a>
 
         <hr />
         Hecho con ❤ por el equipo de Hackathon
     `;
 
     await sendMailUtils(finalEmail, emailSubject, emailBody);
-
 };
 
 export default sendEventRegistrationMailService;

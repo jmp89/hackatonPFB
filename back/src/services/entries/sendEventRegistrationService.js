@@ -47,8 +47,11 @@ const sendEventRegistrationMailService = async (eventID, userID) => {
         
         <p>${eventInfo.description}</p>
         
-     
-        Hecho con ❤ por el equipo de Hackathon
+        
+        <a href="http://${FRONT_URL}:${FRONT_PORT}/event/validate/activate" style="color: #fff; background-color: #000; padding: 15px 25px; border-radius: 10px; margin: 0 25px">Haz click aqui para confirmar la inscripción.</a>
+
+        <hr />
+        Hecho con ❤ por el equipo de HackaVerse
     `;
 
     await sendMailUtils(finalEmail, emailSubject, emailBody);

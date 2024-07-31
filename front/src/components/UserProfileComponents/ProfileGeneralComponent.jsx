@@ -1,9 +1,10 @@
 import { useState } from "react";
+import fetchUpdateProfileService from "../../services/fetchUpdateProfileService";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const API_URL_FOR_PROFILE = API_URL + "/users/edit";
 
-const ProfileGeneral = ({
+const ProfileGeneralComponent = ({
     token,
     updateCurrentUser,
     placeholders,
@@ -36,21 +37,11 @@ const ProfileGeneral = ({
                 personal_info: formDataProfile.personal_info.length > 0 ? formDataProfile.personal_info : placeholders.personal_info,
             };
 
-            const response = await fetch(API_URL_FOR_PROFILE, {
-                method: "PUT",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: token
-                },
-                body: JSON.stringify(updatedFormDataProfile)
-            });
-            
-            const data = await response.json();
-            
-            if (!response.ok){
-                throw new Error(data.message);
-            };
+            const data = await fetchUpdateProfileService(
+                API_URL_FOR_PROFILE,
+                token,
+                updatedFormDataProfile
+            );
 
             updateCurrentUser(data.data.newUserInfo[0]);
             setFormDataProfile({
@@ -203,4 +194,4 @@ const ProfileGeneral = ({
     );
 };
 
-export default ProfileGeneral;
+export default ProfileGeneralComponent;

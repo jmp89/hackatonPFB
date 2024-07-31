@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
-import EventCard from '../components/EventCard';
+import EventCardComponent from './EventCardComponent';
 
-const RateEventPage = ({
+const RateEventComponent = ({
     token,
     PushNotification
 }) => {
@@ -133,14 +133,23 @@ const RateEventPage = ({
 
     return (
         <>
-        <h2 className='mt-10 text-2xl font-bold text-center'>Mis eventos finalizados</h2>
-        <section className="mt-4 w-full grid grid-cols-auto-fit-minmax justify-evenly items-center">
-            {events.map((event, i) => (
-                <EventCard key={i} event={event} onRate={handleRate} />
-            ))}
-        </section>
+        {events.length < 1
+
+            ? <><h2 className='mt-10 text-2xl font-bold text-center'>Mis eventos finalizados</h2>
+                <p className="mt-8 mb-10 text-lg text-center">No has finalizado ningún evento</p>
+                </>
+
+            : <>
+                <h2 className='mt-10 text-2xl font-bold text-center'>Mis eventos finalizados</h2>
+                <section className="mt-8 mb-10 w-full grid grid-cols-auto-fit-minmax justify-evenly items-center gap-2">
+                    {events.map((event, i) => (
+                        <EventCardComponent key={i} event={event} onRate={handleRate} />
+                    ))}
+                </section>
+            </>
+        }
         </>
     );
 };
 
-export default RateEventPage;
+export default RateEventComponent;

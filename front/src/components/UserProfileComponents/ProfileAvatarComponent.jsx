@@ -1,9 +1,10 @@
 import { useState, useRef } from "react";
+import fetchChangeAvatarService from "../../services/fetchChangeAvatar"
 
 const API_URL = import.meta.env.VITE_API_URL;
 const API_URL_FOR_AVATAR = API_URL + "/upload"
 
-const ProfileAvatar = ({
+const ProfileAvatarComponent = ({
     token,
     currentUser,
     updateCurrentUser,
@@ -34,20 +35,12 @@ const ProfileAvatar = ({
             const updatedFormDataAvatar = new FormData();
             updatedFormDataAvatar.append('fileName', formDataAvatar);
 
-            const response = await fetch(API_URL_FOR_AVATAR, {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Authorization": token
-                },
-                body: updatedFormDataAvatar
-            });
 
-            const data = await response.json();
-
-            if (!response.ok){
-                throw new Error(data.message);
-            };
+            const data = await fetchChangeAvatarService(
+                API_URL_FOR_AVATAR,
+                token,
+                updatedFormDataAvatar
+            );
 
             updateCurrentUser({...currentUser, avatar: data.data.newAvatar.avatar});
             setFormDataAvatar(null);
@@ -146,4 +139,4 @@ const ProfileAvatar = ({
     );
 };
 
-export default ProfileAvatar;
+export default ProfileAvatarComponent;

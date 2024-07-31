@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import fetchMyInscriptionsService from "../services/fetchMyInscriptionsService";
-import MyEventCard from "./MyEventCard";
+import fetchMyInscriptionsService from "../../services/fetchMyInscriptionsService";
+import MyEventCardComponent from "./MyEventCardComponent";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const eventDetailsURL = "/event/details/";
 
-const MyInscriptions = ({
+const MyInscriptionsComponent = ({
     token,
     PushNotification
 }) => {
@@ -46,7 +46,7 @@ const MyInscriptions = ({
 
         <h2 className="mt-10 text-2xl font-bold text-center">Mis eventos activos</h2>
 
-        <ul className="mt-4 w-full grid grid-cols-auto-fit-minmax justify-evenly items-center">
+        <ul className="mt-4 w-full grid grid-cols-auto-fit-minmax justify-evenly items-center gap-2">
 
             {responseData.length < 1 &&  <li className="mt-6 mb-6 text-lg text-center">No estás inscrito en ningún evento</li>}
 
@@ -54,7 +54,7 @@ const MyInscriptions = ({
 
                 <li key={event.id} className="w-full my-auto">
 
-                    <MyEventCard 
+                    <MyEventCardComponent
                         event={event}
                         API_URL={API_URL}
                         handleEventClick={handleEventClick}
@@ -67,4 +67,4 @@ const MyInscriptions = ({
     );
 };
 
-export default MyInscriptions;
+export default MyInscriptionsComponent;

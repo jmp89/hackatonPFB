@@ -11,7 +11,6 @@ import MyEventsPage from './pages/MyEventsPage';
 import NotFound from './pages/NotFound';
 import MainLayout from './layout/MainLayout';
 import FAQPage from './pages/FAQPage';
-import RateEventPage from './pages/RateEventPage';
 import EventDetails from './pages/EventDetailsPage';
 import EventSearchPage from './pages/EventSearchPage';
 import ProfilePage from './pages/ProfilePage';
@@ -28,7 +27,6 @@ const App = () => {
                 <Route path="/reset-password" element={<ResetPass />} />
                 <Route path="/users/validate/activate" element={<ActivationPage />} />
                 <Route path="/users/login" element={<LoginFormPage />} />
-                <Route path="/users/rate-event" element={<RateEventPage />} />
                 <Route path="/users/my-events" element={<MyEventsPage />} />
                 <Route path="/faq" element={<FAQPage />} />
                 <Route path="/event/search" element={<EventSearchPage />} />

@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-import StarIcon from './StarIcon';
+import StarIcon from '../StarIcon';
 import { Link } from 'react-router-dom';
-const EventCard = ({ event, onRate }) => {
+
+const EventCardComponent = ({ event, onRate }) => {
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
 
@@ -13,7 +14,7 @@ const EventCard = ({ event, onRate }) => {
 
     return (
         <article className="mt-4 mb-4 w-full cursor-pointer transition-transform transform hover:scale-105 hover:shadow-xl">
-            <div className="border rounded-lg shadow-md p-4 min-w-72">
+            <div className="h-44 border rounded-lg shadow-md p-4 min-w-72 flex flex-col justify-center">
                 {/* <img
                     src={event.image}
                     alt={event.event_name}
@@ -48,4 +49,4 @@ const EventCard = ({ event, onRate }) => {
     );
 };
 
-export default EventCard;
+export default EventCardComponent;

@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import PushNotification from '../components/PushNotification';
 
-// TODO: Testear Toastify, borrar elementos inncesarios al tener toastify
-
 const RegisterFormPage = () => {
     const [formData, setFormData] = useState({
         username: '',
@@ -31,30 +29,19 @@ const RegisterFormPage = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        username: formData.username,
-                        name: formData.name,
-                        surname: formData.surname,
-                        email: formData.email,
-                        password: formData.password,
-                    }),
+                    body: JSON.stringify(formData),
                 }
             );
 
             const responseData = await response.json();
 
-            // if (!response.ok) {
-            //     PushNotification(
-            //         responseData.message ||
-            //             `Hubo un problema al procesar tu solicitud.
-            //             Por favor, intenta de nuevo más tarde.`,
-            //         { type: 'error' }
-            //     );
-            //     throw new Error(
-            //         responseData.message ||
-            //             'Hubo un problema al procesar tu solicitud. Por favor, intenta de nuevo más tarde.'
-            //     );
-            // }
+            if (!response.ok) {
+                const errorMessage =
+                    responseData.message ||
+                    'Hubo un problema al procesar tu solicitud. Por favor, intenta de nuevo más tarde.';
+                PushNotification(errorMessage, { type: 'error' });
+                return;
+            }
 
             PushNotification(responseData.message, { type: 'success' });
             setFormData({
@@ -64,9 +51,13 @@ const RegisterFormPage = () => {
                 email: '',
                 password: '',
             });
-        
+            setError(null);
         } catch (error) {
-            PushNotification(error.message, { type: 'error' });
+            const errorMessage =
+                error.response?.data?.message ||
+                error.message ||
+                'Hubo un problema al procesar tu solicitud. Por favor, intenta de nuevo más tarde.';
+            PushNotification(errorMessage, { type: 'error' });
         }
     };
 

@@ -11,7 +11,7 @@ const EventDetails = () => {
     const { token } = useAuth(); 
     const [event, setEvent] = useState(null);
     const [error, setError] = useState('');
-    const [message, setMessage] = useState('');
+   
 
     useEffect(() => {
         const fetchEvent = async () => {
@@ -22,7 +22,7 @@ const EventDetails = () => {
                 setEvent(eventData);
             } catch (err) {
                 console.error('Error fetching event:', err);
-                setError('Error fetching event. Please try again later.');
+
                 PushNotification(err.message, { type: 'error' });
             }
         };
@@ -34,23 +34,19 @@ const EventDetails = () => {
 
     const handleButtonClick = async () => {
         if (!isLoggedIn()) {
-            setMessage('Necesitas loguearte primero');
             PushNotification('Necesitas loguearte primero', { type: 'error' });
             return;
         }
 
         try {
             await registerForEvent(eventId, token);
-            setMessage(
-                'Te has inscrito correctamente al evento. Te llegará un correo con la confirmación'
-            );
+           
             PushNotification(
                 'Te has inscrito correctamente al evento. Te llegará un correo con la confirmación',
                 { type: 'success' }
             );
         } catch (err) {
             console.error('Error registering for event:', err);
-            setMessage('Ya estás registrado a este evento');
             PushNotification('Ya estás registrado a este evento', {
                 type: 'info',
             });

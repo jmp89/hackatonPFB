@@ -64,7 +64,7 @@ const RegisterFormPage = () => {
                 email: '',
                 password: '',
             });
-            setError(null);
+        
         } catch (error) {
             PushNotification(error.message, { type: 'error' });
         }

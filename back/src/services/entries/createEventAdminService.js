@@ -1,7 +1,10 @@
 import getPool from '../../database/getPool.js';
 
-const createEventAdminService = async (eventInfo) => {
+const createEventAdminService = async (eventInfo, eventImage) => {
     const pool = await getPool();
+
+    const thematics = JSON.parse(eventInfo.thematics);
+    const technologies = JSON.parse(eventInfo.technologies);
 
     await pool.query(
         `
@@ -14,8 +17,9 @@ const createEventAdminService = async (eventInfo) => {
                 start_time,
                 finish_time,
                 organizer,
-                description
-            ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )
+                description,
+                image
+            ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
         `,
         [
             eventInfo.name,
@@ -27,6 +31,7 @@ const createEventAdminService = async (eventInfo) => {
             eventInfo.finish_time,
             eventInfo.organizer,
             eventInfo.description,
+            eventImage
         ]
     );
 
@@ -39,14 +44,15 @@ const createEventAdminService = async (eventInfo) => {
         [eventInfo.name]
     );
 
-    for (const tech of eventInfo.technologies) {
+    for (const tech of technologies) {
+
         const [[techID]] = await pool.query(
             `
                 SELECT id
                 FROM technologies
                 WHERE name = ?
             `,
-            [tech.name]
+            [tech]
         );
 
         await pool.query(
@@ -56,16 +62,16 @@ const createEventAdminService = async (eventInfo) => {
             `,
             [eventID.id, techID.id]
         );
-    }
+    };
 
-    for (const them of eventInfo.thematics) {
+    for (const them of thematics) {
         const [[themID]] = await pool.query(
             `
                 SELECT id
                 FROM thematics
                 WHERE name = ?
             `,
-            [them.name]
+            [them]
         );
 
         await pool.query(
@@ -75,7 +81,7 @@ const createEventAdminService = async (eventInfo) => {
             `,
             [eventID.id, themID.id]
         );
-    }
+    };
 };
 
 export default createEventAdminService;

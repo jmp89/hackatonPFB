@@ -11,6 +11,9 @@ export default {
             },
             clipPath: {
                 'polygonImage': 'polygon(0% 0%, 80% 0%, 80% 30%, 100% 50%, 80% 70%, 80% 100%, 0 100%)'
+            },
+            screens:{
+                "x12": '1690px',
             }
         },
     },

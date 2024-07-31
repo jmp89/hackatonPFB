@@ -12,9 +12,6 @@ const RegisterFormPage = () => {
         password: '',
     });
 
-    const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -46,20 +43,19 @@ const RegisterFormPage = () => {
 
             const responseData = await response.json();
 
-            if (!response.ok) {
-                PushNotification(
-                    responseData.message ||
-                        `Hubo un problema al procesar tu solicitud.
-                        Por favor, intenta de nuevo más tarde.`,
-                    { type: 'error' }
-                );
-                throw new Error(
-                    responseData.message ||
-                        'Hubo un problema al procesar tu solicitud. Por favor, intenta de nuevo más tarde.'
-                );
-            }
+            // if (!response.ok) {
+            //     PushNotification(
+            //         responseData.message ||
+            //             `Hubo un problema al procesar tu solicitud.
+            //             Por favor, intenta de nuevo más tarde.`,
+            //         { type: 'error' }
+            //     );
+            //     throw new Error(
+            //         responseData.message ||
+            //             'Hubo un problema al procesar tu solicitud. Por favor, intenta de nuevo más tarde.'
+            //     );
+            // }
 
-            setSuccess(responseData.message);
             PushNotification(responseData.message, { type: 'success' });
             setFormData({
                 username: '',
@@ -70,13 +66,7 @@ const RegisterFormPage = () => {
             });
             setError(null);
         } catch (error) {
-            console.error('Error al registrar el usuario:', error.message);
-            setError(
-                error.message ||
-                    'Hubo un problema al procesar tu solicitud. Por favor, intenta de nuevo más tarde.'
-            );
             PushNotification(error.message, { type: 'error' });
-            setSuccess(null);
         }
     };
 
@@ -89,11 +79,6 @@ const RegisterFormPage = () => {
                 <h2 className="text-2xl font-bold text-center mb-6">
                     REGISTRARSE
                 </h2>
-
-                {/*
-        TOASTIFY (HAY QUE TESTEAR)
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        {success && <p className="text-green-500 mb-4">{success}</p>} */}
 
                 <fieldset>
                     <section className="mb-4">

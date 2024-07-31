@@ -1,4 +1,4 @@
-![Logo hackathones](./public/logo_hackaverse.svg)
+![Logo HackAVerse](../back/public/media/logo_hackaverse.svg)
 
 # INSTRUCCIONES DEL FRONTEND
 
@@ -59,14 +59,6 @@ Empezaremos de la siguiente forma:
 -   **`/users/profile`**
 
     Tu perfil de usuario
-
--   **`/users/my-events`**
-
-    Eventos sin empezar a los que te has inscrito.
-
--   **`/users/rate-event`**
-
-    Eventos finalizados donde has participado (y puedes dar valoración)
 
 -   **`/admin/:eventId?`**
 

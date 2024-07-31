@@ -1,4 +1,4 @@
-![Logo hackathones](../front/public/logo_hackaverse.svg)
+![Logo hackathones](./public/media/logo_hackaverse.svg)
 
 # INSTRUCCIONES DEL BACKEND
 

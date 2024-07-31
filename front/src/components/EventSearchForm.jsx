@@ -106,16 +106,14 @@ const EventSearchForm = () => {
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 w-full max-w-7xl mx-auto">
 
                     {responseData.map((event, index) => (
-
+                        
                         <li key={index} className="flex flex-col sm:flex-row border rounded-lg shadow-md hover:scale-105 transition-all duration-300 transform cursor-pointer">
 
                             <article className="flex flex-col sm:flex-row items-center" onClick={() => handleEventClick(event.id)}>
                                 <Link to={`/event/details/${event.id}`} className="flex flex-col sm:flex-row items-center no-underline text-black">
-                                
                                     <div className="w-full sm:w-1/3 p-2">
-                                        <img src="http://localhost:3001/event/${event.image}" alt="Imagen del evento" className="w-full h-full object-cover rounded-lg" />
+                                        <img src="http://localhost:3001/media/img-static.png" alt="Imagen del evento" className="w-full h-full object-cover rounded-lg" />
                                     </div>
-
                                     <div className="flex flex-col p-4 sm:w-2/3">
                                         <p><span className="font-bold">Nombre del evento:</span> {event.name}</p>
                                         <p><span className="font-bold">Tecnología:</span> {event.technologies.join(", ")}</p>

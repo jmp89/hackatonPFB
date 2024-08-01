@@ -1,6 +1,5 @@
-/* eslint-disable react/prop-types */
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 // Icono del menú hamburguesa que cambia de estado abierto/cerrado
@@ -96,6 +95,9 @@ const Header = () => {
     const [isAvatarMenuOpen, setIsAvatarMenuOpen] = useState(false);
     const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
 
+    const hamburgerMenuRef = useRef(null);
+    const hamburgerButtonRef = useRef(null);
+
     const toggleAvatarMenu = () => {
         setIsAvatarMenuOpen(!isAvatarMenuOpen);
         if (!isAvatarMenuOpen) {
@@ -104,11 +106,28 @@ const Header = () => {
     };
 
     const toggleHamburgerMenu = () => {
-        setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
-        if (!isHamburgerMenuOpen) {
+        setIsHamburgerMenuOpen(prev => !prev);
+        if (isHamburgerMenuOpen) {
             setIsAvatarMenuOpen(false);
         }
     };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                hamburgerMenuRef.current &&
+                !hamburgerMenuRef.current.contains(event.target) &&
+                !hamburgerButtonRef.current.contains(event.target)
+            ) {
+                setIsHamburgerMenuOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isHamburgerMenuOpen]);
 
     const API_URL = import.meta.env.VITE_API_URL;
     const avatar = currentUser && currentUser.avatar ? currentUser.avatar : '/media/userProfile.svg';
@@ -116,15 +135,14 @@ const Header = () => {
 
     const avatarMenuItems = [
         { to: '/users/profile', label: 'Perfil' },
-        { to: '/users/my-events', label: 'Mis inscripciones' },
-        { to: '/users/rate-event', label: 'Valoraciones' },
-        { onClick: removeToken, label: '', icon: `${API_URL}/media/power-icon.svg` }, 
+        { onClick: removeToken, label: 'Cerrar sesión', icon: `${API_URL}/media/power-icon.svg` }, 
     ];
 
     const hamburgerMenuItems = token
         ? [
               { to: '/event/search', label: 'Eventos', isMobile: true },
               { to: '/faq', label: 'FAQ', isMobile: true },
+              { onClick: removeToken, label: 'Cerrar sesión', icon: `${API_URL}/media/power-icon.svg` }
           ]
         : [
               { to: '/users/login', label: 'Login', isMobile: true },
@@ -156,15 +174,26 @@ const Header = () => {
                             </>
                         ) : (
                             <>
-                                <NavItem to="/event/search" >Eventos</NavItem>
+                                <NavItem to="/event/search">Eventos</NavItem>
                                 <NavItem to="/faq">FAQ</NavItem>
-                                <div className="relative">
-                                    <img
-                                        className="w-10 h-10 rounded-full cursor-pointer"
-                                        src={avatarUrl}
-                                        alt="User Avatar"
-                                        onClick={toggleAvatarMenu}
-                                    />
+                                <div className="relative flex items-center">
+                                    <NavLink to="/users/profile">
+                                        <img
+                                            className="w-10 h-10 rounded-full cursor-pointer"
+                                            src={avatarUrl}
+                                            alt="User Avatar"
+                                        />
+                                    </NavLink>
+                                    <button
+                                        onClick={removeToken}
+                                        className="ml-4 text-sm text-red-500 hover:text-red-700"
+                                    >
+                                        <img
+                                            src={`${API_URL}/media/power-icon.svg`}
+                                            alt="Cerrar sesión"
+                                            className="w-5 h-5 inline"
+                                        />
+                                    </button>
                                     <DropdownMenu
                                         items={avatarMenuItems}
                                         isOpen={isAvatarMenuOpen}
@@ -178,13 +207,14 @@ const Header = () => {
                     {/* Menú móvil */}
                     <div className="sm:hidden flex items-center space-x-4 relative">
                         {token && (
-                            <div className="relative">
-                                <img
-                                    className="w-10 h-10 rounded-full cursor-pointer"
-                                    src={avatarUrl}
-                                    alt="User Avatar"
-                                    onClick={toggleAvatarMenu}
-                                />
+                            <div className="relative flex items-center">
+                                <NavLink to="/users/profile">
+                                    <img
+                                        className="w-10 h-10 rounded-full cursor-pointer"
+                                        src={avatarUrl}
+                                        alt="User Avatar"
+                                    />
+                                </NavLink>
                                 <DropdownMenu
                                     items={avatarMenuItems}
                                     isOpen={isAvatarMenuOpen}
@@ -194,6 +224,7 @@ const Header = () => {
                             </div>
                         )}
                         <button
+                            ref={hamburgerButtonRef}
                             onClick={toggleHamburgerMenu}
                             type="button"
                             className="inline-flex items-center justify-center p-2 rounded-md text-black hover:text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition-colors duration-300"
@@ -203,12 +234,14 @@ const Header = () => {
                             <span className="sr-only">Abrir menú</span>
                             <MenuIcon isOpen={isHamburgerMenuOpen} />
                         </button>
-                        <DropdownMenu
-                            items={hamburgerMenuItems}
-                            isOpen={isHamburgerMenuOpen}
-                            toggleMenu={toggleHamburgerMenu}
-                            className="top-11"
-                        />
+                        <div ref={hamburgerMenuRef}>
+                            <DropdownMenu
+                                items={hamburgerMenuItems}
+                                isOpen={isHamburgerMenuOpen}
+                                toggleMenu={toggleHamburgerMenu}
+                                className="top-11"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,8 @@ import fetchEventSearchService from '../services/fetchEventSearchService';
 import PushNotification from './PushNotification.jsx';
 import { Navigate, Link } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const EventSearchForm = () => {
     const [formData, setFormData] = useState({
         filter: '',
@@ -10,7 +12,6 @@ const EventSearchForm = () => {
         direction: '',
     });
     const [responseData, setResponseData] = useState(null);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchEventSearch = async () => {
@@ -23,7 +24,7 @@ const EventSearchForm = () => {
 
                 setResponseData(data.data.eventsList);
             } catch (error) {
-                setError(error.message);
+
                 setResponseData(null);
                 PushNotification(error.message, { type: 'error' });
             }
@@ -43,10 +44,8 @@ const EventSearchForm = () => {
         try {
             const data = await fetchEventSearchService(formData.filter, formData.sort, formData.direction);
             setResponseData(data.data.eventsList);
-            setError(null);
             setFormData({ filter: '', sort: '', direction: '' });
         } catch (error) {
-            setError(error.message);
             setResponseData(null);
             PushNotification(error.message, { type: 'error' });
         }
@@ -71,7 +70,7 @@ const EventSearchForm = () => {
                     value={formData.filter} 
                 />
 
-                <label className="block text-lg font-medium mb-2" htmlFor="sort">Agrupar</label>
+                <label className="mt-2 block text-lg font-medium mb-2" htmlFor="sort">Agrupar por</label>
                 <select 
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" 
                     onChange={handleChange} 
@@ -80,12 +79,15 @@ const EventSearchForm = () => {
                 >
                     <option value="">Seleccione una opción</option>
                     <option value="name">Nombre</option>
-                    <option value="technology">Tecnología</option>
-                    <option value="theme">Temática</option>
+                    <option value="technologies">Tecnología</option>
+                    <option value="thematics">Temática</option>
+                    <option value="online_on_site">Modalidad - Remoto / Presencial</option>
                     <option value="location">Ciudad</option>
+                    <option value="start_date">Fecha de inicio</option>
+                    <option value="finish_date">Fecha de finalización</option>
                 </select>
 
-                <label className="block text-lg font-medium mb-2" htmlFor="direction">Ordenar por</label>
+                <label className="mt-2 block text-lg font-medium mb-2" htmlFor="direction">Ordenar por</label>
                 <select 
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" 
                     onChange={handleChange} 
@@ -97,7 +99,7 @@ const EventSearchForm = () => {
                     <option value="desc">Descendente</option>
                 </select>
 
-                <button className="w-44 bg-black text-white py-2 rounded-lg font-bold text-lg mb-4 hover:scale-105 transition-transform duration-300">
+                <button className="mt-4 w-44 bg-black text-white py-2 rounded-lg font-bold text-lg mb-2 hover:scale-105 transition-transform duration-300">
                     Enviar
                 </button>
             </form>
@@ -111,15 +113,23 @@ const EventSearchForm = () => {
 
                             <article className="flex flex-col sm:flex-row items-center" onClick={() => handleEventClick(event.id)}>
                                 <Link to={`/event/details/${event.id}`} className="flex flex-col sm:flex-row items-center no-underline text-black">
+
+                                   
                                     <div className="w-full sm:w-2/3 p-2">
+                                    
                                     <img src={event.imageUrl || "http://localhost:3001/uploads/event1.jpg"} alt="Imagen del evento" className="w-full h-full object-cover rounded-lg" />
                                     </div>
+                                   
+                                    
+                                     
+                                    
                                     <div className="flex flex-col p-4 sm:w-2/5">
                                         <p><span className="font-bold">Nombre del evento:</span> {event.name}</p>
                                         <p><span className="font-bold">Tecnología:</span> {event.technologies.join(", ")}</p>
                                         <p><span className="font-bold">Temática:</span> {event.thematics.join(", ")}</p>
-                                        <p><span className="font-bold">Remoto / Presencial:</span> {event.online_on_site}</p>
-                                        <p><span className="font-bold">Ciudad:</span> {event.location}</p>
+                                        <p><span className="font-bold">Remoto / Presencial:</span> {event.online_on_site === "online" ? "Remoto" : "Presencial"}</p>
+                                        <p><span className="font-bold">Tendrá lugar en:</span> {event.location}</p>
+                                        <p><span className="font-bold">Inicio / Fin:</span> {event.start_date.slice(0, 10)} / {event.finish_date.slice(0, 10)}</p>
                                     </div>
                                 </Link>
                             </article>

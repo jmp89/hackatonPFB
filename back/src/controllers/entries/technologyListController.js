@@ -1,6 +1,6 @@
 import getTechnologiesService from "../../services/entries/getTechnologiesService.js";
 
-const technologyListController = async (req, res) => {
+const technologyListController = async (req, res, next) => {
   try {
 
     const technologies = await getTechnologiesService();

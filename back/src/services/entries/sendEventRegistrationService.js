@@ -34,24 +34,30 @@ const sendEventRegistrationMailService = async (eventID, userID) => {
     const emailSubject = `Confirma tu inscripción en ${eventInfo.name}`;
 
     const emailBody = `
-        <h1>Gracias por enviarnos tu solicitud, a continuación te mostramos un poco de qué va este Hackathon con más detalle:</h1>
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; padding: 20px;">
+    <h1 style="color: #2c3e50;">¡Gracias por tu solicitud!</h1>
+    <p style="font-size: 16px; margin-bottom: 20px;">
+        A continuación, te proporcionamos los detalles de tu participación en el Hackathon:
+    </p>
 
-        <p style="color: #fff; background-color: #000; padding: 5px 15px; border-radius: 10px; margin: 0 25px; width: fit-content; height: fit-content; font-weight: bold; font-size: 1.2rem">Código de confirmación: ${reservationCode}</p>
+    <h2>Código de confirmación: </h2>
+    <p style="color: #fff; background-color: #000; padding: 5px 15px; border-radius: 10px; margin: 0 25px; width: fit-content; height: fit-content; font-weight: bold; font-size: 1.2rem">${reservationCode}</p>
 
-        <a href="http://${FRONT_URL}:${FRONT_PORT}/event/validate/activate" style="color: #fff; background-color: #000; padding: 15px 25px; border-radius: 10px; margin: 0 25px">Haz click aquí para confirmar la inscripción.</a>
+    <a href="http://${FRONT_URL}:${FRONT_PORT}/event/validate/activate" style="color: #fff; background-color: #000; padding: 15px 25px; border-radius: 10px; margin: 0 25px">INSERTA EL CÓDIGO DE CONFIRMACIÓN AQUI.</a>
 
-        <hr />
+    <hr style="border: 1px solid #ddd; margin: 20px 0;" />
 
-        
-        <h2>¿De qué va ${eventInfo.name}?</h2>
-        
-        <p>${eventInfo.description}</p>
-        
-        
-        <a href="http://${FRONT_URL}:${FRONT_PORT}/event/validate/activate" style="color: #fff; background-color: #000; padding: 15px 25px; border-radius: 10px; margin: 0 25px">Haz click aqui para confirmar la inscripción.</a>
+    <h3 style="font-size: 16px; color: #2c3e50; margin-bottom: 10px;">¿De qué va ${eventInfo.name}?</h3>
+    <p style="font-size: 16px; margin-bottom: 20px;">
+        ${eventInfo.description}
+    </p>
 
-        <hr />
+    <hr style="border: 1px solid #ddd; margin: 20px 0;" />
+
+    <p style="text-align: center; font-size: 14px; color: #777;">
         Hecho con ❤ por el equipo de HackaVerse
+    </p>
+</div>
     `;
 
     await sendMailUtils(finalEmail, emailSubject, emailBody);

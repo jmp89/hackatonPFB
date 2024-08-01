@@ -14,14 +14,17 @@ import FAQPage from './pages/FAQPage';
 import EventDetails from './pages/EventDetailsPage';
 import EventSearchPage from './pages/EventSearchPage';
 import ProfilePage from './pages/ProfilePage';
-import './styles.css';
 import ActivationEventPage from "./pages/ActivationEventPage"
+import CreateEventPage from './pages/CreateEventPage';
+import EditEventPage from './pages/EditEventPage';
+import './styles.css';
+
 const App = () => {
     return (
         <MainLayout>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/admin/:eventId?" element={<AdminPage />} />
+                {/* <Route path="/admin/:eventId?" element={<AdminPage />} /> */}
                 <Route path="/register" element={<RegisterFormPage />} />
                 <Route path="/reset-password" element={<ResetPass />} />
                 <Route path="/users/validate/activate" element={<ActivationPage />} />
@@ -33,6 +36,8 @@ const App = () => {
                 <Route path="/event/details/:eventId" element={<EventDetails />} />
                 <Route path="/users/profile" element={<ProfilePage />} />
                 <Route path='/event/validate/activate' element={<ActivationEventPage />}/>
+                <Route path="/event/create" element={<CreateEventPage />} />
+                <Route path="/event/edit/:eventID" element={<EditEventPage />} />
             </Routes>
             <ToastContainer
                 position="bottom-right"

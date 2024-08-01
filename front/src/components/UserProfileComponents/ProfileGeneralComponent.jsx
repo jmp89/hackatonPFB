@@ -111,17 +111,10 @@ const ProfileGeneralComponent = ({
 
                     <label htmlFor="personal_info" className="mt-4 flex flex-row items-start">
                         <img src={`${API_URL}/media/description.svg`} alt="email-svg" className="w-6 h-6 mr-4 mt-2" />
-                        {/* <textarea ref={personalInfoRef} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black mb-2"*/}
                         <textarea className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black mb-2"    
                             name="personal_info" value={placeholders.personal_info}
                             onChange={handleProfileChange} rows="10" disabled />
                     </label>
-
-                    {/* <label className="mt-4 flex flex-row items-center ">
-                        <img src="http://localhost:3001/media/description.svg" alt="email-svg" className="w-6 h-6 mr-4" />
-                        <input className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
-                            ref={personalInfoRef} type="text" name="personal_info" value={placeholders.personal_info} disabled />
-                    </label> */}
 
                     <label htmlFor="created_at" className="mt-4 flex flex-row items-center">
                         <img src={`${API_URL}/media/date.svg`} alt="email-svg" className="w-6 h-6 mr-4" />

@@ -80,16 +80,18 @@ const getEventsService = async (filter, sort, direction) => {
             OR t.name LIKE ?
             OR th.name LIKE ?
             OR e.online_on_site LIKE ?
-            OR e.organizer LIKE ?
+            OR e.location LIKE ?
         `;
     }
 
     const validSort = [
         'name',
-        'technology',
+        'technologies',
+        'thematics',
         'online_on_site',
-        'organizer',
-        'theme',
+        'location',
+        'start_date',
+        'finish_date'
     ];
 
     const validDirection = ['ASC', 'DESC'];
@@ -135,6 +137,7 @@ const getEventsService = async (filter, sort, direction) => {
                 finish_date: row.finish_date,
                 start_time: row.start_time,
                 finish_time: row.finish_time,
+                image: row.image
             });
         }
 
@@ -154,7 +157,7 @@ const getEventsService = async (filter, sort, direction) => {
         technologies: Array.from(event.technologies),
         thematics: Array.from(event.thematics),
     }));
-
+    console.log(finalEventsList)
     return finalEventsList;
 };
 

@@ -1,6 +1,6 @@
-import "dotenv/config";
-import path from "path";
-import fs from "fs";
+import 'dotenv/config';
+import path from 'path';
+import fs from 'fs';
 import randomstring from 'randomstring';
 import updateEventAdminService from '../../services/entries/updateEventAdminService.js';
 import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
@@ -10,18 +10,15 @@ const { UPLOADS_DIR } = process.env;
 
 const updateEventAdminController = async (req, res, next) => {
     try {
-
         const parsedBody = {
             ...req.body,
             technologies: JSON.parse(req.body.technologies),
-            thematics: JSON.parse(req.body.thematics)
-        }
-
-        if(parsedBody.fileName){
-
-            delete parsedBody["fileName"];
+            thematics: JSON.parse(req.body.thematics),
         };
 
+        if (parsedBody.fileName) {
+            delete parsedBody['fileName'];
+        }
 
         const updateEventAdminSchema = Joi.object({
             name: Joi.string().required(),
@@ -34,37 +31,37 @@ const updateEventAdminController = async (req, res, next) => {
             finish_time: Joi.string().required(),
             thematics: Joi.array().items(Joi.string()).required(),
             organizer: Joi.number().integer().required(),
-            description: Joi.string().min(15).max(255).required(),
+            description: Joi.string().required(),
         });
 
         const { error } = updateEventAdminSchema.validate(parsedBody);
 
         if (error) {
             throw generateErrorsUtils(error.message, 400);
-        };
+        }
 
         const eventInfo = req.body;
         const eventID = req.params.id;
 
         let finalName;
 
-        if (req.files || req.files.fileName){
-            console.log("por aki ando ppepepepepepepe")
+        if (req.files || req.files.fileName) {
+            console.log('por aki ando ppepepepepepepe');
             const eventImage = req.files.fileName;
 
             const uploadDir = path.join(process.cwd(), UPLOADS_DIR);
 
             if (!fs.existsSync(uploadDir)) {
                 fs.mkdirSync(uploadDir, { recursive: true });
-            };
+            }
 
             const randomName = randomstring.generate(15);
-            finalName = "/uploads/" + randomName + '_' + eventImage.name;
+            finalName = '/uploads/' + randomName + '_' + eventImage.name;
 
             const uploadPath = path.join(uploadDir, finalName);
 
             await eventImage.mv(uploadPath);
-        };
+        }
 
         await updateEventAdminService(eventID, eventInfo, finalName);
 

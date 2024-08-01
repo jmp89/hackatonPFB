@@ -52,7 +52,7 @@ const LoginForm = () => {
     return token ? (
         <Navigate to="/" />
     ) : (
-        <main className="flex items-start justify-center px-4">
+        <section className="flex items-start justify-center px-4">
             <form
                 onSubmit={handleSubmit}
                 className="flex flex-col items-center justify-center bg-white p-6 rounded-lg shadow-md w-full max-w-3xl mt-10"
@@ -64,7 +64,7 @@ const LoginForm = () => {
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 {loginOk && <p className="text-green-500 mb-4">{loginOk}</p>} */}
 
-                <fieldset>
+                <fieldset className="w-full max-w-sm">
                     <section className="mb-4">
                         <label
                             htmlFor="email"
@@ -120,7 +120,7 @@ const LoginForm = () => {
                     </Link>
                 </section>
             </form>
-        </main>
+        </section>
     );
 };
 

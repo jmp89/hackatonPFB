@@ -3,8 +3,6 @@ import fetchEventSearchService from '../services/fetchEventSearchService';
 import PushNotification from './PushNotification.jsx';
 import { Navigate, Link } from 'react-router-dom';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 const EventSearchForm = () => {
     const [formData, setFormData] = useState({
         filter: '',
@@ -24,7 +22,6 @@ const EventSearchForm = () => {
 
                 setResponseData(data.data.eventsList);
             } catch (error) {
-
                 setResponseData(null);
                 PushNotification(error.message, { type: 'error' });
             }
@@ -42,7 +39,11 @@ const EventSearchForm = () => {
         e.preventDefault();
 
         try {
-            const data = await fetchEventSearchService(formData.filter, formData.sort, formData.direction);
+            const data = await fetchEventSearchService(
+                formData.filter,
+                formData.sort,
+                formData.direction
+            );
             setResponseData(data.data.eventsList);
             setFormData({ filter: '', sort: '', direction: '' });
         } catch (error) {
@@ -61,37 +62,54 @@ const EventSearchForm = () => {
                 className="flex flex-col items-center justify-center bg-white p-6 rounded-lg shadow-md w-full max-w-3xl mt-10 mx-auto"
                 onSubmit={handleSubmit}
             >
-                <label className="block text-lg font-medium mb-2" htmlFor="filter">Búsqueda de evento</label>
-                <input 
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" 
-                    type="text" 
-                    onChange={handleChange} 
-                    name="filter" 
-                    value={formData.filter} 
+                <label
+                    className="block text-lg font-medium mb-2"
+                    htmlFor="filter"
+                >
+                    Búsqueda de evento
+                </label>
+                <input
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                    type="text"
+                    onChange={handleChange}
+                    name="filter"
+                    value={formData.filter}
                 />
 
-                <label className="mt-2 block text-lg font-medium mb-2" htmlFor="sort">Agrupar por</label>
-                <select 
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" 
-                    onChange={handleChange} 
-                    name="sort" 
+                <label
+                    className="mt-2 block text-lg font-medium mb-2"
+                    htmlFor="sort"
+                >
+                    Agrupar por
+                </label>
+                <select
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                    onChange={handleChange}
+                    name="sort"
                     value={formData.sort}
                 >
                     <option value="">Seleccione una opción</option>
                     <option value="name">Nombre</option>
                     <option value="technologies">Tecnología</option>
                     <option value="thematics">Temática</option>
-                    <option value="online_on_site">Modalidad - Remoto / Presencial</option>
+                    <option value="online_on_site">
+                        Modalidad - Remoto / Presencial
+                    </option>
                     <option value="location">Ciudad</option>
                     <option value="start_date">Fecha de inicio</option>
                     <option value="finish_date">Fecha de finalización</option>
                 </select>
 
-                <label className="mt-2 block text-lg font-medium mb-2" htmlFor="direction">Ordenar por</label>
-                <select 
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black" 
-                    onChange={handleChange} 
-                    name="direction" 
+                <label
+                    className="mt-2 block text-lg font-medium mb-2"
+                    htmlFor="direction"
+                >
+                    Ordenar por
+                </label>
+                <select
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                    onChange={handleChange}
+                    name="direction"
                     value={formData.direction}
                 >
                     <option value="">Seleccione una opción</option>
@@ -106,30 +124,72 @@ const EventSearchForm = () => {
 
             {responseData && (
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 w-full max-w-7xl mx-auto">
-
                     {responseData.map((event, index) => (
-                        
-                        <li key={index} className="flex flex-col sm:flex-row border rounded-lg shadow-md hover:scale-105 transition-all duration-300 transform cursor-pointer">
-
-                            <article className="flex flex-col sm:flex-row items-center" onClick={() => handleEventClick(event.id)}>
-                                <Link to={`/event/details/${event.id}`} className="flex flex-col sm:flex-row items-center no-underline text-black">
-
-                                   
-                                    <div className="w-full sm:w-2/3 p-2">
-                                    
-                                    <img src={event.imageUrl || "http://localhost:3001/uploads/event1.jpg"} alt="Imagen del evento" className="w-full h-full object-cover rounded-lg" />
+                        <li
+                            key={index}
+                            className="flex flex-col sm:flex-row border rounded-lg shadow-md hover:scale-105 transition-all duration-300 transform cursor-pointer"
+                        >
+                            <article
+                                className="flex flex-col sm:flex-row items-center"
+                                onClick={() => handleEventClick(event.id)}
+                            >
+                                <Link
+                                    to={`/event/details/${event.id}`}
+                                    className="flex flex-col sm:flex-row items-center no-underline text-black"
+                                >
+                                    <div className="w-full sm:w-2/3 p-2 flex justify-center">
+                                        <img
+                                            src={
+                                                import.meta.env.VITE_API_URL +
+                                                    event.image ||
+                                                import.meta.env.VITE_API_URL +
+                                                    '/uploads/event1.jpg'
+                                            }
+                                            alt="Imagen del evento"
+                                            className="w-full max-w-64 h-full object-cover rounded-lg"
+                                        />
                                     </div>
-                                   
-                                    
-                                     
-                                    
-                                    <div className="flex flex-col p-4 sm:w-2/5">
-                                        <p><span className="font-bold">Nombre del evento:</span> {event.name}</p>
-                                        <p><span className="font-bold">Tecnología:</span> {event.technologies.join(", ")}</p>
-                                        <p><span className="font-bold">Temática:</span> {event.thematics.join(", ")}</p>
-                                        <p><span className="font-bold">Remoto / Presencial:</span> {event.online_on_site === "online" ? "Remoto" : "Presencial"}</p>
-                                        <p><span className="font-bold">Tendrá lugar en:</span> {event.location}</p>
-                                        <p><span className="font-bold">Inicio / Fin:</span> {event.start_date.slice(0, 10)} / {event.finish_date.slice(0, 10)}</p>
+
+                                    <div className="flex flex-col p-4 sm:w-full">
+                                        <p>
+                                            <span className="font-bold">
+                                                Nombre del evento:
+                                            </span>{' '}
+                                            {event.name}
+                                        </p>
+                                        <p>
+                                            <span className="font-bold">
+                                                Tecnología:
+                                            </span>{' '}
+                                            {event.technologies.join(', ')}
+                                        </p>
+                                        <p>
+                                            <span className="font-bold">
+                                                Temática:
+                                            </span>{' '}
+                                            {event.thematics.join(', ')}
+                                        </p>
+                                        <p>
+                                            <span className="font-bold">
+                                                Remoto / Presencial:
+                                            </span>{' '}
+                                            {event.online_on_site === 'online'
+                                                ? 'Remoto'
+                                                : 'Presencial'}
+                                        </p>
+                                        <p>
+                                            <span className="font-bold">
+                                                Tendrá lugar en:
+                                            </span>{' '}
+                                            {event.location}
+                                        </p>
+                                        <p>
+                                            <span className="font-bold">
+                                                Inicio / Fin:
+                                            </span>{' '}
+                                            {event.start_date.slice(0, 10)} /{' '}
+                                            {event.finish_date.slice(0, 10)}
+                                        </p>
                                     </div>
                                 </Link>
                             </article>

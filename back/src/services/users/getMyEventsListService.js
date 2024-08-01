@@ -1,10 +1,10 @@
-import getPool from "../../database/getPool.js";
+import getPool from '../../database/getPool.js';
 
 const getMyEventsListService = async (queryUserId) => {
-
     const pool = await getPool();
 
-    const [results] = await pool.query(`
+    const [results] = await pool.query(
+        `
         SELECT e.id,
         e.name,
         t.name AS technologies,
@@ -23,8 +23,9 @@ const getMyEventsListService = async (queryUserId) => {
         JOIN technologies t ON t.id = te.technology_id
         JOIN thematics_events the ON the.event_id = e.id
         JOIN thematics th ON th.id = the.thematic_id
-        WHERE p.user_id = ?
-   `, [queryUserId]
+        WHERE p.user_id = ? AND e.finish_date > NOW()
+   `,
+        [queryUserId]
     );
 
     const eventsMap = new Map();
@@ -43,26 +44,25 @@ const getMyEventsListService = async (queryUserId) => {
                 finish_date: row.finish_date,
                 start_time: row.start_time,
                 finish_time: row.finish_time,
-                image: row.image
+                image: row.image,
             });
-        };
-        
+        }
+
         const event = eventsMap.get(row.id);
 
         if (row.technologies) {
             event.technologies.add(row.technologies);
-        };
+        }
 
         if (row.thematics) {
-
             event.thematics.add(row.thematics);
-        };
-    };
+        }
+    }
 
-    const finalEventsList = Array.from(eventsMap.values()).map(event => ({
+    const finalEventsList = Array.from(eventsMap.values()).map((event) => ({
         ...event,
         technologies: Array.from(event.technologies),
-        thematics: Array.from(event.thematics)
+        thematics: Array.from(event.thematics),
     }));
 
     return finalEventsList;

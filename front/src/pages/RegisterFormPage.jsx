@@ -51,7 +51,6 @@ const RegisterFormPage = () => {
                 email: '',
                 password: '',
             });
-            setError(null);
         } catch (error) {
             const errorMessage =
                 error.response?.data?.message ||
@@ -62,7 +61,7 @@ const RegisterFormPage = () => {
     };
 
     return (
-        <main className="flex items-center justify-center px-4">
+        <section className="flex items-center justify-center px-4">
             <form
                 onSubmit={handleSubmit}
                 className="flex flex-col items-center justify-center bg-white p-6 rounded-lg shadow-md w-full max-w-3xl mt-10"
@@ -71,7 +70,7 @@ const RegisterFormPage = () => {
                     REGISTRARSE
                 </h2>
 
-                <fieldset>
+                <fieldset className="w-full max-w-md">
                     <section className="mb-4">
                         <label
                             htmlFor="username"
@@ -224,7 +223,7 @@ const RegisterFormPage = () => {
                     </ol>
                 </section>
             </form>
-        </main>
+        </section>
     );
 };
 

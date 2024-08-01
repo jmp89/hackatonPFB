@@ -4,37 +4,36 @@ import { initiatePassword } from '../services/initiatePasswordServices';
 import { resetPassword } from '../services/resetPasswordServices';
 import PushNotification from './PushNotification.jsx';
 
-// TODO: Testear Toastify, borrar elementos innecesarios al tener toastify
-
 const ResetPass = () => {
     const [email, setEmail] = useState('');
     const [recoverPassCode, setRecoverPassCode] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [message, setMessage] = useState('');
     const [step, setStep] = useState(1);
     const [countdown, setCountdown] = useState(5);
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
+        setErrorMessage('');
         try {
             const response = await initiatePassword(email);
             if (response) {
-                setMessage('Código de verificación enviado a tu correo electrónico.');
                 setStep(2);
                 PushNotification('Código de verificación enviado a tu correo electrónico.', { type: 'info' });
             }
         } catch (error) {
-            setMessage(error.message);
+            setErrorMessage(error.message);
             PushNotification(error.message, { type: 'error' });
         }
     };
 
     const handlePasswordReset = async (e) => {
         e.preventDefault();
+        setErrorMessage('');
         if (newPassword !== confirmPassword) {
-            setMessage('Las contraseñas no coinciden.');
+            setErrorMessage('Las contraseñas no coinciden.');
             PushNotification('Las contraseñas no coinciden.', { type: 'error' });
             return;
         }
@@ -47,12 +46,11 @@ const ResetPass = () => {
             });
 
             if (response) {
-                setMessage(response.message || 'Contraseña cambiada correctamente.');
-                PushNotification(response.message || 'Contraseña cambiada correctamente.', { type: 'success' });
                 setStep(3);
+                PushNotification(response.message || 'Contraseña cambiada correctamente.', { type: 'success' });
             }
         } catch (error) {
-            setMessage(`Error en la solicitud: ${error.message}`);
+            setErrorMessage(`Error en la solicitud: ${error.message}`);
             PushNotification(`Error en la solicitud: ${error.message}`, { type: 'error' });
         }
     };
@@ -91,6 +89,9 @@ const ResetPass = () => {
                 {step === 1 && (
                     <div className="w-full flex flex-col items-center">
                         <h2 className="text-2xl font-bold text-center mb-6">Recuperar Contraseña</h2>
+                        {errorMessage && (
+                            <p className="text-red-500 mb-4 text-center">{errorMessage}</p>
+                        )}
                         <fieldset className="w-full">
                             <section className="mb-4 w-full">
                                 <label className="block text-lg font-medium mb-2 text-center">Email</label>
@@ -115,6 +116,9 @@ const ResetPass = () => {
                 {step === 2 && (
                     <div className="w-full flex flex-col items-center">
                         <fieldset className="w-full">
+                            {errorMessage && (
+                                <p className="text-red-500 mb-4 text-center">{errorMessage}</p>
+                            )}
                             <section className="mb-4 w-full">
                                 <label className="block text-lg font-medium mb-2 text-center">Código de verificación</label>
                                 <input
@@ -173,3 +177,4 @@ const ResetPass = () => {
 };
 
 export default ResetPass;
+

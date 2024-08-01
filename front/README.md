@@ -60,9 +60,17 @@ Empezaremos de la siguiente forma:
 
     Tu perfil de usuario
 
--   **`/admin/:eventId?`**
+-   **`/event/create`**
 
-    Crea y edita eventos (solo admin)
+    Crea un evento nuevo (solo admin)
+
+-   **`/event/edit/:eventID`**
+
+    Edita un evento creado (solo admin)
+
+-   **`/event/validate/activate`**
+
+    Valida tu inscripción al evento con un código único
 
 -   **`/event/search`**
 

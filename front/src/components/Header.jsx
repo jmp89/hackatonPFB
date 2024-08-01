@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 // Icono del menú hamburguesa que cambia de estado abierto/cerrado
-const MenuIcon = ({ isOpen }) => (
+const MenuIcon = ({ isOpen }) =>
     !isOpen ? (
         <svg
             className="block h-6 w-6"
@@ -36,8 +36,7 @@ const MenuIcon = ({ isOpen }) => (
                 d="M6 18L18 6M6 6l12 12"
             />
         </svg>
-    )
-);
+    );
 
 // Componente de ítem de navegación, se adapta a móvil y escritorio
 const NavItem = ({ to, onClick, children, isMobile }) => (
@@ -72,13 +71,21 @@ const DropdownMenu = ({ items, isOpen, toggleMenu, className }) => {
                                 className="block w-full text-left px-4 py-2 rounded-md transition-colors duration-300 text-sm hover:bg-gray-200"
                             >
                                 {item.icon ? (
-                                    <img src={item.icon} alt={item.label} className="w-5 h-5 inline mr-2"/>
+                                    <img
+                                        src={item.icon}
+                                        alt={item.label}
+                                        className="w-5 h-5 inline mr-2"
+                                    />
                                 ) : (
                                     item.label
                                 )}
                             </button>
                         ) : (
-                            <NavItem to={item.to} onClick={toggleMenu} isMobile={item.isMobile}>
+                            <NavItem
+                                to={item.to}
+                                onClick={toggleMenu}
+                                isMobile={item.isMobile}
+                            >
                                 {item.label}
                             </NavItem>
                         )}
@@ -106,7 +113,7 @@ const Header = () => {
     };
 
     const toggleHamburgerMenu = () => {
-        setIsHamburgerMenuOpen(prev => !prev);
+        setIsHamburgerMenuOpen((prev) => !prev);
         if (isHamburgerMenuOpen) {
             setIsAvatarMenuOpen(false);
         }
@@ -130,19 +137,30 @@ const Header = () => {
     }, [isHamburgerMenuOpen]);
 
     const API_URL = import.meta.env.VITE_API_URL;
-    const avatar = currentUser && currentUser.avatar ? currentUser.avatar : '/media/userProfile.svg';
+    const avatar =
+        currentUser && currentUser.avatar
+            ? currentUser.avatar
+            : '/media/userProfile.svg';
     const avatarUrl = API_URL + avatar;
 
     const avatarMenuItems = [
         { to: '/users/profile', label: 'Perfil' },
-        { onClick: removeToken, label: 'Cerrar sesión', icon: `${API_URL}/media/power-icon.svg` }, 
+        {
+            onClick: removeToken,
+            label: 'Cerrar sesión',
+            icon: `${API_URL}/media/power-icon.svg`,
+        },
     ];
 
     const hamburgerMenuItems = token
         ? [
               { to: '/event/search', label: 'Eventos', isMobile: true },
               { to: '/faq', label: 'FAQ', isMobile: true },
-              { onClick: removeToken, label: 'Cerrar sesión', icon: `${API_URL}/media/power-icon.svg` }
+              {
+                  onClick: removeToken,
+                  label: 'Cerrar sesión',
+                  icon: `${API_URL}/media/power-icon.svg`,
+              },
           ]
         : [
               { to: '/users/login', label: 'Login', isMobile: true },
@@ -165,6 +183,11 @@ const Header = () => {
                         </NavLink>
                     </div>
                     <nav className="hidden sm:flex space-x-4">
+                        {token && currentUser.role === 'admin' ? (
+                            <NavItem to="/event/create">Crear evento</NavItem>
+                        ) : (
+                            ''
+                        )}
                         {!token ? (
                             <>
                                 <NavItem to="/users/login">Login</NavItem>
@@ -206,6 +229,11 @@ const Header = () => {
                     </nav>
                     {/* Menú móvil */}
                     <div className="sm:hidden flex items-center space-x-4 relative">
+                        {token && currentUser.role === 'admin' ? (
+                            <NavItem to="/event/create">Crear evento</NavItem>
+                        ) : (
+                            ''
+                        )}
                         {token && (
                             <div className="relative flex items-center">
                                 <NavLink to="/users/profile">

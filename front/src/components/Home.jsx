@@ -44,11 +44,15 @@ const Home = () => {
     };
 
     return (
-        <main className="w-full h-full px-0 py-8 text-center">
+        <section className="w-full h-full px-0 py-8 text-center">
             <section className="py-8 h-56 bg-zinc-800 text-white sd:h-auto">
                 <div className="container mx-auto px-4 md:px-6">
-                    <h1 className="text-4xl font-bold mt-10">¡BIENVENIDOS A HACKAVERSE!</h1>
-                    <p className="text-xl font-medium mt-4">LA MEJOR PLATAFORMA DE HACKATONES</p>
+                    <h1 className="text-4xl font-bold mt-10">
+                        ¡BIENVENIDOS A HACKAVERSE!
+                    </h1>
+                    <p className="text-xl font-medium mt-4">
+                        LA MEJOR PLATAFORMA DE HACKATONES
+                    </p>
                 </div>
             </section>
 
@@ -75,12 +79,30 @@ const Home = () => {
                                         />
                                     </div>
                                     <div className="w-2/3 pl-4 flex flex-col justify-between">
-                                        <h3 className="text-xl font-bold">{event.name}</h3>
-                                        <p>Organizador: {event.organizer_name}</p>
-                                        <p> Inicio: {event.start_date.split('T')[0]} </p>
-                                        <p> Fin: {event.finish_date.split('T')[0]}</p>
+                                        <h3 className="text-xl font-bold">
+                                            {event.name}
+                                        </h3>
+                                        <p>
+                                            Organizador: {event.organizer_name}
+                                        </p>
+                                        <p>
+                                            {' '}
+                                            Inicio:{' '}
+                                            {
+                                                event.start_date.split('T')[0]
+                                            }{' '}
+                                        </p>
+                                        <p>
+                                            {' '}
+                                            Fin:{' '}
+                                            {event.finish_date.split('T')[0]}
+                                        </p>
                                         {/* <p>Localidad: {event.location}</p> */}
-                                        <p>{event.online_on_site !== 'on_site' ? 'Online' : `Ciudad: ${event.location}`}</p>
+                                        <p>
+                                            {event.online_on_site !== 'on_site'
+                                                ? 'Online'
+                                                : `Ciudad: ${event.location}`}
+                                        </p>
                                         <p>Tecnología: {event.technologies}</p>
                                         <p>Temática: {event.thematics}</p>
                                     </div>
@@ -89,7 +111,7 @@ const Home = () => {
                     </div>
                 )}
             </section>
-        </main>
+        </section>
     );
 };
 

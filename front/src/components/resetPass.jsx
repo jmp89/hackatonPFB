@@ -21,7 +21,10 @@ const ResetPass = () => {
             const response = await initiatePassword(email);
             if (response) {
                 setStep(2);
-                PushNotification('Código de verificación enviado a tu correo electrónico.', { type: 'info' });
+                PushNotification(
+                    'Código de verificación enviado a tu correo electrónico.',
+                    { type: 'info' }
+                );
             }
         } catch (error) {
             setErrorMessage(error.message);
@@ -34,7 +37,9 @@ const ResetPass = () => {
         setErrorMessage('');
         if (newPassword !== confirmPassword) {
             setErrorMessage('Las contraseñas no coinciden.');
-            PushNotification('Las contraseñas no coinciden.', { type: 'error' });
+            PushNotification('Las contraseñas no coinciden.', {
+                type: 'error',
+            });
             return;
         }
 
@@ -47,11 +52,16 @@ const ResetPass = () => {
 
             if (response) {
                 setStep(3);
-                PushNotification(response.message || 'Contraseña cambiada correctamente.', { type: 'success' });
+                PushNotification(
+                    response.message || 'Contraseña cambiada correctamente.',
+                    { type: 'success' }
+                );
             }
         } catch (error) {
             setErrorMessage(`Error en la solicitud: ${error.message}`);
-            PushNotification(`Error en la solicitud: ${error.message}`, { type: 'error' });
+            PushNotification(`Error en la solicitud: ${error.message}`, {
+                type: 'error',
+            });
         }
     };
 
@@ -81,20 +91,26 @@ const ResetPass = () => {
     }, [step, navigate]);
 
     return (
-        <main className="flex items-start justify-center px-4">
+        <section className="flex items-start justify-center px-4">
             <form
                 onSubmit={handleSubmit}
                 className="flex flex-col items-center justify-center bg-white p-6 rounded-lg shadow-md w-full max-w-3xl mt-10"
             >
                 {step === 1 && (
                     <div className="w-full flex flex-col items-center">
-                        <h2 className="text-2xl font-bold text-center mb-6">Recuperar Contraseña</h2>
+                        <h2 className="text-2xl font-bold text-center mb-6">
+                            Recuperar Contraseña
+                        </h2>
                         {errorMessage && (
-                            <p className="text-red-500 mb-4 text-center">{errorMessage}</p>
+                            <p className="text-red-500 mb-4 text-center">
+                                {errorMessage}
+                            </p>
                         )}
                         <fieldset className="w-full">
                             <section className="mb-4 w-full">
-                                <label className="block text-lg font-medium mb-2 text-center">Email</label>
+                                <label className="block text-lg font-medium mb-2 text-center">
+                                    Email
+                                </label>
                                 <input
                                     type="email"
                                     value={email}
@@ -117,14 +133,20 @@ const ResetPass = () => {
                     <div className="w-full flex flex-col items-center">
                         <fieldset className="w-full">
                             {errorMessage && (
-                                <p className="text-red-500 mb-4 text-center">{errorMessage}</p>
+                                <p className="text-red-500 mb-4 text-center">
+                                    {errorMessage}
+                                </p>
                             )}
                             <section className="mb-4 w-full">
-                                <label className="block text-lg font-medium mb-2 text-center">Código de verificación</label>
+                                <label className="block text-lg font-medium mb-2 text-center">
+                                    Código de verificación
+                                </label>
                                 <input
                                     type="text"
                                     value={recoverPassCode}
-                                    onChange={(e) => setRecoverPassCode(e.target.value)}
+                                    onChange={(e) =>
+                                        setRecoverPassCode(e.target.value)
+                                    }
                                     required
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                     placeholder="Escribe el código de verificación"
@@ -132,11 +154,15 @@ const ResetPass = () => {
                             </section>
 
                             <section className="mb-4 w-full">
-                                <label className="block text-lg font-medium mb-2 text-center">Nueva contraseña</label>
+                                <label className="block text-lg font-medium mb-2 text-center">
+                                    Nueva contraseña
+                                </label>
                                 <input
                                     type="password"
                                     value={newPassword}
-                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    onChange={(e) =>
+                                        setNewPassword(e.target.value)
+                                    }
                                     required
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                     placeholder="Escribe tu nueva contraseña"
@@ -144,11 +170,15 @@ const ResetPass = () => {
                             </section>
 
                             <section className="mb-4 w-full">
-                                <label className="block text-lg font-medium mb-2 text-center">Repita la contraseña</label>
+                                <label className="block text-lg font-medium mb-2 text-center">
+                                    Repita la contraseña
+                                </label>
                                 <input
                                     type="password"
                                     value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    onChange={(e) =>
+                                        setConfirmPassword(e.target.value)
+                                    }
                                     required
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                     placeholder="Repite tu nueva contraseña"
@@ -168,13 +198,14 @@ const ResetPass = () => {
                         <p className="bg-black text-white py-2 rounded-lg font-bold text-lg text-center w-full max-w-md mx-4 md:mx-auto mb-4 shadow-md">
                             Contraseña cambiada correctamente
                         </p>
-                        <p className="text-center text-lg font-medium">Redirigiendo en {countdown} segundos...</p>
+                        <p className="text-center text-lg font-medium">
+                            Redirigiendo en {countdown} segundos...
+                        </p>
                     </>
                 )}
             </form>
-        </main>
+        </section>
     );
 };
 
 export default ResetPass;
-

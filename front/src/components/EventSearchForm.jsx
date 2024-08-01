@@ -113,10 +113,17 @@ const EventSearchForm = () => {
 
                             <article className="flex flex-col sm:flex-row items-center" onClick={() => handleEventClick(event.id)}>
                                 <Link to={`/event/details/${event.id}`} className="flex flex-col sm:flex-row items-center no-underline text-black">
-                                    <div className="w-full sm:w-1/3 p-2">
-                                        <img src={`${API_URL}${(event.image || "/media/img-static.png")}`} alt="Imagen del evento" className="w-full h-full object-cover rounded-lg" />
+
+                                   
+                                    <div className="w-full sm:w-2/3 p-2">
+                                    
+                                    <img src={event.imageUrl || "http://localhost:3001/uploads/event1.jpg"} alt="Imagen del evento" className="w-full h-full object-cover rounded-lg" />
                                     </div>
-                                    <div className="flex flex-col p-4 sm:w-2/3">
+                                   
+                                    
+                                     
+                                    
+                                    <div className="flex flex-col p-4 sm:w-2/5">
                                         <p><span className="font-bold">Nombre del evento:</span> {event.name}</p>
                                         <p><span className="font-bold">Tecnología:</span> {event.technologies.join(", ")}</p>
                                         <p><span className="font-bold">Temática:</span> {event.thematics.join(", ")}</p>

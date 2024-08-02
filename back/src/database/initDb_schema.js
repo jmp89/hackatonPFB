@@ -70,6 +70,7 @@ const initDB = async () => {
                 active BOOLEAN DEFAULT false,
                 rating_user_event TINYINT CHECK (rating_user_event BETWEEN 1 AND 5),
                 user_score INT UNSIGNED,
+                rated BOOLEAN DEFAULT false,
                 PRIMARY KEY (user_id, event_id),
                 FOREIGN KEY (user_id) REFERENCES users(id),
                 FOREIGN KEY (event_id) REFERENCES events(id),
@@ -85,7 +86,7 @@ const initDB = async () => {
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                 )
-            `)
+            `);
 
         await pool.query(`
                 CREATE TABLE technologies_events (
@@ -97,7 +98,7 @@ const initDB = async () => {
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                 )
-            `)
+            `);
 
         await pool.query(`
                 CREATE TABLE thematics (

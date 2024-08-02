@@ -113,14 +113,22 @@ const CreateEventComponent = () => {
         try {
             // Validar fechas
             if (formDataEvent.finish_date <= formDataEvent.start_date) {
-                throw new Error('La fecha de finalización debe ser posterior a la fecha de inicio');
+                throw new Error(
+                    'La fecha de finalización debe ser posterior a la fecha de inicio'
+                );
             }
 
-            const themsArray = formDataEvent.thematics.map((them) => them.value);
-            const techsArray = formDataEvent.technologies.map((tech) => tech.value);
+            const themsArray = formDataEvent.thematics.map(
+                (them) => them.value
+            );
+            const techsArray = formDataEvent.technologies.map(
+                (tech) => tech.value
+            );
 
             if (!formDataEventImage) {
-                throw new Error('Es necesario subir una imagen para crear el evento');
+                throw new Error(
+                    'Es necesario subir una imagen para crear el evento'
+                );
             }
 
             const formDataGeneral = new FormData();
@@ -128,10 +136,19 @@ const CreateEventComponent = () => {
             formDataGeneral.append('name', formDataEvent.name);
             formDataGeneral.append('thematics', JSON.stringify(themsArray));
             formDataGeneral.append('technologies', JSON.stringify(techsArray));
-            formDataGeneral.append('online_on_site', formDataEvent.online_on_site.value);
+            formDataGeneral.append(
+                'online_on_site',
+                formDataEvent.online_on_site.value
+            );
             formDataGeneral.append('location', formDataEvent.location);
-            formDataGeneral.append('start_date', formDataEvent.start_date.toISOString().split('T')[0]);
-            formDataGeneral.append('finish_date', formDataEvent.finish_date.toISOString().split('T')[0]);
+            formDataGeneral.append(
+                'start_date',
+                formDataEvent.start_date.toISOString().split('T')[0]
+            );
+            formDataGeneral.append(
+                'finish_date',
+                formDataEvent.finish_date.toISOString().split('T')[0]
+            );
             formDataGeneral.append('start_time', formDataEvent.start_time);
             formDataGeneral.append('finish_time', formDataEvent.finish_time);
             formDataGeneral.append('organizer', formDataEvent.organizer);
@@ -140,10 +157,14 @@ const CreateEventComponent = () => {
 
             await fetchEventCreateService(token, formDataGeneral);
 
-            PushNotification('Evento creado correctamente', { type: 'success' });
+            PushNotification('Evento creado correctamente', {
+                type: 'success',
+            });
         } catch (error) {
             if (error.message.includes('Duplicate entry')) {
-                PushNotification('Ya existe un evento con este nombre', { type: 'error' });
+                PushNotification('Ya existe un evento con este nombre', {
+                    type: 'error',
+                });
             } else {
                 PushNotification(error.message, { type: 'error' });
             }
@@ -171,12 +192,28 @@ const CreateEventComponent = () => {
         fileInputRef.current.click();
     };
 
-    const thematicOptions = validThems.map((them) => ({ value: them, label: them }));
-    const technologyOptions = validTechs.map((tech) => ({ value: tech, label: tech }));
+    const thematicOptions = validThems.map((them) => ({
+        value: them,
+        label: them,
+    }));
+    const technologyOptions = validTechs.map((tech) => ({
+        value: tech,
+        label: tech,
+    }));
     const onlineOnSiteOptions = [
         { value: 'online', label: 'Online' },
         { value: 'on_site', label: 'On Site' },
     ];
+
+    const getLocationPlaceholder = () => {
+        if (formDataEvent.online_on_site?.value === 'on_site') {
+            return 'Ciudad...';
+        }
+        if (formDataEvent.online_on_site?.value === 'online') {
+            return 'URL del evento...';
+        }
+        return '';
+    };
 
     return (
         <section className="text-lg">
@@ -246,6 +283,12 @@ const CreateEventComponent = () => {
                         value={formDataEvent.location}
                         onChange={handleChange}
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                        // placeholder={
+                        //     formDataEvent.online_on_site === 'on_site'
+                        //         ? 'Ciudad...'
+                        //         : 'URL del evento...'
+                        // }
+                        placeholder={getLocationPlaceholder()}
                     />
 
                     <label htmlFor="start_date" className="mt-4 mb-2">
@@ -253,7 +296,9 @@ const CreateEventComponent = () => {
                     </label>
                     <DatePicker
                         selected={formDataEvent.start_date}
-                        onChange={(date) => handleDateChange(date, 'start_date')}
+                        onChange={(date) =>
+                            handleDateChange(date, 'start_date')
+                        }
                         dateFormat="yyyy-MM-dd"
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                     />
@@ -263,7 +308,9 @@ const CreateEventComponent = () => {
                     </label>
                     <DatePicker
                         selected={formDataEvent.finish_date}
-                        onChange={(date) => handleDateChange(date, 'finish_date')}
+                        onChange={(date) =>
+                            handleDateChange(date, 'finish_date')
+                        }
                         dateFormat="yyyy-MM-dd"
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                     />
@@ -343,7 +390,9 @@ const CreateEventComponent = () => {
                             </button>
 
                             {formDataEventImage?.name && (
-                                <p className="ml-6 text-lg">{formDataEventImage.name}</p>
+                                <p className="ml-6 text-lg">
+                                    {formDataEventImage.name}
+                                </p>
                             )}
                         </section>
                     </section>

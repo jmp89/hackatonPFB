@@ -1,11 +1,17 @@
+////////////////////
+////// TO DO ///////
+////////////////////
+
+/* El handleRate elimina la tarjeta una vez valorado,
+pero al cerrar sesión y volver a abrir vuelve a aparecer, y,
+como solo se puede valorar un vez si lo vuelves a intentar da error
+*/
+
 import { useEffect, useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import EventCardComponent from './EventCardComponent';
 
-const RateEventComponent = ({
-    token,
-    PushNotification
-}) => {
+const RateEventComponent = ({ token, PushNotification }) => {
     const [events, setEvents] = useState([]);
     const [countdown, setCountdown] = useState(5);
     const [redirect, setRedirect] = useState(false);
@@ -104,6 +110,11 @@ const RateEventComponent = ({
                 PushNotification('Valoración enviada con éxito', {
                     type: 'success',
                 });
+
+                // Eliminar el evento valorado del estado
+                setEvents((prevEvents) =>
+                    prevEvents.filter((event) => event.id !== eventId)
+                );
             } else {
                 PushNotification('Fallo al enviar valoración', {
                     type: 'error',
@@ -133,21 +144,31 @@ const RateEventComponent = ({
 
     return (
         <>
-        {events.length < 1
-
-            ? <><h2 className='mt-10 text-2xl font-bold text-center'>Mis eventos finalizados</h2>
-                <p className="mt-8 mb-10 text-lg text-center">No has finalizado ningún evento</p>
+            {events.length < 1 ? (
+                <>
+                    <h2 className="mt-10 text-2xl font-bold text-center">
+                        Mis eventos finalizados
+                    </h2>
+                    <p className="mt-8 mb-10 text-lg text-center">
+                        No has finalizado ningún evento
+                    </p>
                 </>
-
-            : <>
-                <h2 className='mt-10 text-2xl font-bold text-center'>Mis eventos finalizados</h2>
-                <section className="mt-8 mb-10 w-full grid grid-cols-auto-fit-minmax justify-evenly items-center gap-2">
-                    {events.map((event, i) => (
-                        <EventCardComponent key={i} event={event} onRate={handleRate} />
-                    ))}
-                </section>
-            </>
-        }
+            ) : (
+                <>
+                    <h2 className="mt-10 text-2xl font-bold text-center">
+                        Mis eventos finalizados
+                    </h2>
+                    <section className="mt-8 mb-10 w-full grid grid-cols-auto-fit-minmax justify-evenly items-center gap-2">
+                        {events.map((event, i) => (
+                            <EventCardComponent
+                                key={i}
+                                event={event}
+                                onRate={handleRate}
+                            />
+                        ))}
+                    </section>
+                </>
+            )}
         </>
     );
 };

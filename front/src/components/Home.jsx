@@ -65,49 +65,71 @@ const Home = () => {
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-6xl mx-auto">
                         {Array.isArray(events) &&
-                            events.map((event, index) => (
-                                <article
-                                    key={event.id || index}
-                                    className="border p-4 rounded-lg shadow-md text-center cursor-pointer transition-transform transform hover:scale-105 hover:shadow-xl max-w-[800px] max-h-[800px] flex"
-                                    onClick={() => handleEventClick(event.id)}
-                                >
-                                    <div className="w-1/3 flex-shrink-0 h-full">
-                                        <img
-                                            src={API_URL + event.image}
-                                            alt="event-image"
-                                            className="w-full h-full object-cover rounded-lg"
-                                        />
-                                    </div>
-                                    <div className="w-2/3 pl-4 flex flex-col justify-between">
-                                        <h3 className="text-xl font-bold">
-                                            {event.name}
-                                        </h3>
-                                        <p>
-                                            Organizador: {event.organizer_name}
-                                        </p>
-                                        <p>
-                                            {' '}
-                                            Inicio:{' '}
-                                            {
-                                                event.start_date.split('T')[0]
-                                            }{' '}
-                                        </p>
-                                        <p>
-                                            {' '}
-                                            Fin:{' '}
-                                            {event.finish_date.split('T')[0]}
-                                        </p>
-                                        {/* <p>Localidad: {event.location}</p> */}
-                                        <p>
-                                            {event.online_on_site !== 'on_site'
-                                                ? 'Online'
-                                                : `Ciudad: ${event.location}`}
-                                        </p>
-                                        <p>Tecnología: {event.technologies}</p>
-                                        <p>Temática: {event.thematics}</p>
-                                    </div>
-                                </article>
-                            ))}
+                            events.map((event, index) => {
+                                const isFinished =
+                                    new Date(event.finish_date) < new Date();
+
+                                return (
+                                    <article
+                                        key={event.id || index}
+                                        className="border p-4 rounded-lg shadow-md text-center cursor-pointer transition-transform transform hover:scale-105 hover:shadow-xl max-w-[800px] max-h-[800px] flex"
+                                        onClick={() =>
+                                            handleEventClick(event.id)
+                                        }
+                                    >
+                                        <div className="w-1/3 flex-shrink-0 h-full">
+                                            <img
+                                                src={API_URL + event.image}
+                                                alt="event-image"
+                                                className="w-full h-full object-cover rounded-lg"
+                                            />
+                                        </div>
+                                        <div className="w-2/3 pl-4 flex flex-col justify-between">
+                                            <h3 className="text-xl font-bold">
+                                                {event.name}
+                                            </h3>
+                                            <p>
+                                                Organizador:{' '}
+                                                {event.organizer_name}
+                                            </p>
+                                            <p>
+                                                {' '}
+                                                Inicio:{' '}
+                                                {
+                                                    event.start_date.split(
+                                                        'T'
+                                                    )[0]
+                                                }{' '}
+                                            </p>
+                                            <p>
+                                                {' '}
+                                                Fin:{' '}
+                                                {
+                                                    event.finish_date.split(
+                                                        'T'
+                                                    )[0]
+                                                }
+                                            </p>
+                                            {/* <p>Localidad: {event.location}</p> */}
+                                            <p>
+                                                {event.online_on_site !==
+                                                'on_site'
+                                                    ? 'Online'
+                                                    : `Ciudad: ${event.location}`}
+                                            </p>
+                                            <p>
+                                                Tecnología: {event.technologies}
+                                            </p>
+                                            <p>Temática: {event.thematics}</p>
+                                            {isFinished && (
+                                                <p className="text-red-700 font-bold">
+                                                    Evento finalizado
+                                                </p>
+                                            )}
+                                        </div>
+                                    </article>
+                                );
+                            })}
                     </div>
                 )}
             </section>

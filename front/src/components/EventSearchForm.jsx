@@ -51,11 +51,9 @@ const EventSearchForm = () => {
             PushNotification(error.message, { type: 'error' });
         }
     };
-
     const handleEventClick = (eventId) => {
         return <Navigate to={`/event/details/${eventId}`} />;
     };
-
     return (
         <>
             <form
@@ -73,6 +71,7 @@ const EventSearchForm = () => {
                     type="text"
                     onChange={handleChange}
                     name="filter"
+                    id="filter"
                     value={formData.filter}
                 />
 
@@ -86,6 +85,7 @@ const EventSearchForm = () => {
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                     onChange={handleChange}
                     name="sort"
+                    id="sort"
                     value={formData.sort}
                 >
                     <option value="">Seleccione una opción</option>
@@ -110,6 +110,7 @@ const EventSearchForm = () => {
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                     onChange={handleChange}
                     name="direction"
+                    id="direction"
                     value={formData.direction}
                 >
                     <option value="">Seleccione una opción</option>
@@ -124,77 +125,91 @@ const EventSearchForm = () => {
 
             {responseData && (
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 w-full max-w-7xl mx-auto">
-                    {responseData.map((event, index) => (
-                        <li
-                            key={index}
-                            className="flex flex-col sm:flex-row border rounded-lg shadow-md hover:scale-105 transition-all duration-300 transform cursor-pointer"
-                        >
-                            <article
-                                className="flex flex-col sm:flex-row items-center"
-                                onClick={() => handleEventClick(event.id)}
-                            >
-                                <Link
-                                    to={`/event/details/${event.id}`}
-                                    className="flex flex-col sm:flex-row items-center no-underline text-black"
-                                >
-                                    <div className="w-full sm:w-2/3 p-2 flex justify-center">
-                                        <img
-                                            src={
-                                                import.meta.env.VITE_API_URL +
-                                                    event.image ||
-                                                import.meta.env.VITE_API_URL +
-                                                    '/uploads/event1.jpg'
-                                            }
-                                            alt="Imagen del evento"
-                                            className="w-full max-w-64 h-full object-cover rounded-lg"
-                                        />
-                                    </div>
+                    {responseData.map((event, index) => {
+                        const isFinished =
+                            new Date(event.finish_date) < new Date();
 
-                                    <div className="flex flex-col p-4 sm:w-full">
-                                        <p>
-                                            <span className="font-bold">
-                                                Nombre del evento:
-                                            </span>{' '}
-                                            {event.name}
-                                        </p>
-                                        <p>
-                                            <span className="font-bold">
-                                                Tecnología:
-                                            </span>{' '}
-                                            {event.technologies.join(', ')}
-                                        </p>
-                                        <p>
-                                            <span className="font-bold">
-                                                Temática:
-                                            </span>{' '}
-                                            {event.thematics.join(', ')}
-                                        </p>
-                                        <p>
-                                            <span className="font-bold">
-                                                Remoto / Presencial:
-                                            </span>{' '}
-                                            {event.online_on_site === 'online'
-                                                ? 'Remoto'
-                                                : 'Presencial'}
-                                        </p>
-                                        <p>
-                                            <span className="font-bold">
-                                                Tendrá lugar en:
-                                            </span>{' '}
-                                            {event.location}
-                                        </p>
-                                        <p>
-                                            <span className="font-bold">
-                                                Inicio / Fin:
-                                            </span>{' '}
-                                            {event.start_date.slice(0, 10)} /{' '}
-                                            {event.finish_date.slice(0, 10)}
-                                        </p>
-                                    </div>
-                                </Link>
-                            </article>
-                        </li>
-                    ))}
+                        return (
+                            <li
+                                key={index}
+                                className="flex flex-col sm:flex-row border rounded-lg shadow-md hover:scale-105 transition-all duration-300 transform cursor-pointer"
+                            >
+                                <article
+                                    className="flex flex-col sm:flex-row items-center"
+                                    onClick={() => handleEventClick(event.id)}
+                                >
+                                    <Link
+                                        to={`/event/details/${event.id}`}
+                                        className="flex flex-col sm:flex-row items-center no-underline text-black"
+                                    >
+                                        <div className="w-full sm:w-2/3 p-2 flex justify-center">
+                                            <img
+                                                src={
+                                                    import.meta.env
+                                                        .VITE_API_URL +
+                                                        event.image ||
+                                                    import.meta.env
+                                                        .VITE_API_URL +
+                                                        '/uploads/event1.jpg'
+                                                }
+                                                alt="Imagen del evento"
+                                                className="w-full max-w-64 h-full object-cover rounded-lg"
+                                            />
+                                        </div>
+
+                                        <div className="flex flex-col p-4 sm:w-full">
+                                            <p>
+                                                <span className="font-bold">
+                                                    Nombre del evento:
+                                                </span>{' '}
+                                                {event.name}
+                                            </p>
+                                            <p>
+                                                <span className="font-bold">
+                                                    Tecnología:
+                                                </span>{' '}
+                                                {event.technologies.join(', ')}
+                                            </p>
+                                            <p>
+                                                <span className="font-bold">
+                                                    Temática:
+                                                </span>{' '}
+                                                {event.thematics.join(', ')}
+                                            </p>
+                                            <p>
+                                                <span className="font-bold">
+                                                    Remoto / Presencial:
+                                                </span>{' '}
+                                                {event.online_on_site ===
+                                                'online'
+                                                    ? 'Remoto'
+                                                    : 'Presencial'}
+                                            </p>
+                                            <p>
+                                                <span className="font-bold">
+                                                    Tendrá lugar en:
+                                                </span>{' '}
+                                                {event.location}
+                                            </p>
+                                            <p>
+                                                <span className="font-bold">
+                                                    Inicio / Fin:
+                                                </span>{' '}
+                                                {event.start_date.slice(0, 10)}{' '}
+                                                /{' '}
+                                                {event.finish_date.slice(0, 10)}
+                                            </p>
+                                            {isFinished && (
+                                                <p className="text-red-700 font-bold text-center">
+                                                    Evento finalizado
+                                                </p>
+                                            )}
+                                        </div>
+                                    </Link>
+                                </article>
+                            </li>
+                        );
+                    })}
                 </ul>
             )}
         </>

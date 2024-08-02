@@ -2,7 +2,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/HomePage';
-import ResetPass from './components/resetPass';
+import ResetPass from './pages/resetPass';
 import ActivationPage from './pages/ActivationPage'; 
 import LoginFormPage from './pages/LoginFormPage';
 import RegisterFormPage from './pages/RegisterFormPage';

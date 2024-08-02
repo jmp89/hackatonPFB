@@ -16,6 +16,7 @@ import ActivationEventPage from "./pages/ActivationEventPage"
 import CreateEventPage from './pages/CreateEventPage';
 import EditEventPage from './pages/EditEventPage';
 import EventResultsPage from './pages/EventResultsPage';
+import InsertEventResultsPage from './pages/InsertEventResultsPage';
 import './styles.css';
 
 const App = () => {
@@ -36,6 +37,7 @@ const App = () => {
                 <Route path="/event/create" element={<CreateEventPage />} />
                 <Route path="/event/edit/:eventID" element={<EditEventPage />} />
                 <Route path="/event/results" element={<EventResultsPage />} />
+                <Route path="/event/insert-results/:eventID" element={<InsertEventResultsPage />} />
             </Routes>
             <ToastContainer
                 position="bottom-right"

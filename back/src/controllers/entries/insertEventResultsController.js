@@ -9,12 +9,15 @@ const insertEventResultsController = async (req, res, next) => {
     try {
         const { eventInfo } = req.body;
 
+        const { eventID } = req.params;
+
+        const itemsSchema = Joi.object({
+            user_id: Joi.number().required(),
+            points: Joi.number().required()
+        });
+
         const insertEventControllerSchema = Joi.object({
-            eventInfo: Joi.object({
-                eventID: Joi.number().required(),
-            })
-                .pattern(/^user\d+$/, Joi.string().required())
-                .pattern(/^points\d+$/, Joi.number().required()),
+            eventInfo: Joi.array().items(itemsSchema).required()
         });
 
         const { error } = insertEventControllerSchema.validate(req.body);
@@ -23,9 +26,9 @@ const insertEventResultsController = async (req, res, next) => {
             throw generateErrorsUtils(error.message, 400);
         };
 
-        await checkParticipationService(eventInfo);
+        await checkParticipationService(eventID, eventInfo);
 
-        await insertEventResultsService(eventInfo);
+        await insertEventResultsService(eventID, eventInfo);
 
         let resData = {
             status: "ok",

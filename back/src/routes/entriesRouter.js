@@ -33,7 +33,7 @@ router
     .get('/event/technologies', technologyListController)
     .get('/event/results', listEventResultsController)
     .post(
-        '/event/insert-results',
+        '/event/insert-results/:eventID',
         authUser,
         authAdmin,
         insertEventResultsController

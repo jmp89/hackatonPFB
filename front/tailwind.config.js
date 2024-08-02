@@ -8,13 +8,18 @@ export default {
             },
             gridTemplateColumns: {
                 'auto-fit-minmax': 'repeat(auto-fit, minmax(260px, 320px))',
+                'auto-fit-minmax2': 'repeat(auto-fit, minmax(260px, 350px))',
             },
             clipPath: {
-                'polygonImage': 'polygon(0% 0%, 80% 0%, 80% 30%, 100% 50%, 80% 70%, 80% 100%, 0 100%)'
+                'polygonImage': 'polygon(0% 0%, 80% 0%, 80% 30%, 100% 50%, 80% 70%, 80% 100%, 0 100%)',
+                'polygonImage2': 'polygon(0% 0%, 100% 0%, 100% 80%, 50% 100%, 0% 80%)',
             },
             screens:{
                 "x12": '1690px',
-            }
+            },
+            width: {
+                'eventCard': '350px'
+            },
         },
     },
     plugins: [

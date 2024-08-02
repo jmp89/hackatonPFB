@@ -113,7 +113,7 @@ const Header = () => {
     };
 
     const toggleHamburgerMenu = () => {
-        setIsHamburgerMenuOpen((prev) => !prev);
+        setIsHamburgerMenuOpen(prev => !prev);
         if (isHamburgerMenuOpen) {
             setIsAvatarMenuOpen(false);
         }
@@ -152,22 +152,22 @@ const Header = () => {
         },
     ];
 
-    const hamburgerMenuItems = token
-        ? [
-              { to: '/event/search', label: 'Eventos', isMobile: true },
-              { to: '/faq', label: 'FAQ', isMobile: true },
-              {
-                  onClick: removeToken,
-                  label: 'Cerrar sesión',
-                  icon: `${API_URL}/media/power-icon.svg`,
-              },
-          ]
-        : [
-              { to: '/users/login', label: 'Login', isMobile: true },
-              { to: '/register', label: 'Registrarse', isMobile: true },
-              { to: '/event/search', label: 'Eventos', isMobile: true },
-              { to: '/faq', label: 'FAQ', isMobile: true },
-          ];
+    const hamburgerMenuItems = [
+        currentUser?.role === 'admin' && { to: '/event/create', label: 'Crear evento', isMobile: true },
+        { to: '/event/search', label: 'Eventos', isMobile: true },
+        { to: '/faq', label: 'FAQ', isMobile: true },
+        ...(!token ? [
+            { to: '/users/login', label: 'Login', isMobile: true },
+            { to: '/register', label: 'Registrarse', isMobile: true }
+        ] : [
+            {
+                onClick: removeToken,
+                label: 'Cerrar sesión',
+                icon: `${API_URL}/media/power-icon.svg`,
+                isMobile: true,
+            }
+        ])
+    ].filter(Boolean);
 
     return (
         <header className="bg-white text-black sticky top-0 z-50 shadow-md h-20">
@@ -229,11 +229,6 @@ const Header = () => {
                     </nav>
                     {/* Menú móvil */}
                     <div className="sm:hidden flex items-center space-x-4 relative">
-                        {token && currentUser.role === 'admin' ? (
-                            <NavItem to="/event/create">Crear evento</NavItem>
-                        ) : (
-                            ''
-                        )}
                         {token && (
                             <div className="relative flex items-center">
                                 <NavLink to="/users/profile">

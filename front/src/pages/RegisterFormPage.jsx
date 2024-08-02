@@ -8,6 +8,7 @@ const RegisterFormPage = () => {
         surname: '',
         email: '',
         password: '',
+        confirmPassword: '', 
     });
 
     const handleChange = (e) => {
@@ -21,6 +22,15 @@ const RegisterFormPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (formData.password !== formData.confirmPassword) {
+            PushNotification('Las contraseñas no coinciden', { type: 'error' });
+            return;
+        }
+
+
+        // Me daba error al enviar el confirmPassword al servidor, quitandolo confirmPassword del formData funciona.
+        const { confirmPassword, ...dataToSend } = formData; 
+      
         try {
             const response = await fetch(
                 import.meta.env.VITE_API_URL + '/users/register',
@@ -29,7 +39,7 @@ const RegisterFormPage = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(formData),
+                    body: JSON.stringify(dataToSend),
                 }
             );
 
@@ -50,6 +60,7 @@ const RegisterFormPage = () => {
                 surname: '',
                 email: '',
                 password: '',
+                confirmPassword: '', 
             });
         } catch (error) {
             const errorMessage =
@@ -160,6 +171,25 @@ const RegisterFormPage = () => {
                             name="password"
                             placeholder="Contraseña"
                             value={formData.password}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                            required
+                        />
+                    </section>
+
+                    <section className="mb-4">
+                        <label
+                            htmlFor="confirmPassword"
+                            className="block text-lg font-medium mb-2"
+                        >
+                            Repita tu contraseña
+                        </label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Repita tu contraseña"
+                            value={formData.confirmPassword}
                             onChange={handleChange}
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                             required

@@ -48,6 +48,7 @@ const CreateEventComponent = () => {
         'Gaming',
         'Healthcare Technology',
     ];
+
     const validTechs = [
         'Python',
         'JavaScript',
@@ -110,6 +111,11 @@ const CreateEventComponent = () => {
         e.preventDefault();
 
         try {
+            // Validar fechas
+            if (formDataEvent.finish_date <= formDataEvent.start_date) {
+                throw new Error('La fecha de finalización debe ser posterior a la fecha de inicio');
+            }
+
             const themsArray = formDataEvent.thematics.map((them) => them.value);
             const techsArray = formDataEvent.technologies.map((tech) => tech.value);
 
@@ -352,4 +358,3 @@ const CreateEventComponent = () => {
 };
 
 export default CreateEventComponent;
-

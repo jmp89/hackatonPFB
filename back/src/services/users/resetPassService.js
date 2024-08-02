@@ -8,12 +8,14 @@ const resetPassService = async (email, recoverPassCode, newPassword) => {
 
     try {
         const user = await selectUserByEmailService(email);
-        console.log(user);
-        if (!user || user.recover_pass_code !== recoverPassCode) {
-            throw generateErrorsUtils(
-                'Código de recuperación inválido o usuario no encontrado',
-                400
-            );
+        console.log('User for password reset:', user); // Añade un log aquí
+
+        if (!user) {
+            throw generateErrorsUtils('Usuario no encontrado', 404);
+        }
+
+        if (user.recover_pass_code !== recoverPassCode) {
+            throw generateErrorsUtils('Código de recuperación inválido', 400);
         }
 
         const hashPassword = await bcrypt.hash(newPassword, 10);
@@ -27,6 +29,7 @@ const resetPassService = async (email, recoverPassCode, newPassword) => {
             [hashPassword, email]
         );
     } catch (error) {
+        console.error('Error in resetPassService:', error); //!quitar al acabar
         throw error;
     }
 };

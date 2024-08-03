@@ -8,7 +8,6 @@ const resetPassService = async (email, recoverPassCode, newPassword) => {
 
     try {
         const user = await selectUserByEmailService(email);
-        console.log('User for password reset:', user); // Añade un log aquí
 
         if (!user) {
             throw generateErrorsUtils('Usuario no encontrado', 404);
@@ -29,7 +28,6 @@ const resetPassService = async (email, recoverPassCode, newPassword) => {
             [hashPassword, email]
         );
     } catch (error) {
-        console.error('Error in resetPassService:', error); //!quitar al acabar
         throw error;
     }
 };

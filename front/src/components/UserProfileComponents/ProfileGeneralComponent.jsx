@@ -155,17 +155,10 @@ const ProfileGeneralComponent = ({
                         type="email" name="email" placeholder={placeholders.email} value={formDataProfile.email} onChange={handleProfileChange} />
                 </label>
 
-                {/* <label className="mt-4">
-                    Descripción
-                    <input className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
-                        ref={personalInfoRef} type="text" name="personal_info" placeholder={placeholders.personal_info} value={formDataProfile.personal_info} onChange={handleProfileChange} />
-                </label> */}
-
                 <label htmlFor="personal_info" className="mt-4">Descripción
-                    {/* <textarea ref={personalInfoRef} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black mb-2"*/}
-                        <textarea className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black mb-2"
-                        name="personal_info" placeholder={placeholders.personal_info} value={formDataProfile.personal_info} 
-                        onChange={handleProfileChange} rows="10" />
+                        <textarea className="mt-2 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black mb-2"
+                            name="personal_info" placeholder={placeholders.personal_info} value={formDataProfile.personal_info} 
+                            onChange={handleProfileChange} rows="10" />
                 </label>
 
                 <section className="mt-4 flex flex-row justify-evenly">

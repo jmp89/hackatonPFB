@@ -28,7 +28,7 @@ const updateUserProfileService = async (userId, name, surname, username, email, 
             values.push(email);
         }
 
-        if (personalInfo !== undefined && personalInfo !== '') {
+        if (personalInfo !== undefined) {
             query += 'personal_info = ?, ';
             values.push(personalInfo);
         };

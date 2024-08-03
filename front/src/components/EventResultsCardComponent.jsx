@@ -80,7 +80,7 @@ const EventResultsCardComponent = ({ event }) => {
                                     (user.avatar || '/media/userProfile.svg')
                                 }
                                 alt="user-avatar"
-                                className="w-10 h-10"
+                                className="w-10 h-10 rounded-full"
                             />
                         </li>
                         <li className="mx-auto">{user.username}</li>

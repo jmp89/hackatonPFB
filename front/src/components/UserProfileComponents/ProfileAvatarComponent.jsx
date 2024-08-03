@@ -84,14 +84,16 @@ const ProfileAvatarComponent = ({
 
     return (
 
-        <fieldset className="flex flex-col justify-center items-center">
+        <fieldset className="flex flex-col justify-center items-center clip-path-circleImage">
 
-            <section className="h-48 w-48 relative flex justify-center items-center">
+            <section className="mt-6 mb-4 h-48 w-48 relative flex justify-center items-center">
 
-                <img src={`${API_URL}${avatar}`} alt="user-avatar"
-                    className="mt-2 mx-auto w-48" />
+                <div className="h-48 w-48 rounded-full overflow-hidden flex justify-center items-center">
+                    <img src={`${API_URL}${avatar}`} alt="user-avatar"
+                        className="w-full h-full object-cover" />
+                </div>
                         
-                <button type="button" className="absolute top-[calc(85%)] left-[calc(80%)] ">
+                <button type="button" className="absolute top-[calc(85%)] left-[calc(85%)] ">
                     <img src={`${API_URL}/media/edit.svg`} alt="edit-svg"
                         className="w-6 h-6"
                         onClick={handleAvatarEdit} />

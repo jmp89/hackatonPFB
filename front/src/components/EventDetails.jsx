@@ -110,13 +110,13 @@ const EventDetails = () => {
                     <p className="mt-3 xl2:mt-4">
                         <span className="font-bold uppercase">TEMÁTICA:</span>
                     </p>
-                    <p>{event.thematics}</p>
+                    <p>{event.thematics[0].split(",").join(", ")}</p>
                     <p className="mt-3 xl2:mt-4">
                         <span className="font-bold uppercase">
                             TECNOLOGÍAS:
                         </span>
                     </p>
-                    <p>{event.technologies}</p>
+                    <p>{event.technologies[0].split(",").join(", ")}</p>
                     <section className="text-center mt-7 mb-5 w-full max-w-[70vw] mx-auto xl2:mt-10 xl2:mb-7">
                         <h2 className="font-bold">¿QUÉ VAMOS A HACER?</h2>
                         <p className="mt-5 xl2:mt-7">{event.description}</p>

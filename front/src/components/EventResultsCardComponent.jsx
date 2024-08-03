@@ -13,7 +13,7 @@ const EventResultsCardComponent = ({ event }) => {
 
         for (let i = 0; i < event.rating; i++) {
             stars.push(
-                <StarIcon key={i} className="w-[20px] h-[20px] text-black" />
+                <StarIcon key={i} className="w-10 h-10 text-black" />
             );
         }
 

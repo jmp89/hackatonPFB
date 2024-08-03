@@ -5,7 +5,7 @@ const StarIcon = ({ className }) => (
         fill="currentColor"
         viewBox="0 0 24 24"
         stroke="currentColor"
-        className={`w-full h-full ${className}`}
+        className={`w-8 h-8 ${className}`}
     >
         <path
             strokeLinecap="round"

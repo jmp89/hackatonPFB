@@ -1,4 +1,4 @@
-const fetchUserLoginService = async (email, password, setError, setLoginOk) => {
+const fetchUserLoginService = async (email, password) => {
 
     const URL_LOGIN = import.meta.env.VITE_API_URL + "/users/login";
 

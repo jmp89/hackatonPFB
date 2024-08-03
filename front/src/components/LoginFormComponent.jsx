@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import fetchUserLoginService from '../services/fetchUserLoginService.js';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext.jsx';
 import PushNotification from './PushNotification.jsx';
 
 const LoginForm = () => {
     const { token, updateToken, updateCurrentUser } = useAuth();
 
     const [formData, setFormData] = useState({ email: '', password: '' });
-    const [error, setError] = useState(null);
-    const [loginOk, setLoginOk] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,9 +15,7 @@ const LoginForm = () => {
         try {
             const data = await fetchUserLoginService(
                 formData.email,
-                formData.password,
-                setError,
-                setLoginOk
+                formData.password
             );
 
             if (!data.token || data.token.length < 1) {
@@ -32,14 +28,9 @@ const LoginForm = () => {
             updateCurrentUser(data.userInfo);
 
             setFormData({ email: '', password: '' });
-            setLoginOk(
-                'Inicio de sesión exitoso, redirigiendo a la página principal...'
-            );
-            setError(null);
+
             PushNotification('Inicio de sesión exitoso', { type: 'success' });
         } catch (error) {
-            setError(error.message);
-            setLoginOk(null);
             PushNotification(error.message, { type: 'error' });
         }
     };
@@ -58,11 +49,6 @@ const LoginForm = () => {
                 className="flex flex-col items-center justify-center bg-white p-6 rounded-lg shadow-md w-full max-w-3xl mt-10"
             >
                 <h2 className="text-2xl font-bold text-center mb-6">LOGIN</h2>
-
-                {/*
-                AHORA SE USA CON TOASTIFY
-                {error && <p className="text-red-500 mb-4">{error}</p>}
-                {loginOk && <p className="text-green-500 mb-4">{loginOk}</p>} */}
 
                 <fieldset className="w-full max-w-sm">
                     <section className="mb-4">

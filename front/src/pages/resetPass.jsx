@@ -11,12 +11,10 @@ const ResetPass = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [step, setStep] = useState(1);
     const [countdown, setCountdown] = useState(5);
-    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
-        setErrorMessage('');
         try {
             const response = await initiatePassword(email);
             if (response) {
@@ -27,18 +25,15 @@ const ResetPass = () => {
                 );
             }
         } catch (error) {
-            setErrorMessage(error.message);
+
             PushNotification(error.message, { type: 'error' });
         }
     };
 
     const handlePasswordReset = async (e) => {
         e.preventDefault();
-        setErrorMessage('');
 
-        // Validar coincidencia de contraseñas
         if (newPassword !== confirmPassword) {
-            setErrorMessage('Las contraseñas no coinciden.');
             PushNotification('Las contraseñas no coinciden.', {
                 type: 'error',
             });
@@ -49,34 +44,21 @@ const ResetPass = () => {
             const response = await resetPassword({
                 email,
                 recoverPassCode,
-                newPassword,
+                newPassword
             });
 
-            // Aquí asumimos que el backend podría devolver un objeto con un mensaje
-            if (response && response.success) {
+            if (response.status === 'ok') {
+                PushNotification(response.message, { type: 'success' });
                 setStep(3);
-                PushNotification(
-                    response.message || 'Contraseña cambiada correctamente.',
-                    { type: 'success' }
-                );
-            } else if (response && response.errors) {
-                // Mostrar errores específicos devueltos por el backend
-                setErrorMessage(response.errors.join(', '));
-                PushNotification(response.errors.join(', '), { type: 'error' });
             } else {
-                // En caso de una respuesta inesperada
-                setErrorMessage('Error desconocido en la respuesta del servidor.');
-                PushNotification('Error desconocido en la respuesta del servidor.', {
-                    type: 'error',
-                });
+                throw new Error(response.message);
             }
+
         } catch (error) {
-            // Manejo de errores de red
-            setErrorMessage(`Error en la solicitud: ${error.message}`);
-            PushNotification(`Error en la solicitud: ${error.message}`, {
+            PushNotification(error.message, {
                 type: 'error',
             });
-        }
+        };
     };
 
     const handleSubmit = (e) => {
@@ -115,11 +97,7 @@ const ResetPass = () => {
                         <h2 className="text-2xl font-bold text-center mb-6">
                             Recuperar Contraseña
                         </h2>
-                        {errorMessage && (
-                            <p className="text-red-500 mb-4 text-center">
-                                {errorMessage}
-                            </p>
-                        )}
+
                         <fieldset className="w-full">
                             <section className="mb-4 w-full">
                                 <label className="block text-lg font-medium mb-2 text-center">
@@ -146,11 +124,7 @@ const ResetPass = () => {
                 {step === 2 && (
                     <div className="w-full flex flex-col items-center">
                         <fieldset className="w-full">
-                            {errorMessage && (
-                                <p className="text-red-500 mb-4 text-center">
-                                    {errorMessage}
-                                </p>
-                            )}
+
                             <section className="mb-4 w-full">
                                 <label className="block text-lg font-medium mb-2 text-center">
                                     Código de verificación

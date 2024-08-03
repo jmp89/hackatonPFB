@@ -84,13 +84,33 @@ const EditEventComponent = () => {
         e.preventDefault();
 
         try {
-            const themsArray = formDataEvent.thematics.map(them => them.value);
-            const techsArray = formDataEvent.technologies.map(tech => tech.value);
+            const separeThems = formDataEvent.thematics.length > 1 ? formDataEvent.thematics[0] : [];
+            const separeTechs = formDataEvent.technologies.length > 1 ? formDataEvent.technologies[0] : [];
+
+            const [firstThem, ...restThems] = formDataEvent.thematics;
+            const [firstTech, ...restTechs] = formDataEvent.technologies;
+            
+            let finalThems = [];
+            let finalTechs = [];
+    
+            if (firstThem) {
+                finalThems = firstThem.value.split(",").map(them => them.trim());
+            }
+            if (restThems.length > 0) {
+                finalThems = [...finalThems, ...restThems.map(them => them.value)];
+            }
+    
+            if (firstTech) {
+                finalTechs = firstTech.value.split(",").map(tech => tech.trim());
+            }
+            if (restTechs.length > 0) {
+                finalTechs = [...finalTechs, ...restTechs.map(tech => tech.value)];
+            }
 
             const formDataFinal = new FormData();
             formDataFinal.append('name', formDataEvent.name);
-            formDataFinal.append('thematics', JSON.stringify(themsArray));
-            formDataFinal.append('technologies', JSON.stringify(techsArray));
+            formDataFinal.append('thematics', JSON.stringify(finalThems));
+            formDataFinal.append('technologies', JSON.stringify(finalTechs));
             formDataFinal.append('online_on_site', formDataEvent.online_on_site ? formDataEvent.online_on_site.value : '');
             formDataFinal.append('location', formDataEvent.location);
             formDataFinal.append('start_date', formDataEvent.start_date.toISOString().split('T')[0]);
@@ -99,7 +119,7 @@ const EditEventComponent = () => {
             formDataFinal.append('finish_time', formDataEvent.finish_time);
             formDataFinal.append('organizer', formDataEvent.organizer);
             formDataFinal.append('description', formDataEvent.description);
-            if (formDataEventImage) formDataFinal.append('fileUpload', formDataEventImage);
+            formDataFinal.append('fileName', formDataEventImage);
 
             await fetchEventEditService(token, eventID, formDataFinal);
             PushNotification('Evento actualizado correctamente', { type: 'success' });
@@ -158,6 +178,7 @@ const EditEventComponent = () => {
                         type="text"
                         name="name"
                         required
+                        placeholder={placeholders?.name}
                         value={formDataEvent.name}
                         onChange={handleChange}
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
@@ -204,6 +225,7 @@ const EditEventComponent = () => {
                     <input
                         type="text"
                         name="location"
+                        placeholder={placeholders?.location}
                         value={formDataEvent.location}
                         onChange={handleChange}
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
@@ -257,6 +279,7 @@ const EditEventComponent = () => {
                     <input
                         type="text"
                         name="organizer"
+                        placeholder={placeholders?.organizer}
                         value={formDataEvent.organizer}
                         onChange={handleChange}
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
@@ -267,7 +290,8 @@ const EditEventComponent = () => {
                     </label>
                     <textarea
                         name="description"
-                        rows="5"
+                        rows="7"
+                        placeholder={placeholders?.description}
                         value={formDataEvent.description}
                         onChange={handleChange}
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"

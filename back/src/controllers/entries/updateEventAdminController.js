@@ -45,9 +45,9 @@ const updateEventAdminController = async (req, res, next) => {
 
         let finalName;
 
-        if (req.files || req.files.fileName) {
+        if (req.files !== null) {
             console.log('por aki ando ppepepepepepepe');
-            const eventImage = req.files.fileName;
+            const eventImage = req.files?.fileName;
 
             const uploadDir = path.join(process.cwd(), UPLOADS_DIR);
 

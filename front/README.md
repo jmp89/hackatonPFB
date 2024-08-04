@@ -80,6 +80,14 @@ Empezaremos de la siguiente forma:
 
     Página de cada evento con toda la información
 
+-   **`/event/results`**
+
+    Listado de eventos finalizados con los resultados
+
+-   **`/event/insert-results/:eventID`**
+
+    (Solo admin) Desde los detalles del evento finalizado, inserta resultado de los participantes
+
 -   **`/faq`**
 
     Preguntas frecuentes

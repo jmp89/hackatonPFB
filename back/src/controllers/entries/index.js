@@ -9,6 +9,7 @@ import validateEventParticipationController from './validateEventParticipationCo
 import listEventResultsController from './listEventResultsController.js';
 import insertEventResultsController from './insertEventResultsController.js';
 import updateEventAdminController from './updateEventAdminController.js';
+import checkRegistrationController from './checkRegistrationController.js';
 
 export {
     createEventAdminController,
@@ -22,4 +23,5 @@ export {
     listEventResultsController,
     insertEventResultsController,
     updateEventAdminController,
+    checkRegistrationController,
 };

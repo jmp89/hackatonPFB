@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import randomstring from 'randomstring';
 import updateEventAdminService from '../../services/entries/updateEventAdminService.js';
+import { previousAvatarOrImageService } from '../../services/users/index.js';
 import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
 import Joi from 'joi';
 
@@ -46,7 +47,14 @@ const updateEventAdminController = async (req, res, next) => {
         let finalName;
 
         if (req.files !== null) {
-            console.log('por aki ando ppepepepepepepe');
+
+            const previousImage = await previousAvatarOrImageService(eventID, "image");
+
+            if (previousImage.length > 0){
+                const finalPath = UPLOADS_DIR + previousImage;
+                fs.unlinkSync(finalPath);
+            };
+
             const eventImage = req.files?.fileName;
 
             const uploadDir = path.join(process.cwd(), UPLOADS_DIR);

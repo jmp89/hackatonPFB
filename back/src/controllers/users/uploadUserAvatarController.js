@@ -4,7 +4,10 @@ import randomstring from 'randomstring';
 import 'dotenv/config';
 
 import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
-import { insertUserAvatarService } from '../../services/users/index.js';
+import { 
+    insertUserAvatarService,
+    previousAvatarOrImageService
+} from '../../services/users/index.js';
 
 const { UPLOADS_DIR } = process.env;
 
@@ -28,6 +31,13 @@ const uploadUserAvatarController = async (req, res, next) => {
         const uploadPath = path.join(uploadDir, finalName);
 
         const userID = req.user.id;
+
+        const previousAvatar = await previousAvatarOrImageService(userID, "avatar");
+
+        if (previousAvatar.length > 0){
+            const finalPath = UPLOADS_DIR + previousAvatar;
+            fs.unlinkSync(finalPath);
+        };
 
         const newAvatar = await insertUserAvatarService(finalName, userID);
 

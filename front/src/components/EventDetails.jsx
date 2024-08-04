@@ -1,10 +1,10 @@
 // EventDetails.jsx
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import getEventById from '../services/eventDetailsService';
 import registerForEvent from '../services/registerEventService';
-import unlistFromEvent from '../services/unlistFromEvent';
 import checkRegistration from '../services/checkRegistrationService';
+import unlistFromEvent from '../services/unlistFromEvent';
 import { useAuth } from '../context/AuthContext';
 import PushNotification from './PushNotification.jsx';
 
@@ -16,7 +16,7 @@ const EventDetails = () => {
     const [event, setEvent] = useState(null);
     const [isRegistered, setIsRegistered] = useState(false);
     const [error, setError] = useState('');
-
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchEvent = async () => {
             try {
@@ -39,6 +39,10 @@ const EventDetails = () => {
     }, [eventId]);
 
     const isLoggedIn = () => !!token;
+
+    const handleNavigate = () => {
+        navigate(`../event/insert-results/${eventId}`);
+    };
 
     const handleRegisterClick = async () => {
         if (!isLoggedIn()) {
@@ -89,6 +93,8 @@ const EventDetails = () => {
 
     const isFinished = new Date(event.finish_date) < new Date();
 
+    console.log(event);
+
     return (
         <section className="flex flex-col items-center justify-center px-4 py-3 xl2:px-8 xl2:py-6">
             {token && currentUser.role === 'admin' && (
@@ -115,8 +121,32 @@ const EventDetails = () => {
             </section>
             <section className="relative w-full max-w-[900px] bg-white p-6 rounded-lg shadow-md mt-12 xl2:max-w-[70vw] xl2:p-8 xl2:mt-16">
                 <div className="text-center">
+                    {isFinished && token && currentUser.role === 'admin' && (
+                        <button
+                            className="mt-5 bg-black text-white py-3 px-6 rounded-lg font-bold text-lg mb-4 hover:scale-105 transition-transform duration-300 xl2:py-4 xl2:px-8 xl2:text-xl xl2:mt-7"
+                            onClick={handleNavigate}
+                        >
+                            Insertar puntuaciones
+                        </button>
+                    )}
                     {event.organizer_name && (
                         <>
+                            {isFinished && (
+                                <>
+                                    <p className="font-bold uppercase mt-4">
+                                        RESULTADOS:
+                                    </p>
+                                    <p>
+                                        Primer puesto: {event.top_user_name} (
+                                        {event.user_score}/100 puntos)
+                                    </p>
+                                    <p>
+                                        Valoración de los participantes:{' '}
+                                        {+event.rating}
+                                        /5
+                                    </p>
+                                </>
+                            )}
                             <p className="font-bold uppercase mt-4">
                                 ORGANIZADOR:
                             </p>
@@ -124,7 +154,8 @@ const EventDetails = () => {
                         </>
                     )}
                     <p className="my-3 xl2:my-4 font-bold">
-                        {new Date(event.start_date).toLocaleDateString()} -
+                        {new Date(event.start_date).toLocaleDateString()}
+                        {' - '}
                         {new Date(event.finish_date).toLocaleDateString()}
                     </p>
 

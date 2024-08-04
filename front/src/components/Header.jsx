@@ -113,7 +113,7 @@ const Header = () => {
     };
 
     const toggleHamburgerMenu = () => {
-        setIsHamburgerMenuOpen(prev => !prev);
+        setIsHamburgerMenuOpen((prev) => !prev);
         if (isHamburgerMenuOpen) {
             setIsAvatarMenuOpen(false);
         }
@@ -153,20 +153,27 @@ const Header = () => {
     ];
 
     const hamburgerMenuItems = [
-        currentUser?.role === 'admin' && { to: '/event/create', label: 'Crear evento', isMobile: true },
+        currentUser?.role === 'admin' && {
+            to: '/event/create',
+            label: 'Crear evento',
+            isMobile: true,
+        },
         { to: '/event/search', label: 'Eventos', isMobile: true },
+        { to: '/event/results', label: 'Resultados', isMobile: true },
         { to: '/faq', label: 'FAQ', isMobile: true },
-        ...(!token ? [
-            { to: '/users/login', label: 'Login', isMobile: true },
-            { to: '/register', label: 'Registrarse', isMobile: true }
-        ] : [
-            {
-                onClick: removeToken,
-                label: 'Cerrar sesión',
-                icon: `${API_URL}/media/power-icon.svg`,
-                isMobile: true,
-            }
-        ])
+        ...(!token
+            ? [
+                  { to: '/users/login', label: 'Login', isMobile: true },
+                  { to: '/register', label: 'Registrarse', isMobile: true },
+              ]
+            : [
+                  {
+                      onClick: removeToken,
+                      label: 'Cerrar sesión',
+                      icon: `${API_URL}/media/power-icon.svg`,
+                      isMobile: true,
+                  },
+              ]),
     ].filter(Boolean);
 
     return (
@@ -193,11 +200,17 @@ const Header = () => {
                                 <NavItem to="/users/login">Login</NavItem>
                                 <NavItem to="/register">Registrarse</NavItem>
                                 <NavItem to="/event/search">Eventos</NavItem>
+                                <NavItem to="/event/results">
+                                    Resultados
+                                </NavItem>
                                 <NavItem to="/faq">FAQ</NavItem>
                             </>
                         ) : (
                             <>
                                 <NavItem to="/event/search">Eventos</NavItem>
+                                <NavItem to="/event/results">
+                                    Resultados
+                                </NavItem>
                                 <NavItem to="/faq">FAQ</NavItem>
                                 <div className="relative flex items-center">
                                     <NavLink to="/users/profile">

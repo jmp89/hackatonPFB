@@ -22,7 +22,7 @@ const getMyFinishedEventsListService = async (queryUserId) => {
         JOIN technologies t ON t.id = te.technology_id
         JOIN thematics_events the ON the.event_id = e.id
         JOIN thematics th ON th.id = the.thematic_id
-        WHERE p.user_id = ? AND e.finish_date < NOW()
+        WHERE p.user_id = ? AND e.finish_date < NOW() AND p.rated = 0
     `,
         [queryUserId]
     );
@@ -42,26 +42,25 @@ const getMyFinishedEventsListService = async (queryUserId) => {
                 start_date: row.start_date,
                 finish_date: row.finish_date,
                 start_time: row.start_time,
-                finish_time: row.finish_time
+                finish_time: row.finish_time,
             });
-        };
-        
+        }
+
         const event = eventsMap.get(row.id);
 
         if (row.technologies) {
             event.technologies.add(row.technologies);
-        };
+        }
 
         if (row.thematics) {
-
             event.thematics.add(row.thematics);
-        };
-    };
+        }
+    }
 
-    const finalEventsList = Array.from(eventsMap.values()).map(event => ({
+    const finalEventsList = Array.from(eventsMap.values()).map((event) => ({
         ...event,
         technologies: Array.from(event.technologies),
-        thematics: Array.from(event.thematics)
+        thematics: Array.from(event.thematics),
     }));
 
     return finalEventsList;

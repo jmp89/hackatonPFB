@@ -1,12 +1,3 @@
-////////////////////
-////// TO DO ///////
-////////////////////
-
-/* El handleRate elimina la tarjeta una vez valorado,
-pero al cerrar sesión y volver a abrir vuelve a aparecer, y,
-como solo se puede valorar un vez si lo vuelves a intentar da error
-*/
-
 import { useEffect, useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import EventCardComponent from './EventCardComponent';

@@ -20,6 +20,13 @@ const getEventDetailsService = async (eventID) => {
         e.finish_time,
         e.description,
         e.image,
+        (SELECT p.user_score
+        FROM participates p
+        WHERE p.event_id = e.id ORDER BY p.user_score DESC LIMIT 1) AS user_score,
+        (SELECT us.name
+        FROM users us
+        JOIN participates p ON us.id = p.user_id WHERE p.event_id = e.id ORDER BY p.user_score DESC LIMIT 1) AS top_user_name,
+        AVG(p.rating_user_event) AS rating,
         COUNT(DISTINCT p.user_id) AS total_participants
       FROM events e
       LEFT JOIN participates p ON p.event_id = e.id
@@ -28,7 +35,7 @@ const getEventDetailsService = async (eventID) => {
       LEFT JOIN thematics_events the ON the.event_id = e.id
       LEFT JOIN thematics th ON th.id = the.thematic_id
       LEFT JOIN users u ON e.organizer = u.id
-      -- WHERE e.id = ?  -- Uncomment if you want to filter by ID later
+      WHERE e.id = ?
       GROUP BY
         e.id,
         e.online_on_site,
@@ -38,8 +45,7 @@ const getEventDetailsService = async (eventID) => {
         e.finish_date,
         e.start_time,
         e.finish_time,
-        e.description;
-        `,
+        e.description`,
         [eventID]
     );
 
@@ -61,26 +67,28 @@ const getEventDetailsService = async (eventID) => {
                 start_time: row.start_time,
                 finish_time: row.finish_time,
                 description: row.description,
-                image: row.image
+                rating: row.rating,
+                user_score: row.user_score,
+                top_user_name: row.top_user_name,
+                image: row.image,
             });
-        };
-        
+        }
+
         const event = eventsMap.get(row.id);
 
         if (row.technologies) {
             event.technologies.add(row.technologies);
-        };
+        }
 
         if (row.thematics) {
-
             event.thematics.add(row.thematics);
-        };
-    };
+        }
+    }
 
-    const finalEventsList = Array.from(eventsMap.values()).map(event => ({
+    const finalEventsList = Array.from(eventsMap.values()).map((event) => ({
         ...event,
         technologies: Array.from(event.technologies),
-        thematics: Array.from(event.thematics)
+        thematics: Array.from(event.thematics),
     }));
 
     return finalEventsList;

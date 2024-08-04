@@ -37,7 +37,7 @@ const EventCardComponent = ({ event, onRate }) => {
                             onMouseEnter={() => setHover(star)}
                             onMouseLeave={() => setHover(0)}
                         >
-                            <StarIcon />
+                            <StarIcon size={2} />
                         </button>
                     ))}
                 </div>

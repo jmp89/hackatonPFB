@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import getEventById from '../services/eventDetailsService';
 import registerForEvent from '../services/registerEventService';
+import unlistFromEvent from '../services/unlistFromEvent';
+import checkRegistration from '../services/checkRegistrationService';
 import { useAuth } from '../context/AuthContext';
 import PushNotification from './PushNotification.jsx';
 
@@ -12,6 +14,7 @@ const EventDetails = () => {
     const { eventId } = useParams();
     const { token, currentUser } = useAuth();
     const [event, setEvent] = useState(null);
+    const [isRegistered, setIsRegistered] = useState(false);
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -19,6 +22,14 @@ const EventDetails = () => {
             try {
                 const eventData = await getEventById(eventId);
                 setEvent(eventData);
+
+                if (token) {
+                    const { isRegistered } = await checkRegistration(
+                        eventId,
+                        token
+                    );
+                    setIsRegistered(isRegistered);
+                }
             } catch (err) {
                 console.error('Error fetching event:', err);
                 PushNotification(err.message, { type: 'error' });
@@ -29,13 +40,14 @@ const EventDetails = () => {
 
     const isLoggedIn = () => !!token;
 
-    const handleButtonClick = async () => {
+    const handleRegisterClick = async () => {
         if (!isLoggedIn()) {
             PushNotification('Necesitas loguearte primero', { type: 'error' });
             return;
         }
         try {
             await registerForEvent(eventId, token);
+            setIsRegistered(true);
             PushNotification(
                 'Te has inscrito correctamente al evento. Te llegará un correo con la confirmación',
                 { type: 'success' }
@@ -44,6 +56,25 @@ const EventDetails = () => {
             console.error('Error registering for event:', err);
             PushNotification('Ya estás registrado a este evento', {
                 type: 'info',
+            });
+        }
+    };
+
+    const handleUnlistClick = async () => {
+        if (!isLoggedIn()) {
+            PushNotification('Necesitas loguearte primero', { type: 'error' });
+            return;
+        }
+        try {
+            await unlistFromEvent(eventId, token);
+            setIsRegistered(false);
+            PushNotification('Te has dado de baja del evento correctamente', {
+                type: 'success',
+            });
+        } catch (err) {
+            console.error('Error unregistering from event:', err);
+            PushNotification('Error al darse de baja del evento', {
+                type: 'error',
             });
         }
     };
@@ -63,7 +94,7 @@ const EventDetails = () => {
             {token && currentUser.role === 'admin' && (
                 <Link
                     to={`../event/edit/${eventId}`}
-                    className="w-full max-w-[900px] xl2:max-w-[70vw] text-white bg-red-700 text-center -mb-2 py-2 rounded-lg hover:font-bold"
+                    className="w-full max-w-[900px] xl2:max-w-[70vw] text-white bg-blue-500 text-center -mb-2 py-2 rounded-lg hover:font-bold"
                 >
                     Editar este evento
                 </Link>
@@ -110,13 +141,13 @@ const EventDetails = () => {
                     <p className="mt-3 xl2:mt-4">
                         <span className="font-bold uppercase">TEMÁTICA:</span>
                     </p>
-                    <p>{event.thematics[0].split(",").join(", ")}</p>
+                    <p>{event.thematics[0].split(',').join(', ')}</p>
                     <p className="mt-3 xl2:mt-4">
                         <span className="font-bold uppercase">
                             TECNOLOGÍAS:
                         </span>
                     </p>
-                    <p>{event.technologies[0].split(",").join(", ")}</p>
+                    <p>{event.technologies[0].split(',').join(', ')}</p>
                     <section className="text-center mt-7 mb-5 w-full max-w-[70vw] mx-auto xl2:mt-10 xl2:mb-7">
                         <h2 className="font-bold">¿QUÉ VAMOS A HACER?</h2>
                         <p className="mt-5 xl2:mt-7">{event.description}</p>
@@ -125,10 +156,14 @@ const EventDetails = () => {
             </section>
             {!isFinished && (
                 <button
-                    onClick={handleButtonClick}
-                    className="mt-5 bg-black text-white py-3 px-6 rounded-lg font-bold text-lg mb-4 hover:scale-105 transition-transform duration-300 flex items-center justify-center xl2:py-4 xl2:px-8 xl2:text-xl xl2:mt-7"
+                    onClick={
+                        isRegistered ? handleUnlistClick : handleRegisterClick
+                    }
+                    className={`mt-5 ${
+                        isRegistered ? 'bg-red-600' : 'bg-black'
+                    }  text-white py-3 px-6 rounded-lg font-bold text-lg mb-4 hover:scale-105 transition-transform duration-300 flex items-center justify-center xl2:py-4 xl2:px-8 xl2:text-xl xl2:mt-7`}
                 >
-                    Apúntate
+                    {isRegistered ? 'Cancelar inscripción' : 'Apúntate'}
                 </button>
             )}
             {isFinished && event && (

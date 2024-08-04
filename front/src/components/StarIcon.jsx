@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-const StarIcon = ({ className }) => (
+const StarIcon = ({ className, size }) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"

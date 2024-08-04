@@ -14,6 +14,7 @@ import {
     listEventResultsController,
     insertEventResultsController,
     updateEventAdminController,
+    checkRegistrationController,
 } from '../controllers/entries/index.js';
 
 const router = express.Router();
@@ -38,6 +39,11 @@ router
         authAdmin,
         insertEventResultsController
     )
-    .put('/event/edit/:id', authUser, authAdmin, updateEventAdminController);
+    .put('/event/edit/:id', authUser, authAdmin, updateEventAdminController)
+    .get(
+        '/event/check-registration/:eventID',
+        authUser,
+        checkRegistrationController
+    );
 
 export default router;

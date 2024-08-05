@@ -6,11 +6,11 @@ const FAQPage = () => {
         },
         {
             question: '¿Cómo puedo crear un hackathon en HackaVerse?',
-            answer: "Para crear un hackathon, simplemente inicia sesión en tu cuenta de HackaVerse, ve a la sección 'Crear Hackathon' en el panel de usuario y sigue los pasos para configurar los detalles del evento, como la fecha, la temática y las reglas.",
+            answer: "Para crear un hackathon, ponte en contacto con el soporte técnico enviando un correo a admin@example.com para solicitar los permisos necesarios. Una vez que los tengas, te aparecerá la opción de crear evento",
         },
         {
             question: '¿Cómo me registro para participar en un hackathon?',
-            answer: "Puedes registrarte en un hackathon navegando a la sección 'Hackathones' en nuestra web, seleccionando el evento de tu interés y haciendo clic en 'Registrarse'. Completa el formulario de inscripción para confirmar tu participación.",
+            answer: "Puedes registrarte en un hackathon navegando a la sección 'Eventos' en nuestra web, seleccionando el evento de tu interés y haciendo clic en 'Apúntate'. Una vez apuntado, te llegará un correo de confirmación",
         },
         {
             question: '¿Qué tipo de proyectos se pueden presentar?',

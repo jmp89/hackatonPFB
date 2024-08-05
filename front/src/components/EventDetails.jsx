@@ -31,7 +31,7 @@ const EventDetails = () => {
                     setIsRegistered(isRegistered);
                 }
             } catch (err) {
-                console.error('Error fetching event:', err);
+                
                 PushNotification(err.message, { type: 'error' });
             }
         };
@@ -57,7 +57,7 @@ const EventDetails = () => {
                 { type: 'success' }
             );
         } catch (err) {
-            console.error('Error registering for event:', err);
+           
             PushNotification('Ya estás registrado a este evento', {
                 type: 'info',
             });
@@ -76,7 +76,7 @@ const EventDetails = () => {
                 type: 'success',
             });
         } catch (err) {
-            console.error('Error unregistering from event:', err);
+           
             PushNotification('Error al darse de baja del evento', {
                 type: 'error',
             });
@@ -93,7 +93,7 @@ const EventDetails = () => {
 
     const isFinished = new Date(event.finish_date) < new Date();
 
-    console.log(event);
+    
 
     return (
         <section className="flex flex-col items-center justify-center px-4 py-3 xl2:px-8 xl2:py-6">

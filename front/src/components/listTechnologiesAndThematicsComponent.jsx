@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import fetchThematicsService from '../services/fetchThematicsService';
 import fetchTechnologiesService from '../services/fetchTechnologiesService';
 import { useMediaQuery } from 'react-responsive';
+import PushNotification from './PushNotification.jsx';
 
 const ListTechnologiesAndThematicsComponent = () => {
     const [thematics, setThematics] = useState([]);
@@ -15,7 +16,7 @@ const ListTechnologiesAndThematicsComponent = () => {
                 const thematicsData = await fetchThematicsService();
                 setThematics(thematicsData);
             } catch (error) {
-                console.error('Error fetching thematics:', error);
+                PushNotification(error.message, { type: 'error' });
             }
         };
 
@@ -24,7 +25,7 @@ const ListTechnologiesAndThematicsComponent = () => {
                 const technologiesData = await fetchTechnologiesService();
                 setTechnologies(technologiesData);
             } catch (error) {
-                console.error('Error fetching technologies:', error);
+                PushNotification(error.message, { type: 'error' });
             }
         };
 

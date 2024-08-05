@@ -30,7 +30,7 @@ const Home = () => {
                     }, []);
                 setEvents(sortedEvents);
             } catch (err) {
-                console.error('Error fetching events:', err);
+                
                 setError('Error fetching events. Please try again later.');
                 PushNotification(err.message, { type: 'error' });
             }

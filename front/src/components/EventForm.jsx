@@ -39,12 +39,12 @@ const EventForm = ({ token }) => {
             }
 
             const data = await response.json();
-            console.log('Event saved successfully:', data);
+         
             setCreateOk('Event saved successfully!');
             setError('');
             PushNotification('Evento creado con éxito', { type: 'success' });
         } catch (error) {
-            console.error('Error submitting form:', error);
+            
             setError('Error submitting form: ' + error.message);
             setCreateOk('');
             PushNotification(error.message, { type: 'error' });

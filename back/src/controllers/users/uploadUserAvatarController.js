@@ -34,7 +34,7 @@ const uploadUserAvatarController = async (req, res, next) => {
 
         const previousAvatar = await previousAvatarOrImageService(userID, "avatar");
 
-        if (previousAvatar.length > 0){
+        if (previousAvatar || previousAvatar?.length > 0){
             const finalPath = UPLOADS_DIR + previousAvatar;
             fs.unlinkSync(finalPath);
         };

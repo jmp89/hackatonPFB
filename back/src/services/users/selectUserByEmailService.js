@@ -24,7 +24,7 @@ const selectUserByEmailService = async (email) => {
         [email]
     );
 
-    console.log('Fetched user:', user[0]); //! quitar al acabar
+    
 
     return user[0];
 };

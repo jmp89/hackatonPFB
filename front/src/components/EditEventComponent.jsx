@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,  useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
@@ -15,6 +15,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 const EditEventComponent = () => {
     const { token } = useAuth();
     const { eventID } = useParams();
+    const navigate = useNavigate(); // <-- Add this line
     const [thematics, setThematics] = useState([]);
     const [technologies, setTechnologies] = useState([]);
     const [formDataEvent, setFormDataEvent] = useState({
@@ -123,6 +124,7 @@ const EditEventComponent = () => {
 
             await fetchEventEditService(token, eventID, formDataFinal);
             PushNotification('Evento actualizado correctamente', { type: 'success' });
+            navigate(`/event/details/${eventID}`); // <-- Add this line
         } catch (error) {
             if (error.message.includes('Duplicate entry')) {
                 PushNotification('Ya existe un evento con este nombre', { type: 'error' });
@@ -340,8 +342,3 @@ const EditEventComponent = () => {
 };
 
 export default EditEventComponent;
-
-
-
-
-

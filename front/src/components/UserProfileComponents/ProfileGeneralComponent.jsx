@@ -163,9 +163,10 @@ const ProfileGeneralComponent = ({
 
                 <section className="mt-4 flex flex-row justify-evenly">
 
-                    <button className="w-11 h-11 rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300"
-                        onClick={handleProfileBack}>
-                            <img src={`${API_URL}/media/back-arrow.svg`} alt="back-arrow-svg" />
+                
+                        <button className="px-4 py-2 rounded-lg overflow-hidden bg-black  text-white font-bold  hover:scale-105 transition-transform duration-300"
+                            onClick={handleProfileBack}>
+                            Volver
                         </button>
 
                     <button className="w-44 bg-black text-white py-2 rounded-lg font-bold hover:scale-105 transition-transform duration-300"

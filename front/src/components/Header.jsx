@@ -74,7 +74,7 @@ const DropdownMenu = ({ items, isOpen, toggleMenu, className }) => {
                                     <img
                                         src={item.icon}
                                         alt={item.label}
-                                        className="w-5 h-5 inline mr-2"
+                                        className="w-6 h-6 inline mr-2"
                                     />
                                 ) : (
                                     item.label
@@ -227,7 +227,7 @@ const Header = () => {
                                         <img
                                             src={`${API_URL}/media/power-icon.svg`}
                                             alt="Cerrar sesión"
-                                            className="w-5 h-5 inline"
+                                            className="w-6 h-6 inline"
                                         />
                                     </button>
                                     <DropdownMenu

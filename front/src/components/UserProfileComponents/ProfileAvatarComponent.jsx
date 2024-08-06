@@ -96,7 +96,7 @@ const ProfileAvatarComponent = ({
                 <button type="button" className="absolute top-[calc(85%)] left-[calc(85%)] ">
                     <img src={`${API_URL}/media/edit.svg`} alt="edit-svg"
                         className="w-6 h-6"
-                        onClick={handleAvatarEdit} />
+                        onClick={handleAvatarEdit} /> 
                 </button>
 
             </section>
@@ -123,12 +123,12 @@ const ProfileAvatarComponent = ({
 
                     <section className="mt-6 w-full flex flex-row justify-between">
 
-                        <button className="w-11 h-11 rounded-lg overflow-hidden  hover:scale-105 transition-transform duration-300"
+                        <button className="px-4 py-2 rounded-lg overflow-hidden bg-black  text-white font-bold  hover:scale-105 transition-transform duration-300"
                             onClick={handleAvatarBack}>
-                            <img src={`${API_URL}/media/back-arrow.svg`} alt="back-arrow-svg" />
+                            Volver
                         </button>
 
-                        <button className="ml-6 w-44 bg-black text-white py-2 rounded-lg font-bold text-lg hover:scale-105 transition-transform duration-300"
+                        <button className="ml-6 mr-24 w-44 bg-black text-white py-2 rounded-lg font-bold text-lg hover:scale-105 transition-transform duration-300"
                             onClick={handleAvatarSubmit}>
                             Subir archivo</button>
 

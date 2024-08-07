@@ -26,19 +26,30 @@ const initDb_data = async () => {
         console.log("Poblando tabla 'events'...");
 
         await pool.query(`
-        INSERT INTO events (id, name, online_on_site, location, start_date, finish_date, start_time, finish_time, description, image, organizer)
+        INSERT INTO events (name, online_on_site, location, start_date, finish_date, start_time, finish_time, description, image, organizer)
         VALUES
-        (1, "Global Python Hackathon", "online", "http://example.com", "2024-05-22", "2024-06-22", "09:00:00", "18:00:00", "Participa en el Global Python Hackathon y resuelve retos apasionantes utilizando Python. Conéctate desde cualquier parte del mundo y colabora con desarrolladores para crear soluciones innovadoras. ¡No te lo pierdas!", "/uploads/event1.jpg", 2),
-        (2, "JavaScript Gaming Challenge", "on_site", "A Coruña", "2024-08-13", "2024-10-13", "10:00:00", "17:00:00", "Únete a nuestro JavaScript Gaming Challenge en A Coruña y demuestra tus habilidades desarrollando juegos impresionantes con JavaScript. Colabora, compite y aprende de los mejores desarrolladores del sector.", "/uploads/event2.jpg", 3),
-        (3, "React Dev Contest", "online", "http://example.es", "2024-07-24", "2024-09-24", "09:30:00", "18:30:00", "En el React Dev Contest, seleccionamos a los mejores desarrolladores de React. Participa en línea, resuelve desafíos y muestra tus habilidades en el desarrollo de aplicaciones con React. ¡Inscríbete ahora!", "/uploads/event3.jpg", 4),
-        (4, "Next.js App Hackathon", "on_site", "Barcelona", "2024-02-05", "2024-04-05", "08:00:00", "16:00:00", "Participe en el Next.js App Hackathon en Barcelona y compita en el desarrollo de aplicaciones innovadoras usando Next.js. Conozca a otros desarrolladores, colabore en proyectos y gane premios increíbles.", "/uploads/event4.jpg", 5),
-        (5, "AI Python Sprint", "on_site", "Madrid", "2024-01-17", "2024-03-28", "09:15:00", "17:15:00", "Participa en el AI Python Sprint en Madrid y muestra tus habilidades en el desarrollo de soluciones de inteligencia artificial con Python. Colabora con expertos y compite por el primer lugar en esta emocionante carrera.", "/uploads/event1.jpg", 6),
-        (6, "JavaScript API Challenge", "on_site", "Barcelona", "2024-06-08", "2024-09-08", "09:00:00", "18:00:00", "Únete al JavaScript API Challenge en Barcelona y demuestra tus habilidades creando APIs robustas y eficientes con JavaScript. Trabaja en equipo, aprende y compite por premios y reconocimiento.", "/uploads/event5.jpg", 7),
-        (7, "Advanced Python Marathon", "on_site", "Sevilla", "2024-01-15", "2024-03-15", "10:00:00", "17:00:00", "Participa en el Advanced Python Marathon en Sevilla y lleva tus habilidades en Python al siguiente nivel. Resuelve desafíos avanzados, colabora con otros desarrolladores y aprende nuevas técnicas.", "/uploads/event3.jpg", 8),
-        (8, "JS Frameworks Exploration Hackathon", "on_site", "Valencia", "2024-02-20", "2024-04-20", "08:30:00", "17:30:00", "Explora y domina diferentes frameworks de JavaScript en nuestro JS Frameworks Exploration Hackathon en Valencia. Participa en retos interesantes y aprende de los mejores expertos en el campo.", "/uploads/event4.jpg", 5),
-        (9, "React Intensive Hackathon", "online", "http://example.net", "2024-01-05", "2024-02-25", "09:00:00", "18:00:00", "Únete al React Intensive Hackathon y mejora tus habilidades en React. Participa desde cualquier lugar, colabora con otros desarrolladores y resuelve desafíos intensivos para ganar grandes premios.", "/uploads/event5.jpg", 9),
-        (10, "Next.js Modern Apps Hackathon", "on_site", "Alicante", "2024-03-10", "2024-05-10", "09:30:00", "18:30:00", "Desarrolla aplicaciones modernas con Next.js en el Next.js Modern Apps Hackathon en Alicante. Conéctate con otros desarrolladores, comparte ideas y gana premios por tus innovadoras soluciones.", "/uploads/event1.jpg", 3),
-        (11, "Machine Learning Python Hackathon", "on_site", "Granada", "2024-04-18", "2024-06-18", "09:00:00", "18:00:00", "Participa en el Machine Learning Python Hackathon en Granada y demuestra tus habilidades en el desarrollo de modelos de aprendizaje automático con Python. Colabora con otros expertos y compite por premios.", "/uploads/event2.jpg", 6)
+        ("Global Python Hackathon", "online", "http://example.com", "2024-05-22", "2024-06-22", "09:00:00", "18:00:00", "Participa en el Global Python Hackathon y resuelve retos apasionantes utilizando Python. Conéctate desde cualquier parte del mundo y colabora con desarrolladores para crear soluciones innovadoras. ¡No te lo pierdas!", "/uploads/event1.jpg", 2),
+        ("JavaScript Gaming Challenge", "on_site", "A Coruña", "2024-08-13", "2024-10-13", "10:00:00", "17:00:00", "Únete a nuestro JavaScript Gaming Challenge en A Coruña y demuestra tus habilidades desarrollando juegos impresionantes con JavaScript. Colabora, compite y aprende de los mejores desarrolladores del sector.", "/uploads/event2.jpg", 3),
+        ("React Dev Contest", "online", "http://example.es", "2024-07-24", "2024-09-24", "09:30:00", "18:30:00", "En el React Dev Contest, seleccionamos a los mejores desarrolladores de React. Participa en línea, resuelve desafíos y muestra tus habilidades en el desarrollo de aplicaciones con React. ¡Inscríbete ahora!", "/uploads/event3.jpg", 4),
+        ("Next.js App Hackathon", "on_site", "Barcelona", "2024-02-05", "2024-04-05", "08:00:00", "16:00:00", "Participe en el Next.js App Hackathon en Barcelona y compita en el desarrollo de aplicaciones innovadoras usando Next.js. Conozca a otros desarrolladores, colabore en proyectos y gane premios increíbles.", "/uploads/event4.jpg", 5),
+        ("AI Python Sprint", "on_site", "Madrid", "2024-01-17", "2024-03-28", "09:15:00", "17:15:00", "Participa en el AI Python Sprint en Madrid y muestra tus habilidades en el desarrollo de soluciones de inteligencia artificial con Python. Colabora con expertos y compite por el primer lugar en esta emocionante carrera.", "/uploads/event1.jpg", 6),
+        ("JavaScript API Challenge", "on_site", "Barcelona", "2024-06-08", "2024-09-08", "09:00:00", "18:00:00", "Únete al JavaScript API Challenge en Barcelona y demuestra tus habilidades creando APIs robustas y eficientes con JavaScript. Trabaja en equipo, aprende y compite por premios y reconocimiento.", "/uploads/event5.jpg", 7),
+        ("Advanced Python Marathon", "on_site", "Sevilla", "2024-01-15", "2024-03-15", "10:00:00", "17:00:00", "Participa en el Advanced Python Marathon en Sevilla y lleva tus habilidades en Python al siguiente nivel. Resuelve desafíos avanzados, colabora con otros desarrolladores y aprende nuevas técnicas.", "/uploads/event3.jpg", 8),
+        ("JS Frameworks Exploration Hackathon", "on_site", "Valencia", "2024-02-20", "2024-04-20", "08:30:00", "17:30:00", "Explora y domina diferentes frameworks de JavaScript en nuestro JS Frameworks Exploration Hackathon en Valencia. Participa en retos interesantes y aprende de los mejores expertos en el campo.", "/uploads/event4.jpg", 5),
+        ("React Intensive Hackathon", "online", "http://example.net", "2024-01-05", "2024-02-25", "09:00:00", "18:00:00", "Únete al React Intensive Hackathon y mejora tus habilidades en React. Participa desde cualquier lugar, colabora con otros desarrolladores y resuelve desafíos intensivos para ganar grandes premios.", "/uploads/event5.jpg", 9),
+        ("Next.js Modern Apps Hackathon", "on_site", "Alicante", "2024-03-10", "2024-05-10", "09:30:00", "18:30:00", "Desarrolla aplicaciones modernas con Next.js en el Next.js Modern Apps Hackathon en Alicante. Conéctate con otros desarrolladores, comparte ideas y gana premios por tus innovadoras soluciones.", "/uploads/event1.jpg", 3),
+        ("Machine Learning Python Hackathon", "on_site", "Granada", "2024-04-18", "2024-06-18", "09:00:00", "18:00:00", "Participa en el Machine Learning Python Hackathon en Granada y demuestra tus habilidades en el desarrollo de modelos de aprendizaje automático con Python. Colabora con otros expertos y compite por premios.", "/uploads/event2.jpg", 6),
+        ("Global Python Summit", "online", "http://example.com", "2024-11-01", "2024-12-01", "09:00:00", "18:00:00", "Únete al Global Python Summit y muestra tus habilidades en Python. Participa desde cualquier lugar y colabora con desarrolladores para crear soluciones innovadoras.", "/uploads/event1.jpg", 2),
+        ("JavaScript Game Showdown", "on_site", "A Coruña", "2025-01-13", "2025-02-13", "10:00:00", "17:00:00", "Compite en el JavaScript Game Showdown en A Coruña y demuestra tus habilidades creando juegos impresionantes con JavaScript. Aprende de los mejores y compite por premios.", "/uploads/event2.jpg", 3),
+        ("React Native Challenge", "online", "http://example.es", "2025-02-01", "2025-03-01", "09:30:00", "18:30:00", "Participa en el React Native Challenge, resuelve desafíos y muestra tus habilidades en el desarrollo de aplicaciones móviles con React Native. ¡Inscríbete ahora!", "/uploads/event3.jpg", 4),
+        ("Next.js Innovation Sprint", "on_site", "Barcelona", "2024-12-05", "2025-01-05", "08:00:00", "16:00:00", "Participe en el Next.js Innovation Sprint en Barcelona y compita en el desarrollo de aplicaciones innovadoras usando Next.js. Conozca a otros desarrolladores, colabore en proyectos y gane premios increíbles.", "/uploads/event4.jpg", 5),
+        ("AI Python Hackfest", "on_site", "Madrid", "2025-03-17", "2025-04-28", "09:15:00", "17:15:00", "Participa en el AI Python Hackfest en Madrid y muestra tus habilidades en el desarrollo de soluciones de inteligencia artificial con Python. Colabora con expertos y compite por el primer lugar en esta emocionante carrera.", "/uploads/event1.jpg", 6),
+        ("JavaScript API Mastery", "on_site", "Barcelona", "2025-04-08", "2025-05-08", "09:00:00", "18:00:00", "Únete al JavaScript API Mastery en Barcelona y demuestra tus habilidades creando APIs robustas y eficientes con JavaScript. Trabaja en equipo, aprende y compite por premios y reconocimiento.", "/uploads/event5.jpg", 7),
+        ("Advanced Python Coding Marathon", "on_site", "Sevilla", "2025-01-15", "2025-02-15", "10:00:00", "17:00:00", "Participa en el Advanced Python Coding Marathon en Sevilla y lleva tus habilidades en Python al siguiente nivel. Resuelve desafíos avanzados, colabora con otros desarrolladores y aprende nuevas técnicas.", "/uploads/event3.jpg", 8),
+        ("JS Frameworks Hackathon", "on_site", "Valencia", "2025-02-20", "2025-03-20", "08:30:00", "17:30:00", "Explora y domina diferentes frameworks de JavaScript en nuestro JS Frameworks Hackathon en Valencia. Participa en retos interesantes y aprende de los mejores expertos en el campo.", "/uploads/event4.jpg", 5),
+        ("React Coding Challenge", "online", "http://example.net", "2025-01-05", "2025-02-25", "09:00:00", "18:00:00", "Únete al React Coding Challenge y mejora tus habilidades en React. Participa desde cualquier lugar, colabora con otros desarrolladores y resuelve desafíos intensivos para ganar grandes premios.", "/uploads/event5.jpg", 9),
+        ("Next.js App Developer Meetup", "on_site", "Alicante", "2025-03-10", "2025-05-10", "09:30:00", "18:30:00", "Desarrolla aplicaciones modernas con Next.js en el Next.js App Developer Meetup en Alicante. Conéctate con otros desarrolladores, comparte ideas y gana premios por tus innovadoras soluciones.", "/uploads/event1.jpg", 3),
+        ("Machine Learning Python Competition", "on_site", "Granada", "2025-04-18", "2025-05-18", "09:00:00", "18:00:00", "Participa en el Machine Learning Python Competition en Granada y demuestra tus habilidades en el desarrollo de modelos de aprendizaje automático con Python. Colabora con otros expertos y compite por premios.", "/uploads/event2.jpg", 6)
     `);
 
         console.log("Tabla 'events' poblada correctamente.");
@@ -231,7 +242,40 @@ const initDb_data = async () => {
                 (11, 20),
                 (11, 21),
                 (11, 18),
-                (11, 24)
+                (11, 24),
+                (12, 1),
+                (12, 17),
+                (12, 24),
+                (13, 2),
+                (13, 3),
+                (13, 5),
+                (14, 3),
+                (14, 15),
+                (14, 16),
+                (15, 4),
+                (15, 5),
+                (15, 12),
+                (16, 1),
+                (16, 21),
+                (16, 22),
+                (17, 2),
+                (17, 28),
+                (17, 30),
+                (18, 1),
+                (18, 22),
+                (18, 27),
+                (19, 3),
+                (19, 4),
+                (19, 5),
+                (20, 4),
+                (20, 22),
+                (20, 23),
+                (21, 1),
+                (21, 18),
+                (21, 24),
+                (22, 1),
+                (22, 20),
+                (22, 21)
             `);
 
         console.log("Tabla 'technologies_events' poblada correctamente.");
@@ -262,8 +306,30 @@ const initDb_data = async () => {
                 (10, 9),
                 (10, 8),
                 (11, 3),
-                (11, 6)
-            `);
+                (11, 6),
+                (12, 1),
+                (12, 5),
+                (13, 8),
+                (13, 14),
+                (14, 2),
+                (14, 8),
+                (15, 8),
+                (15, 9),
+                (16, 3),
+                (16, 5),
+                (17, 4),
+                (17, 8),
+                (18, 6),
+                (18, 5),
+                (19, 8),
+                (19, 2),
+                (20, 9),
+                (20, 8),
+                (21, 3),
+                (21, 6),
+                (22, 5),
+                (22, 3)
+            `)
 
         console.log("Tabla 'thematics_events' poblada correctamente.");
 

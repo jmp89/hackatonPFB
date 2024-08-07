@@ -28,6 +28,7 @@ const getEventsService = async (filter, sort, direction) => {
 
     if (!filter) {
         query += `
+            WHERE e.finish_date > NOW()
             ORDER BY e.start_date ASC
         `;
 

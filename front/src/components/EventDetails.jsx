@@ -31,7 +31,6 @@ const EventDetails = () => {
                     setIsRegistered(isRegistered);
                 }
             } catch (err) {
-                
                 PushNotification(err.message, { type: 'error' });
             }
         };
@@ -57,7 +56,6 @@ const EventDetails = () => {
                 { type: 'success' }
             );
         } catch (err) {
-           
             PushNotification('Ya estás registrado a este evento', {
                 type: 'info',
             });
@@ -76,7 +74,6 @@ const EventDetails = () => {
                 type: 'success',
             });
         } catch (err) {
-           
             PushNotification('Error al darse de baja del evento', {
                 type: 'error',
             });
@@ -92,8 +89,6 @@ const EventDetails = () => {
     }
 
     const isFinished = new Date(event.finish_date) < new Date();
-
-    
 
     return (
         <section className="flex flex-col items-center justify-center px-4 py-3 xl2:px-8 xl2:py-6">
@@ -160,9 +155,20 @@ const EventDetails = () => {
                     </p>
 
                     {event.online_on_site !== 'on_site' ? (
-                        <p className="mt-3 font-medium xl2:mt-4">
-                            <span className="font-bold uppercase">ONLINE</span>
-                        </p>
+                        <>
+                            <p className="mt-3 font-medium xl2:mt-4">
+                                <span className="font-bold uppercase">
+                                    ONLINE
+                                </span>
+                            </p>
+                            <a
+                                href={event.location}
+                                target="_blank"
+                                className="hover:text-blue-600 hover:font-bold hover:scale-125"
+                            >
+                                URL del evento
+                            </a>
+                        </>
                     ) : (
                         <>
                             <span className="font-bold uppercase">CIUDAD:</span>

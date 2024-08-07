@@ -128,7 +128,7 @@ const EventDetails = () => {
                         <>
                             {isFinished && (
                                 <>
-                                    <p className="font-bold uppercase mt-4">
+                                    <p className="break-all font-bold uppercase mt-4">
                                         RESULTADOS:
                                     </p>
                                     <p>
@@ -142,21 +142,25 @@ const EventDetails = () => {
                                     </p>
                                 </>
                             )}
-                            <p className="font-bold uppercase mt-4">
+                            <p className="break-all font-bold uppercase mt-4">
                                 ORGANIZADOR:
                             </p>
                             <p>{event.organizer_name}</p>
                         </>
                     )}
-                    <p className="my-3 xl2:my-4 font-bold">
+                    <p className="break-all my-3 xl2:my-4 font-bold">
                         {new Date(event.start_date).toLocaleDateString()}
                         {' - '}
                         {new Date(event.finish_date).toLocaleDateString()}
                     </p>
+                    <p className="break-all my-3 xl2:my-4 font-bold">
+                        {event.start_time.slice(0, 5)}h{' - '}
+                        {event.finish_time.slice(0, 5)}h
+                    </p>
 
                     {event.online_on_site !== 'on_site' ? (
                         <>
-                            <p className="mt-3 font-medium xl2:mt-4">
+                            <p className="break-all mt-3 font-medium xl2:mt-4">
                                 <span className="font-bold uppercase">
                                     ONLINE
                                 </span>
@@ -175,11 +179,11 @@ const EventDetails = () => {
                             <p>{event.location}</p>
                         </>
                     )}
-                    <p className="mt-3 xl2:mt-4">
+                    <p className="break-all mt-3 xl2:mt-4">
                         <span className="font-bold uppercase">TEMÁTICA:</span>
                     </p>
                     <p>{event.thematics[0].split(',').join(', ')}</p>
-                    <p className="mt-3 xl2:mt-4">
+                    <p className="break-all mt-3 xl2:mt-4">
                         <span className="font-bold uppercase">
                             TECNOLOGÍAS:
                         </span>
@@ -187,7 +191,9 @@ const EventDetails = () => {
                     <p>{event.technologies[0].split(',').join(', ')}</p>
                     <section className="text-center mt-7 mb-5 w-full max-w-[70vw] mx-auto xl2:mt-10 xl2:mb-7">
                         <h2 className="font-bold">¿QUÉ VAMOS A HACER?</h2>
-                        <p className="mt-5 xl2:mt-7">{event.description}</p>
+                        <p className="break-all mt-5 xl2:mt-7 text-center">
+                            {event.description}
+                        </p>
                     </section>
                 </div>
             </section>

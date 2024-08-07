@@ -30,7 +30,6 @@ const Home = () => {
                     }, []);
                 setEvents(sortedEvents);
             } catch (err) {
-                
                 setError('Error fetching events. Please try again later.');
                 PushNotification(err.message, { type: 'error' });
             }
@@ -118,9 +117,13 @@ const Home = () => {
                                                     : `Ciudad: ${event.location}`}
                                             </p>
                                             <p>
-                                                Tecnología: {event.technologies}
+                                                Tecnología:{' '}
+                                                {event.technologies.join(', ')}
                                             </p>
-                                            <p>Temática: {event.thematics}</p>
+                                            <p>
+                                                Temática:{' '}
+                                                {event.thematics.join(', ')}
+                                            </p>
                                             {isFinished && (
                                                 <p className="text-red-700 font-bold">
                                                     Evento finalizado

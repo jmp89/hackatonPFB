@@ -101,9 +101,19 @@ const Header = () => {
     const { token, removeToken, currentUser } = useAuth();
     const [isAvatarMenuOpen, setIsAvatarMenuOpen] = useState(false);
     const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
+    const [logout, setLogout] = useState(false);
 
     const hamburgerMenuRef = useRef(null);
     const hamburgerButtonRef = useRef(null);
+
+    const toggleLogout = () => {
+        setLogout(!logout);
+    };
+
+    const confirmLogout = () => {
+        removeToken();
+        toggleLogout();
+    };
 
     const toggleAvatarMenu = () => {
         setIsAvatarMenuOpen(!isAvatarMenuOpen);
@@ -146,7 +156,7 @@ const Header = () => {
     const avatarMenuItems = [
         { to: '/users/profile', label: 'Perfil' },
         {
-            onClick: removeToken,
+            onClick: toggleLogout,
             label: 'Cerrar sesión',
             icon: `${API_URL}/media/power-icon.svg`,
         },
@@ -168,7 +178,7 @@ const Header = () => {
               ]
             : [
                   {
-                      onClick: removeToken,
+                      onClick: toggleLogout,
                       label: 'Cerrar sesión',
                       icon: `${API_URL}/media/power-icon.svg`,
                       isMobile: true,
@@ -221,7 +231,7 @@ const Header = () => {
                                         />
                                     </NavLink>
                                     <button
-                                        onClick={removeToken}
+                                        onClick={toggleLogout}
                                         className="ml-4 text-sm text-red-500 hover:text-red-700"
                                     >
                                         <img
@@ -281,6 +291,18 @@ const Header = () => {
                     </div>
                 </div>
             </div>
+            {logout &&
+                <div className="relative">
+                    <div className="absolute w-80 sm:w-customWidth h-40 flex flex-col justify-center gap-4 items-center rounded-lg shadow-customBig bg-gray-100 top-6 right-2 sm:right-[calc(5%)]">
+                        <p className="text-center">¿Está seguro de que desea cerrar su sesión?</p>
+                        <div className="flex flex-row justify-center items-center gap-2 sm:gap-6">
+                            <button onClick={toggleLogout} className="w-36 sm:w-44 bg-black text-white py-2 rounded-lg font-bold hover:scale-105 transition-transform duration-300">
+                                Cancelar</button>
+                            <button onClick={confirmLogout} className="w-36 sm:w-44 bg-black text-white py-2 rounded-lg font-bold hover:scale-105 transition-transform duration-300">
+                                Cerrar sesión</button>
+                        </div>
+                    </div>
+                </div>}
         </header>
     );
 };

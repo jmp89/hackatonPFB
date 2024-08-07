@@ -5,6 +5,7 @@ export default {
         extend: {
             boxShadow: {
                 custom: '-5px 5px 15px rgb(40,40,40)',
+                customBig: '-10px 10px 20px rgb(40,40,40)',
             },
             gridTemplateColumns: {
                 'auto-fit-minmax': 'repeat(auto-fit, minmax(260px, 320px))',
@@ -18,7 +19,8 @@ export default {
                 "x12": '1690px',
             },
             width: {
-                'eventCard': '350px'
+                'eventCard': '350px',
+                'customWidth': '420px',
             },
         },
     },

@@ -158,7 +158,7 @@ const getEventsService = async (filter, sort, direction) => {
         technologies: Array.from(event.technologies),
         thematics: Array.from(event.thematics),
     }));
-    console.log(finalEventsList)
+
     return finalEventsList;
 };
 

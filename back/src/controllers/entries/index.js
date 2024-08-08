@@ -10,7 +10,7 @@ import listEventResultsController from './listEventResultsController.js';
 import insertEventResultsController from './insertEventResultsController.js';
 import updateEventAdminController from './updateEventAdminController.js';
 import checkRegistrationController from './checkRegistrationController.js';
-
+import getParticipantsController from './getParticipantsController.js';
 export {
     createEventAdminController,
     eventRegistrationController,
@@ -24,4 +24,5 @@ export {
     insertEventResultsController,
     updateEventAdminController,
     checkRegistrationController,
+    getParticipantsController
 };

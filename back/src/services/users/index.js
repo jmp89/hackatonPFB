@@ -12,7 +12,6 @@ import isEventFinishedService from './isEventFinishedService.js';
 import rateEventService from './rateEventService.js';
 import getMyFinishedEventsListService from './getMyFinishedEventsListService.js';
 import previousAvatarOrImageService from './previousAvatarOrImageService.js';
-
 export {
     insertUserAvatarService,
     insertUserService,
@@ -27,5 +26,5 @@ export {
     isEventFinishedService,
     rateEventService,
     getMyFinishedEventsListService,
-    previousAvatarOrImageService
+    previousAvatarOrImageService,
 };

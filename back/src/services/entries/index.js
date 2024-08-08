@@ -11,6 +11,7 @@ import eventExistsService from './eventExistsService.js';
 import inscriptionToEventService from './inscriptionToEventService.js';
 import sendEventRegistrationMailService from './sendEventRegistrationService.js';
 import checkRegistrationService from './checkRegistrationService.js';
+import getParticipantsService from './getParticipantsService.js';
 
 export {
     createEventAdminService,
@@ -26,4 +27,5 @@ export {
     inscriptionToEventService,
     sendEventRegistrationMailService,
     checkRegistrationService,
+    getParticipantsService
 };

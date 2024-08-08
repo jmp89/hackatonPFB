@@ -12,6 +12,7 @@ const insertEventResultsController = async (req, res, next) => {
         const { eventID } = req.params;
 
         const itemsSchema = Joi.object({
+            username: Joi.string().required(),
             user_id: Joi.number().required(),
             points: Joi.number().required()
         });
@@ -25,7 +26,7 @@ const insertEventResultsController = async (req, res, next) => {
         if (error) {
             throw generateErrorsUtils(error.message, 400);
         };
-
+        console.log("pre check participation")
         await checkParticipationService(eventID, eventInfo);
 
         await insertEventResultsService(eventID, eventInfo);

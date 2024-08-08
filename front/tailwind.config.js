@@ -22,6 +22,9 @@ export default {
                 'eventCard': '350px',
                 'customWidth': '420px',
             },
+            height: {
+                'custom': '550px',
+            },
         },
     },
     plugins: [

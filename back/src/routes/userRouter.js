@@ -11,7 +11,7 @@ import {
     updateUserProfileController,
     rateUserEventController,
     getMyEventsListController,
-    getMyFinishedEventsListController,
+    getMyFinishedEventsListController
 } from '../controllers/users/index.js';
 
 import { authUser } from '../middlewares/index.js';
@@ -29,10 +29,6 @@ router
     .put('/users/edit', authUser, updateUserProfileController)
     .post('/users/rate-event', authUser, rateUserEventController)
     .get('/users/my-inscriptions', authUser, getMyEventsListController)
-    .get(
-        '/users/my-finished-events',
-        authUser,
-        getMyFinishedEventsListController
-    );
+    .get('/users/my-finished-events', authUser, getMyFinishedEventsListController);
 
 export default router;

@@ -15,6 +15,7 @@ import {
     insertEventResultsController,
     updateEventAdminController,
     checkRegistrationController,
+    getParticipantsController
 } from '../controllers/entries/index.js';
 
 const router = express.Router();
@@ -44,6 +45,7 @@ router
         '/event/check-registration/:eventID',
         authUser,
         checkRegistrationController
-    );
+    )
+    .get('/event/participants/:eventID', getParticipantsController);
 
 export default router;

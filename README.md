@@ -9,7 +9,7 @@
 
 # ¿De qué va esto?
 
-HackaVerse es un proyecto de fin de bootcamp impartido en [Hack a Boss](https://www.hackaboss.com/).
+HackaVerse es un proyecto de fin de bootcamp impartido en [HACK A BOSS](https://www.hackaboss.com/).
 
 Consiste en una aplicación web orientada a los Hackathones que permite, si eres administrador, publicar eventos y puntuar a los competidores, y, si eres usuario, apuntarte a ellos como competidor y valorar los eventos.
 

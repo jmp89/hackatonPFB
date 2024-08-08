@@ -22,10 +22,12 @@ La aplicación actualmente está en desarrollo, aunque ya tenemos una idea en fo
 
 Empezaremos de la siguiente forma:
 
+1. Extrae las carpetas del archivo [`PFB-svgs.zip`](../docs/general/PFB-svgs.zip) ubicado en [`docs/general`](../docs/general/)
+    - Nota: En las imágenes de `uploads`, si cambias una por otra personalizada, se borra la anterior. Si reinicias la base de datos tienes que volver a insertar las imágenes que se han borrado
 1. Configura la ruta del backend tu app en el archivo `.env`
-2. Inicia tu terminal en el directorio `/front`.
-3. Instala las dependencias con `npm i`
-4. Arranca el servidor del front con `npm run dev`
+1. Inicia tu terminal en el directorio `/front`.
+1. Instala las dependencias con `npm i`
+1. Arranca el servidor del front con `npm run dev`
 
 ### Funcionalidades
 

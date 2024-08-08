@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "880dd20f-a5a0-42f7-9ba6-9d3b12af4818",
-		"name": "Hackathones",
+		"name": "HackaVerse",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "33783589"
 	},
@@ -67,7 +67,7 @@
 					]
 				},
 				{
-					"name": "event/:eventID",
+					"name": "event/details/:eventID",
 					"item": [
 						{
 							"name": "Evento con ID 1",
@@ -115,7 +115,7 @@
 					"name": "event/create",
 					"item": [
 						{
-							"name": "(admin) Crear evento",
+							"name": "(admin) Crear evento (añadir imagen local)",
 							"request": {
 								"method": "POST",
 								"header": [
@@ -127,48 +127,69 @@
 									}
 								],
 								"body": {
-									"mode": "raw",
-									"raw": "{\r\n      \"name\": \"Hackathon Python Trainee\",\r\n      \"technology\": \"Python\",\r\n      \"online_on_site\": \"online\",\r\n      \"location\": \"Roma, Italia\",\r\n      \"theme\": \"Iniciacion a programación\",\r\n      \"organizer\": 1,\r\n      \"description\": \"Creado desde Postman! =)\",\r\n      \"start_date\": \"2024-08-20\",\r\n      \"finish_date\": \"2024-08-23\",\r\n      \"start_time\": \"10:00\",\r\n      \"finish_time\": \"22:00\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Evento desde postman 123123 ",
+											"type": "text"
+										},
+										{
+											"key": "technologies",
+											"value": "[\"Python\", \"Java\"]",
+											"type": "text"
+										},
+										{
+											"key": "online_on_site",
+											"value": "online",
+											"type": "text"
+										},
+										{
+											"key": "location",
+											"value": "Roma, Italia",
+											"type": "text"
+										},
+										{
+											"key": "thematics",
+											"value": "[\"Gaming\", \"Robotics\"]",
+											"type": "text"
+										},
+										{
+											"key": "organizer",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Creado desde Postman 213123",
+											"type": "text"
+										},
+										{
+											"key": "start_date",
+											"value": "2024-08-23",
+											"type": "text"
+										},
+										{
+											"key": "finish_date",
+											"value": "2024-09-01",
+											"type": "text"
+										},
+										{
+											"key": "start_time",
+											"value": "10:00",
+											"type": "text"
+										},
+										{
+											"key": "finish_time",
+											"value": "22:00",
+											"type": "text"
+										},
+										{
+											"key": "fileName",
+											"type": "file",
+											"src": "/C:/Users/juanm/Documents/Desarrollo/Proyectos/hackatonPFB/back/public/media/logo_hackaverse.svg"
 										}
-									}
-								},
-								"url": {
-									"raw": "{{URL_BASE}}:3001/event/create",
-									"host": [
-										"{{URL_BASE}}"
-									],
-									"port": "3001",
-									"path": [
-										"event",
-										"create"
 									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "(user normal) Error",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{TOKEN_USER}}",
-										"description": "user: user02@test.com",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n      \"nombre\": \"Hackathon Python Trainee\",\r\n      \"tecnologia\": \"Python\",\r\n      \"online_presencial\": \"online\",\r\n      \"ciudad\": null,\r\n      \"rango_fechas\": \"2025/07/01\",\r\n      \"tematica\": \"Iniciacion a programación\",\r\n      \"organizador\": 1,\r\n      \"descripcion\": \"Esta es una descripcion para este nuevo evento\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
 								},
 								"url": {
 									"raw": "{{URL_BASE}}:3001/event/create",
@@ -191,8 +212,11 @@
 					"item": [
 						{
 							"name": "Te has inscrito",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
-								"method": "POST",
+								"method": "GET",
 								"header": [
 									{
 										"key": "Authorization",
@@ -202,7 +226,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"eventID\": 1\r\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -210,14 +234,15 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL_BASE}}:3001/event/register",
+									"raw": "{{URL_BASE}}:3001/event/register/5",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"event",
-										"register"
+										"register",
+										"5"
 									]
 								}
 							},
@@ -236,7 +261,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"eventID\": 999\r\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -244,48 +269,15 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL_BASE}}:3001/event/register",
+									"raw": "{{URL_BASE}}:3001/event/register/999",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"event",
-										"register"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "(Error) Fallo validación (Joi)",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{TOKEN_USER}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"MeLoInvento\": 123\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{URL_BASE}}:3001/event/register",
-									"host": [
-										"{{URL_BASE}}"
-									],
-									"port": "3001",
-									"path": [
-										"event",
-										"register"
+										"register",
+										"999"
 									]
 								}
 							},
@@ -309,7 +301,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"eventID\": 1\r\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -317,14 +309,15 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL_BASE}}:3001/event/unlist",
+									"raw": "{{URL_BASE}}:3001/event/unlist/2",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"event",
-										"unlist"
+										"unlist",
+										"2"
 									]
 								}
 							},
@@ -347,7 +340,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/event/confirm/testCode",
+									"raw": "{{URL_BASE}}:3001/event/confirm/9b8fGD7Vhv",
 									"host": [
 										"{{URL_BASE}}"
 									],
@@ -355,7 +348,7 @@
 									"path": [
 										"event",
 										"confirm",
-										"testCode"
+										"9b8fGD7Vhv"
 									]
 								}
 							},
@@ -405,14 +398,14 @@
 									}
 								],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/event/themes",
+									"raw": "{{URL_BASE}}:3001/event/thematics",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"event",
-										"themes"
+										"thematics"
 									]
 								}
 							},
@@ -484,7 +477,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"eventInfo\": {\r\n        \"eventID\": 1,\r\n        \"user1\": \"admin\",\r\n        \"points1\": 555,\r\n        \"user2\": \"user04_321test\",\r\n        \"points2\": 122,\r\n        \"user3\": \"user02_test321\",\r\n        \"points3\": 311,\r\n        \"user4\": \"user06_user321\",\r\n        \"points4\": 555,\r\n        \"user5\": \"user08_321user\",\r\n        \"points5\": 100\r\n    }\r\n}",
+									"raw": "{\r\n    \"eventInfo\": [\r\n        {\r\n        \"user_id\": 2,\r\n        \"points\": 55\r\n        }\r\n    ]\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -492,14 +485,15 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL_BASE}}:3001/event/insert-results",
+									"raw": "{{URL_BASE}}:3001/event/insert-results/8",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"event",
-										"insert-results"
+										"insert-results",
+										"8"
 									]
 								}
 							},
@@ -518,7 +512,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"eventInfo\": \"5\"\r\n}",
+									"raw": "{\r\n    \"eventInfo\": [\r\n        {\r\n        \"user_id\": 2,\r\n        \"points\": 55\r\n        }\r\n    ]\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -526,14 +520,15 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL_BASE}}:3001/event/insert-results",
+									"raw": "{{URL_BASE}}:3001/event/insert-results/8",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"event",
-										"insert-results"
+										"insert-results",
+										"8"
 									]
 								}
 							},
@@ -552,17 +547,166 @@
 									{
 										"key": "Authorization",
 										"value": "{{TOKEN_ADMIN}}",
+										"description": "user: admin@example.com",
 										"type": "text"
 									}
 								],
 								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Postman Masterclass\",\r\n    \"technology\": \"Python\",\r\n    \"online_on_site\": \"online\",\r\n    \"location\": \"Italia\",\r\n    \"start_date\": \"2024-05-22\",\r\n    \"finish_date\": \"2024-06-22\",\r\n    \"start_time\": \"10:00\",\r\n    \"finish_time\": \"20:00\",\r\n    \"theme\": \"Coding Race\",\r\n    \"description\": \"Cambio de descripción desde postman\",\r\n    \"organizer\": 1\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Postman editando el evento 22",
+											"type": "text"
+										},
+										{
+											"key": "technologies",
+											"value": "[\"Python\", \"Java\"]",
+											"type": "text"
+										},
+										{
+											"key": "online_on_site",
+											"value": "on_site",
+											"type": "text"
+										},
+										{
+											"key": "location",
+											"value": "Roma, Italia",
+											"type": "text"
+										},
+										{
+											"key": "thematics",
+											"value": "[\"Gaming\", \"Robotics\"]",
+											"type": "text"
+										},
+										{
+											"key": "organizer",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Editado desde Postman",
+											"type": "text"
+										},
+										{
+											"key": "start_date",
+											"value": "2024-08-23",
+											"type": "text"
+										},
+										{
+											"key": "finish_date",
+											"value": "2024-09-05",
+											"type": "text"
+										},
+										{
+											"key": "start_time",
+											"value": "10:00",
+											"type": "text"
+										},
+										{
+											"key": "finish_time",
+											"value": "22:00",
+											"type": "text"
+										},
+										{
+											"key": "fileName",
+											"type": "file",
+											"src": "/C:/Users/juanm/Documents/Desarrollo/Proyectos/hackatonPFB/back/public/media/logo_hackaverse.svg"
 										}
+									]
+								},
+								"url": {
+									"raw": "{{URL_BASE}}:3001/event/edit/22",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"port": "3001",
+									"path": [
+										"event",
+										"edit",
+										"22"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "(error) Solo admin puede",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN_USER}}",
+										"description": "user 2",
+										"type": "text"
 									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "asdafasdas",
+											"type": "text"
+										},
+										{
+											"key": "technologies",
+											"value": "[\"Python\", \"Java\"]",
+											"type": "text"
+										},
+										{
+											"key": "online_on_site",
+											"value": "online",
+											"type": "text"
+										},
+										{
+											"key": "location",
+											"value": "Roma, Italia",
+											"type": "text"
+										},
+										{
+											"key": "thematics",
+											"value": "[\"Iniciacion a programación\"]",
+											"type": "text"
+										},
+										{
+											"key": "organizer",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Creado desde Postman",
+											"type": "text"
+										},
+										{
+											"key": "start_date",
+											"value": "2024-08-23",
+											"type": "text"
+										},
+										{
+											"key": "finish_date",
+											"value": "2024-08-20",
+											"type": "text"
+										},
+										{
+											"key": "start_time",
+											"value": "10:00",
+											"type": "text"
+										},
+										{
+											"key": "finish_time",
+											"value": "22:00",
+											"type": "text"
+										},
+										{
+											"key": "fileName",
+											"type": "file",
+											"src": "/C:/Users/juanm/Pictures/screensaveralexei.png"
+										}
+									]
 								},
 								"url": {
 									"raw": "{{URL_BASE}}:3001/event/edit/1",
@@ -578,11 +722,16 @@
 								}
 							},
 							"response": []
-						},
+						}
+					]
+				},
+				{
+					"name": "event/check-registration/:eventID",
+					"item": [
 						{
-							"name": "(error) Solo admin puede",
+							"name": "Verificar inscripción",
 							"request": {
-								"method": "PUT",
+								"method": "GET",
 								"header": [
 									{
 										"key": "Authorization",
@@ -590,24 +739,40 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Python Race Hackathon\",\r\n    \"technology\": \"Python\",\r\n    \"online_on_site\": \"online\",\r\n    \"city\": null,\r\n    \"start_date\": \"2024-05-22\",\r\n    \"finish_date\": \"2024-06-22\",\r\n    \"category\": \"Coding Race\",\r\n    \"description\": \"Cambio de descripción desde postman\",\r\n    \"organizer\": 1\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
-									"raw": "{{URL_BASE}}:3001/event/edit/1",
+									"raw": "{{URL_BASE}}:3001/event/check-registration/2",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"event",
-										"edit",
+										"check-registration",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "event/participants/:eventID",
+					"item": [
+						{
+							"name": "Listado participantes de evento",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL_BASE}}:3001/event/participants/1",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"port": "3001",
+									"path": [
+										"event",
+										"participants",
 										"1"
 									]
 								}
@@ -634,7 +799,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\": \"John\",\r\n    \"email\": \"usuario@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+									"raw": "{\r\n    \"name\": \"John\",\r\n    \"surname\": \"Travolta\",\r\n    \"username\": \"Pepito Palotes\",\r\n    \"email\": \"j.uanmaciasperez89@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -665,7 +830,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\": \"John\",\r\n    \"email\": \"inserta-un-email@gmail.com\",\r\n    \"password\": \"\"\r\n}",
+									"raw": "{\r\n    \"name\": \"JIJIJI\",\r\n    \"surname\": \"jojojo\",\r\n    \"username\": \"John\",\r\n    \"email\": \"inserta-un-email@gmail.com\",\r\n    \"password\": \"\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -818,7 +983,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"oldPassword\": \"admin123\",\r\n    \"newPassword\": \"123456\",\r\n    \"repeatNewPassword\": \"123456\"\r\n}",
+									"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"oldPassword\": \"admin123\",\r\n    \"newPassword\": \"123456\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -852,7 +1017,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"user02@test.com\",\r\n    \"oldPassword\": \"123456\",\r\n    \"newPassword\": \"test321\",\r\n    \"repeatNewPassword\": \"otraPassword\"\r\n}",
+									"raw": "{\r\n    \"email\": \"user02@test.com\",\r\n    \"oldPassword\": \"123456\",\r\n    \"newPassworddd\": \"test321\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -918,7 +1083,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"juanmaciasperez89@gmail.com\",\r\n    \"recoverPassCode\": \"mFMQ8lMIcr\",\r\n    \"newPassword\": \"test123\",\r\n    \"repeatNewPassword\": \"test123\"\r\n}",
+									"raw": "{\r\n    \"email\": \"juanmaciasperez89@gmail.com\",\r\n    \"recoverPassCode\": \"UAbgKEULeK\",\r\n    \"newPassword\": \"test123\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -945,7 +1110,7 @@
 					"name": "upload",
 					"item": [
 						{
-							"name": "Subir un archivo a uploads",
+							"name": "Subir un avatar a uploads (elegir archivo local, elimina el anterior)",
 							"request": {
 								"method": "POST",
 								"header": [
@@ -962,7 +1127,7 @@
 											"key": "fileName",
 											"description": "fasfadasd",
 											"type": "file",
-											"src": []
+											"src": "/C:/Users/juanm/Documents/Desarrollo/Proyectos/hackatonPFB/back/public/media/logo_hackaverse.svg"
 										}
 									]
 								},
@@ -1026,7 +1191,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Juan Macias\",\r\n    \"email\": \"juanmaciasperez89@gmail.com\",\r\n    \"personal_info\": \"P\"\r\n}",
+									"raw": "{\r\n    \"name\": \"Juan\",\r\n    \"surname\": \"Macias\",\r\n    \"username\": \"juanitow\",\r\n    \"email\": \"juanmaciasperez89@gmail.com\",\r\n    \"personal_info\": \"P\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1034,22 +1199,21 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL_BASE}}:3001/users/edit/2",
+									"raw": "{{URL_BASE}}:3001/users/edit",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"users",
-										"edit",
-										"2"
+										"edit"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "(error/user) No puedes editar otro perfil",
+							"name": "(error/user) E-mail ya está en uso",
 							"request": {
 								"method": "PUT",
 								"header": [
@@ -1061,7 +1225,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"user05_user123\",\r\n    \"email\": \"user05@test.com\",\r\n    \"personal_info\": \"Probandooo\"\r\n}",
+									"raw": "{\r\n    \"name\": \"Juan\",\r\n    \"surname\": \"Macias\",\r\n    \"username\": \"juanitow\",\r\n    \"email\": \"user05@test.com\",\r\n    \"personal_info\": \"P\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1069,50 +1233,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL_BASE}}:3001/users/edit/5",
+									"raw": "{{URL_BASE}}:3001/users/edit",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"users",
-										"edit",
-										"5"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "(admin) Editar información de otro usuario",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "{{TOKEN_ADMIN}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"user06_user321\",\r\n    \"email\": \"user05@test.com\",\r\n    \"personal_info\": \"Prob\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{URL_BASE}}:3001/users/edit/6",
-									"host": [
-										"{{URL_BASE}}"
-									],
-									"port": "3001",
-									"path": [
-										"users",
-										"edit",
-										"6"
+										"edit"
 									]
 								}
 							},
@@ -1136,7 +1264,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"userId\": 2,\r\n    \"eventId\": 1,\r\n    \"rating\": 5\r\n}",
+									"raw": "{\r\n    \"eventId\": 1,\r\n    \"rating\": 5\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1170,7 +1298,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"userId\": 2,\r\n    \"eventId\": 2,\r\n    \"rating\": 7\r\n}",
+									"raw": "{\r\n    \"eventId\": 2,\r\n    \"rating\": 7\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1192,7 +1320,7 @@
 							"response": []
 						},
 						{
-							"name": "Dar valoración",
+							"name": "Dar valoración (usar 2 veces para error)",
 							"request": {
 								"method": "POST",
 								"header": [
@@ -1204,7 +1332,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"userId\": 2,\r\n    \"eventId\": 8,\r\n    \"rating\": 5\r\n}",
+									"raw": "{\r\n    \"eventId\": 8,\r\n    \"rating\": 5\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1228,7 +1356,7 @@
 					]
 				},
 				{
-					"name": "users/my-events",
+					"name": "users/my-inscriptions",
 					"item": [
 						{
 							"name": "(user) Ver mis propias inscripciones",
@@ -1242,14 +1370,14 @@
 									}
 								],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/users/my-events",
+									"raw": "{{URL_BASE}}:3001/users/my-inscriptions",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"users",
-										"my-events"
+										"my-inscriptions"
 									]
 								}
 							},
@@ -1267,14 +1395,14 @@
 									}
 								],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/users/my-events?userId=6",
+									"raw": "{{URL_BASE}}:3001/users/my-inscriptions?userId=6",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"users",
-										"my-events"
+										"my-inscriptions"
 									],
 									"query": [
 										{
@@ -1298,14 +1426,106 @@
 									}
 								],
 								"url": {
-									"raw": "{{URL_BASE}}:3001/users/my-events?userId=6",
+									"raw": "{{URL_BASE}}:3001/users/my-inscriptions?userId=6",
 									"host": [
 										"{{URL_BASE}}"
 									],
 									"port": "3001",
 									"path": [
 										"users",
-										"my-events"
+										"my-inscriptions"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "6"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "users/my-finished-events",
+					"item": [
+						{
+							"name": "(user) Ver mis propias eventos finalizados",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN_USER}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_BASE}}:3001/users/my-finished-events",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"port": "3001",
+									"path": [
+										"users",
+										"my-finished-events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "(admin) Ver eventos finalizados de cualquier user",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN_ADMIN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_BASE}}:3001/users/my-finished-events?userId=6",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"port": "3001",
+									"path": [
+										"users",
+										"my-finished-events"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "6"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "(error) Rol normal no puede ver eventos de otros users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN_USER}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_BASE}}:3001/users/my-finished-events?userId=6",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"port": "3001",
+									"path": [
+										"users",
+										"my-finished-events"
 									],
 									"query": [
 										{
@@ -1348,14 +1568,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL_BASE}}:3001/media/hackaton-banner.jpg",
+							"raw": "{{URL_BASE}}:3001/media/logo_hackaverse.svg",
 							"host": [
 								"{{URL_BASE}}"
 							],
 							"port": "3001",
 							"path": [
 								"media",
-								"hackaton-banner.jpg"
+								"logo_hackaverse.svg"
 							]
 						}
 					},

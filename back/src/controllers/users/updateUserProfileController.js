@@ -1,11 +1,10 @@
 import Joi from 'joi';
 import generateErrorsUtils from '../../utils/generateErrorsUtils.js';
-import {updateUserProfileService} from '../../services/users/index.js';
+import { updateUserProfileService } from '../../services/users/index.js';
 
 const updateUserProfileController = async (req, res, next) => {
     const userId = req.user.id;
     const { name, surname, username, email, personal_info } = req.body;
-    console.log("patata1")
 
     const loginUserControllerSchema = Joi.object({
         name: Joi.string().required(),
@@ -16,31 +15,37 @@ const updateUserProfileController = async (req, res, next) => {
     });
 
     const { error } = loginUserControllerSchema.validate(req.body);
-    console.log("patata2")
+
     try {
         if (error) {
             throw generateErrorsUtils(error.message, 400);
-        };
+        }
 
-        const newUserInfo = await updateUserProfileService(userId, name, surname, username, email, personal_info);
+        const newUserInfo = await updateUserProfileService(
+            userId,
+            name,
+            surname,
+            username,
+            email,
+            personal_info
+        );
 
         let resData = {
-            status: "ok",
-            message: "Perfil actualizado con éxito",
+            status: 'ok',
+            message: 'Perfil actualizado con éxito',
             data: {
-                newUserInfo
-            }
+                newUserInfo,
+            },
         };
 
         let newToken = {};
-        
-        if (req.newAccessToken && req.newAccessToken.length > 1){
-            newToken = {newAccessToken: req.newAccessToken};
-            resData = {...resData, ...newToken};
-        };
-        console.log("jelouu")
-        res.send(resData);
 
+        if (req.newAccessToken && req.newAccessToken.length > 1) {
+            newToken = { newAccessToken: req.newAccessToken };
+            resData = { ...resData, ...newToken };
+        }
+
+        res.send(resData);
     } catch (err) {
         next(err);
     }

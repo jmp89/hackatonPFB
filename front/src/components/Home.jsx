@@ -109,12 +109,12 @@ const Home = () => {
                                                     )[0]
                                                 }
                                             </p>
-                                            {/* <p>Localidad: {event.location}</p> */}
                                             <p>
                                                 {event.online_on_site !==
                                                 'on_site'
-                                                    ? 'Online'
-                                                    : `Ciudad: ${event.location}`}
+                                                    ? 'Online: '
+                                                    : `Ciudad: `}
+                                                {event.location}
                                             </p>
                                             <p>
                                                 Tecnología:{' '}

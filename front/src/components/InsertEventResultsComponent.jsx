@@ -84,7 +84,7 @@ const InsertEventResultsComponent = () => {
             onSubmit={handleSubmit}
             className="mt-10 mx-auto text-lg flex flex-col flex-wrap items-center justify-center gap-4 bg-white px-6 rounded-lg shadow-md w-full max-w-3xl"
         >
-            <h2 className="mt-6 mb-2 text-2xl font-bold text-center">Puntuación de eventos finalizados</h2>
+            <h2 className="mt-6 mb-2 text-2xl font-bold text-center">Puntuar eventos finalizados</h2>
 
             <section className="relative w-full flex flex-col justify-center items-center">
 

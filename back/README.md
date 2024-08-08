@@ -39,12 +39,16 @@ La base de datos tendrá el nombre que indiques en el `.env`, (cuidado si ya tie
 
 Haz uso del comando `npm run dev` en tu terminal.
 
+Desde aquí, ya podemos pasar a [configurar el frontend](../front/README.md).
+
 ### Testing
 
 ---
 
-Para facilitar el test de cada uno de los endpoints, puedes descargar las colecciones de Postman, ubicadas en `docs/postman`.
+Para facilitar el test de cada uno de los endpoints, puedes descargar las colecciones de Postman, ubicadas en `[docs/postman](../docs/postman/)`.
 
 Simplemente importa las colecciones, y ejecútalas.
 
-**_Nota:_** En las variables de entorno en Postman, `URL_BASE` está configurada como `http://localhost` y las peticiones se hacen sobre el puerto `:3001`. Si quieres probarlo bajo otra configuración, asegúrate de cambiar estos puntos. Deberás actualizar el `TOKEN_USER` y el `TOKEN_ADMIN` haciendo login con los datos correspondientes para poder validar en el Header `Authorization`.
+**_Nota:_** En las variables de entorno en Postman, `URL_BASE` está configurada como `http://localhost` y las peticiones se hacen sobre el puerto `:3001`. Si quieres probarlo bajo otra configuración, asegúrate de cambiar estos puntos.
+Deberás actualizar el `TOKEN_USER` y el `TOKEN_ADMIN` haciendo login con los datos correspondientes para poder validar en el Header `Authorization`.
+`TOKEN_USER` y `TOKEN_ADMIN` expiran y se refrescan con frecuencia para mejorar la seguridad. Es importante que los mantengas actualizados para que todo funcione correctamente.

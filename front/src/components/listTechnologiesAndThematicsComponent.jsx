@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import fetchThematicsService from '../services/fetchThematicsService';
 import fetchTechnologiesService from '../services/fetchTechnologiesService';
 import { useMediaQuery } from 'react-responsive';
@@ -39,9 +39,21 @@ const ListTechnologiesAndThematicsComponent = () => {
         );
     };
 
+    const handleThematicsPrev = () => {
+        setCurrentThematicsIndex((prevIndex) =>
+            prevIndex - 3 < 0 ? prevIndex : prevIndex - 3
+        );
+    };
+
     const handleTechnologiesNext = () => {
         setCurrentTechnologiesIndex((prevIndex) =>
             prevIndex + 3 >= technologies.length ? 0 : prevIndex + 3
+        );
+    };
+
+    const handleTechnologiesPrev = () => {
+        setCurrentTechnologiesIndex((prevIndex) =>
+            prevIndex - 3 < 0 ? prevIndex : prevIndex - 3
         );
     };
 
@@ -96,13 +108,23 @@ const ListTechnologiesAndThematicsComponent = () => {
                     <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6 ">
                         {renderTechnologies()}
                     </div>
-                    <div className="mt-4">
-                        <button
-                            className="bg-primary text-primary-foreground p-2 rounded w-44 bg-black text-white py-2  font-bold text-lg mb-2 hover:scale-105 transition-transform duration-300"
-                            onClick={handleTechnologiesNext}
-                        >
-                            Siguiente
-                        </button>
+                    <div className="mt-4 flex gap-3 justify-center">
+                        {currentTechnologiesIndex > 0 && (
+                            <button
+                                className="bg-primary text-primary-foreground p-2 rounded w-44 bg-black text-white py-2 font-bold text-lg mb-2 hover:scale-105 transition-transform duration-300"
+                                onClick={handleTechnologiesPrev}
+                            >
+                                Anterior
+                            </button>
+                        )}
+                        {currentTechnologiesIndex + 3 < technologies.length && (
+                            <button
+                                className="bg-primary text-primary-foreground p-2 rounded w-44 bg-black text-white py-2 font-bold text-lg mb-2 hover:scale-105 transition-transform duration-300"
+                                onClick={handleTechnologiesNext}
+                            >
+                                Siguiente
+                            </button>
+                        )}
                     </div>
                 </div>
             </section>
@@ -114,13 +136,23 @@ const ListTechnologiesAndThematicsComponent = () => {
                     <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
                         {renderThematics()}
                     </div>
-                    <div className="mt-4">
-                        <button
-                            className="bg-primary text-primary-foreground p-2 rounded w-44 bg-black text-white py-2  font-bold text-lg mb-2 hover:scale-105 transition-transform duration-300"
-                            onClick={handleThematicsNext}
-                        >
-                            Siguiente
-                        </button>
+                    <div className="mt-4 flex gap-3 justify-center">
+                        {currentThematicsIndex > 0 && (
+                            <button
+                                className="bg-primary text-primary-foreground p-2 rounded w-44 bg-black text-white py-2 font-bold text-lg mb-2 hover:scale-105 transition-transform duration-300"
+                                onClick={handleThematicsPrev}
+                            >
+                                Anterior
+                            </button>
+                        )}
+                        {currentThematicsIndex + 3 < thematics.length && (
+                            <button
+                                className="bg-primary text-primary-foreground p-2 rounded w-44 bg-black text-white py-2 font-bold text-lg mb-2 hover:scale-105 transition-transform duration-300"
+                                onClick={handleThematicsNext}
+                            >
+                                Siguiente
+                            </button>
+                        )}
                     </div>
                 </div>
             </section>

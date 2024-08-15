@@ -2,7 +2,7 @@ const FAQPage = () => {
     const faqs = [
         {
             question: '¿Qué es un hackathon?',
-            answer: 'Un hackathon es un evento donde los participantes colaboran en equipos para desarrollar soluciones innovadoras a problemas específicos en un período de tiempo limitado, generalmente entre 24 y 48 horas.',
+            answer: 'Un hackathon es un evento competitivo donde los participantes se enfrentan para desarrollar soluciones innovadoras a problemas específicos en un período de tiempo limitado, generalmente entre 24 y 48 horas.',
         },
         {
             question: '¿Cómo puedo crear un hackathon en HackaVerse?',
